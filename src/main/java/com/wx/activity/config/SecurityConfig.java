@@ -18,7 +18,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/weixin/**").permitAll()
+                .antMatchers("/wechat/**").permitAll()
                 //	字体
                 .antMatchers("/**/*.css").permitAll()
                 .antMatchers("/**/*.eot").permitAll()
