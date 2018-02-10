@@ -14,8 +14,8 @@ import java.io.Serializable;
  * @author Create by ky.bai on 2018-02-10 21:44
  */
 @Entity
-@Table(name = "AcitvityEnroll")
-public class AcitvityEnrollEntity implements Serializable {
+@Table(name = "ActivityEnroll")
+public class ActivityEnrollEntity implements Serializable {
     private static final long serialVersionUID = 8319965561102617410L;
 
     private Integer id;

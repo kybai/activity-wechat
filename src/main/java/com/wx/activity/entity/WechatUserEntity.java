@@ -19,7 +19,7 @@ public class WechatUserEntity implements Serializable {
     private static final long serialVersionUID = -900539574353010912L;
 
     //用户唯一标识
-    private Integer openid;
+    private String openid;
     //用户昵称
     private String nickname;
     //关注状态, 0-未关注,获取不到用户的信息
@@ -49,7 +49,7 @@ public class WechatUserEntity implements Serializable {
 
     @Id
     @Column(name = "openid")
-    public Integer getOpenid() {
+    public String getOpenid() {
         return openid;
     }
 
@@ -118,7 +118,7 @@ public class WechatUserEntity implements Serializable {
         return createDate;
     }
 
-    public void setOpenid(Integer openid) {
+    public void setOpenid(String openid) {
         this.openid = openid;
     }
 
