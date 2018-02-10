@@ -1,6 +1,6 @@
-package com.wx.activity.handler;
+package com.wx.activity.wechat.handler;
 
-import com.wx.activity.builder.TextBuilder;
+import com.wx.activity.wechat.builder.TextBuilder;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;

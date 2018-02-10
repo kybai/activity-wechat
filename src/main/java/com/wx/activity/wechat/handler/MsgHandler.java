@@ -1,5 +1,7 @@
-package com.wx.activity.handler;
+package com.wx.activity.wechat.handler;
 
+import com.wx.activity.wechat.builder.TextBuilder;
+import com.wx.activity.wechat.utils.JsonUtils;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -10,18 +12,17 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
- * 取消关注事件
+ * 用户发送信息管理器
  *
  * @author Created by ky.bai on 2018-02-04
  */
 @Component
-public class UnsubscribeHandler extends AbstractHandler {
+public class MsgHandler extends AbstractHandler {
     @Override
-    public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> content, WxMpService wxMpService,
+    public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService,
                                     WxSessionManager sessionManager) throws WxErrorException {
-
-        this.logger.info("取消关注用户 OPENID: " + wxMessage.getFromUser());
-        //TODO: 可修改数据库为取消关注状态
-        return null;
+        //TODO 组装回复消息
+        String content = "收到信息内容：" + JsonUtils.toJson(wxMessage);
+        return new TextBuilder().build(content, wxMessage, wxMpService);
     }
 }

@@ -1,4 +1,4 @@
-package com.wx.activity.utils;
+package com.wx.activity.wechat.utils;
 
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 

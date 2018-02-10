@@ -1,6 +1,6 @@
 package com.wx.activity.config;
 
-import com.wx.activity.handler.*;
+import com.wx.activity.wechat.handler.*;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;

@@ -11,8 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import javax.servlet.MultipartConfigElement;
 
 /**
- * @author ky.bai
- * @date 2018-02-04 17:20
+ * Created by ky.bai on 2018-02-10 20:46
  */
 @Configuration
 @EnableWebMvc

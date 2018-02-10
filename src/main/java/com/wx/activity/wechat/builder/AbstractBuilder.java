@@ -1,4 +1,4 @@
-package com.wx.activity.builder;
+package com.wx.activity.wechat.builder;
 
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;

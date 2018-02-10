@@ -1,7 +1,6 @@
-package com.wx.activity.handler;
+package com.wx.activity.wechat.handler;
 
-import com.wx.activity.builder.TextBuilder;
-import com.wx.activity.utils.JsonUtils;
+import com.wx.activity.wechat.utils.JsonUtils;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -12,17 +11,16 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
- * 用户发送信息管理器
+ * 接收到消息的日志处理器
  *
- * @author Created by ky.bai on 2018-02-04
+ * @author ky.bai
  */
 @Component
-public class MsgHandler extends AbstractHandler {
+public class LogHandler extends AbstractHandler {
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService,
                                     WxSessionManager sessionManager) throws WxErrorException {
-        //TODO 组装回复消息
-        String content = "收到信息内容：" + JsonUtils.toJson(wxMessage);
-        return new TextBuilder().build(content, wxMessage, wxMpService);
+        this.logger.info("\n接收到请求消息，内容：{}", JsonUtils.toJson(wxMessage));
+        return null;
     }
 }

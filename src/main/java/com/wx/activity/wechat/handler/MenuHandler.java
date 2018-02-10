@@ -1,4 +1,4 @@
-package com.wx.activity.handler;
+package com.wx.activity.wechat.handler;
 
 import me.chanjar.weixin.common.api.WxConsts.MenuButtonType;
 import me.chanjar.weixin.common.exception.WxErrorException;

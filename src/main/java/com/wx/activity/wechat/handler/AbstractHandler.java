@@ -1,4 +1,4 @@
-package com.wx.activity.handler;
+package com.wx.activity.wechat.handler;
 
 import me.chanjar.weixin.mp.api.WxMpMessageHandler;
 import org.slf4j.Logger;
