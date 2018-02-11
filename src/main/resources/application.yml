@@ -21,7 +21,6 @@ spring:
 logging:
   level:
     org.springframework.web: warn
-    org.hibernate: error
     com.wx.activity: debug
 
 wechat:
