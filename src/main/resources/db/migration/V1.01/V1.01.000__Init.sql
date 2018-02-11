@@ -248,7 +248,7 @@ CREATE TABLE `wechat_user` (
   `city` varchar(32) DEFAULT NULL,
   `province` varchar(32) DEFAULT NULL,
   `country` varchar(32) DEFAULT NULL,
-  `headingurl` varchar(128) DEFAULT NULL,
+  `headimgurl` varchar(512) DEFAULT NULL,
   `subscribe_time` date DEFAULT NULL,
   `unionid` varchar(32) DEFAULT NULL,
   `remark` varchar(64) DEFAULT NULL,

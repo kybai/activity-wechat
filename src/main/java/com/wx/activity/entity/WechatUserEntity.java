@@ -5,8 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * 微信公众号用户
@@ -23,7 +22,7 @@ public class WechatUserEntity implements Serializable {
     //用户昵称
     private String nickname;
     //关注状态, 0-未关注,获取不到用户的信息
-    private Integer subscribe;
+    private Boolean subscribe;
     //用户性别, 1-男性  2-女性  0-未知
     private Integer sex;
     //城市
@@ -33,9 +32,9 @@ public class WechatUserEntity implements Serializable {
     //国家
     private String country;
     //用户头像
-    private String headingurl;
+    private String headimgurl;
     //用户关注时间
-    private Timestamp subscribeTime;
+    private Date subscribeTime;
     //用户关联编号
     private String unionid;
     //备注
@@ -46,6 +45,27 @@ public class WechatUserEntity implements Serializable {
     private Boolean active;
     //创建日期
     private Date createDate;
+
+    public WechatUserEntity() {
+    }
+
+    public WechatUserEntity(String openid, String nickname, Boolean subscribe, Integer sex, String city, String province, String country, String headimgurl, Date subscribeTime, String unionid,
+                            String remark, Integer groupid, Boolean active, Date createDate) {
+        this.openid = openid;
+        this.nickname = nickname;
+        this.subscribe = subscribe;
+        this.sex = sex;
+        this.city = city;
+        this.province = province;
+        this.country = country;
+        this.headimgurl = headimgurl;
+        this.subscribeTime = subscribeTime;
+        this.unionid = unionid;
+        this.remark = remark;
+        this.groupid = groupid;
+        this.active = active;
+        this.createDate = createDate;
+    }
 
     @Id
     @Column(name = "openid")
@@ -59,7 +79,7 @@ public class WechatUserEntity implements Serializable {
     }
 
     @Column(name = "subscribe")
-    public Integer getSubscribe() {
+    public Boolean getSubscribe() {
         return subscribe;
     }
 
@@ -83,13 +103,13 @@ public class WechatUserEntity implements Serializable {
         return country;
     }
 
-    @Column(name = "headingurl")
-    public String getHeadingurl() {
-        return headingurl;
+    @Column(name = "headimgurl")
+    public String getHeadimgurl() {
+        return headimgurl;
     }
 
     @Column(name = "subscribe_time")
-    public Timestamp getSubscribeTime() {
+    public Date getSubscribeTime() {
         return subscribeTime;
     }
 
@@ -126,7 +146,7 @@ public class WechatUserEntity implements Serializable {
         this.nickname = nickname;
     }
 
-    public void setSubscribe(Integer subscribe) {
+    public void setSubscribe(Boolean subscribe) {
         this.subscribe = subscribe;
     }
 
@@ -146,11 +166,11 @@ public class WechatUserEntity implements Serializable {
         this.country = country;
     }
 
-    public void setHeadingurl(String headingurl) {
-        this.headingurl = headingurl;
+    public void setHeadimgurl(String headimgurl) {
+        this.headimgurl = headimgurl;
     }
 
-    public void setSubscribeTime(Timestamp subscribeTime) {
+    public void setSubscribeTime(Date subscribeTime) {
         this.subscribeTime = subscribeTime;
     }
 
@@ -173,4 +193,5 @@ public class WechatUserEntity implements Serializable {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
+
 }

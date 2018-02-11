@@ -7,23 +7,23 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://120.78.141.210:3306/activity?useUnicode\=true&ampcharacterEncoding\=utf-8
+    url: jdbc:mysql://120.78.141.210:3306/activity?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: 123456
   thymeleaf:
     cache: false
   jpa:
-    hibernate:
-      ddl-auto: none
     database: mysql
     show-sql: true
+    hibernate:
+      ddl-auto: none
     properties:
       jadira.usertype.autoRegisterUserTypes: true
 
 logging:
   level:
-    org.springframework.web: DEBUG
-    com.wx.activity: DEBUG
+    org.springframework.web: warn
+    com.wx.activity: debug
 
 wechat:
   mp:

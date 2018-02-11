@@ -1,6 +1,6 @@
 package com.wx.activity.wechat.handler;
 
-import com.wx.activity.wechat.utils.JsonUtils;
+import com.wx.activity.utils.JsonUtils;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
