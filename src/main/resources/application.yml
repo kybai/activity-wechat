@@ -17,12 +17,11 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: none
-    properties:
-      jadira.usertype.autoRegisterUserTypes: true
 
 logging:
   level:
     org.springframework.web: warn
+    org.hibernate: error
     com.wx.activity: debug
 
 wechat:
