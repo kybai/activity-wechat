@@ -15,7 +15,7 @@ import java.util.Date;
  * @author Create by ky.bai on 2018-02-10 20:58
  */
 @Entity
-@Table(name = "UploadFile")
+@Table(name = "upload_file")
 public class UploadFileEntity implements Serializable {
     private static final long serialVersionUID = -8762078549541426314L;
 

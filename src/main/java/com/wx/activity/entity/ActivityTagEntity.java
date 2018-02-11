@@ -13,7 +13,7 @@ import javax.persistence.Table;
  * @author Create by ky.bai on 2018-02-10 21:24
  */
 @Entity
-@Table(name = "Tag")
+@Table(name = "activity_tag")
 public class ActivityTagEntity {
 
     private Integer id;

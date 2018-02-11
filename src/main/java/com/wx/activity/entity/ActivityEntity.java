@@ -15,7 +15,7 @@ import java.util.Date;
  * @author Create by ky.bai on 2018-02-10 20:48
  */
 @Entity
-@Table(name = "Activity")
+@Table(name = "activity")
 public class ActivityEntity implements Serializable {
     private static final long serialVersionUID = -3349287691785504379L;
 
@@ -23,7 +23,7 @@ public class ActivityEntity implements Serializable {
     //活动标题
     private String title;
     //活动区域编号
-    private Integer disctrctID;
+    private Integer districtID;
     //活动开始时间
     private Date beginTime;
     //活动结束时间
@@ -50,8 +50,8 @@ public class ActivityEntity implements Serializable {
     }
 
     @Column(name = "district_id")
-    public Integer getDisctrctID() {
-        return disctrctID;
+    public Integer getDistrictID() {
+        return districtID;
     }
 
     @Column(name = "begin_time")
@@ -92,8 +92,8 @@ public class ActivityEntity implements Serializable {
         this.title = title;
     }
 
-    public void setDisctrctID(Integer disctrctID) {
-        this.disctrctID = disctrctID;
+    public void setDistrictID(Integer districtID) {
+        this.districtID = districtID;
     }
 
     public void setBeginTime(Date beginTime) {

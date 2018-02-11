@@ -15,7 +15,7 @@ import java.util.Date;
  * @author Create by ky.bai on 2018-02-10 21:58
  */
 @Entity
-@Table(name = "Course")
+@Table(name = "activity_course")
 public class ActivityCourseEntity implements Serializable {
     private static final long serialVersionUID = 3176855541942249409L;
 

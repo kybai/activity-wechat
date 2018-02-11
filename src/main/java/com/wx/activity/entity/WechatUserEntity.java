@@ -14,7 +14,7 @@ import java.sql.Timestamp;
  * @author Create by ky.bai on 2018-02-10 21:08
  */
 @Entity
-@Table(name = "WechatUser")
+@Table(name = "wechat_user")
 public class WechatUserEntity implements Serializable {
     private static final long serialVersionUID = -900539574353010912L;
 

@@ -6,27 +6,15 @@ server:
 # DataSource and JPA Configuration
 spring:
   datasource:
-#    driver-class-name: org.postgresql.Driver
-#    url: jdbc:postgresql://127.0.0.1:5432/activity?useUnicode\=true&ampcharacterEncoding\=utf-8
-#    username: postgres
-#    password: Teamw0rk
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://120.78.141.210:3306/activity?useUnicode\=true&ampcharacterEncoding\=utf-8
     username: root
     password: 123456
-#    test-on-borrow: true
-#    validation-query: SELECT 1;
-#    validation-interval: 30000
-#    test-while-idle: true
-#    time-between-eviction-runs-millis: 60000
-#    remove-abandoned: true
-#    remove-abandoned-timeout: 60
   thymeleaf:
     cache: false
   jpa:
     hibernate:
-      ddl-auto: create-drop
-#    database: postgresql
+      ddl-auto: none
     database: mysql
     show-sql: true
     properties:
