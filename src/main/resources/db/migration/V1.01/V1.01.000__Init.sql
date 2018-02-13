@@ -1,18 +1,3 @@
-/*
-Navicat MySQL Data Transfer
-
-Source Server         : 120.78.141.210
-Source Server Version : 50638
-Source Host           : 120.78.141.210:3306
-Source Database       : activity
-
-Target Server Type    : MYSQL
-Target Server Version : 50638
-File Encoding         : 65001
-
-Date: 2018-02-11 22:57:10
-*/
-
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
@@ -23,12 +8,12 @@ CREATE TABLE `activity` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '活动编号',
   `title` varchar(256) NOT NULL COMMENT '活动标题',
   `district_id` int(11) NOT NULL COMMENT '活动简介编号',
-  `begin_time` date NOT NULL COMMENT '开始时间',
-  `end_time` date NOT NULL COMMENT '结束时间',
+  `begin_time` timestamp NOT NULL COMMENT '开始时间',
+  `end_time` timestamp NOT NULL COMMENT '结束时间',
   `max_limit` int(11) DEFAULT NULL COMMENT '人数限制',
   `upload_file_id` int(11) DEFAULT NULL COMMENT '封面文件编号',
   `active` bit(1) NOT NULL COMMENT '有效性',
-  `create_date` date NOT NULL COMMENT '创建时间',
+  `create_date` timestamp NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `FK_ACTIVITY_REFERENCE_DISTRICT` (`district_id`),
   KEY `FK_ACTIVITY_REFERENCE_UPLOAD_F` (`upload_file_id`),
@@ -44,10 +29,10 @@ CREATE TABLE `activity_course` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '活动课程编号',
   `activity_id` int(11) NOT NULL COMMENT '活动编号',
   `name` varchar(64) NOT NULL COMMENT '课程名称',
-  `begin_time` date NOT NULL COMMENT '课程开始时间',
-  `end_time` date NOT NULL COMMENT '课程结束时间',
+  `begin_time` timestamp NOT NULL COMMENT '课程开始时间',
+  `end_time` timestamp NOT NULL COMMENT '课程结束时间',
   `active` bit(1) NOT NULL COMMENT '有效性',
-  `create_date` date NOT NULL COMMENT '创建时间',
+  `create_date` timestamp NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `FK_ACTIVITY_COURSE_REFERENCE_ACTIVITY` (`activity_id`),
   CONSTRAINT `FK_ACTIVITY_COURSE_REFERENCE_ACTIVITY` FOREIGN KEY (`activity_id`) REFERENCES `activity` (`id`)
@@ -61,7 +46,7 @@ CREATE TABLE `activity_course_signin` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '课程签到编号',
   `course_id` int(11) NOT NULL COMMENT '课程编号',
   `user_id` int(11) NOT NULL COMMENT '用户编号',
-  `sign_in_time` date NOT NULL COMMENT '签到时间',
+  `sign_in_time` timestamp NOT NULL COMMENT '签到时间',
   PRIMARY KEY (`id`),
   KEY `FK_COURSE_SIGNIN_REFERENCE_ACTIVITY` (`course_id`),
   KEY `FK_COURSE_SIGNIN_REFERENCE_USERS` (`user_id`),
@@ -89,8 +74,8 @@ DROP TABLE IF EXISTS `activity_district`;
 CREATE TABLE `activity_district` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '区域编号',
   `name` varchar(32) NOT NULL COMMENT '区域名称',
-  `create_date` date NOT NULL COMMENT '创建时间',
   `active` bit(1) NOT NULL COMMENT '有效性',
+  `create_date` timestamp NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -122,7 +107,7 @@ CREATE TABLE `activity_thumbup` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '活动点赞记录编号',
   `activity_id` int(11) NOT NULL COMMENT '活动编号',
   `user_id` int(11) NOT NULL COMMENT '用户编号',
-  `up_time` date NOT NULL COMMENT '点赞时间',
+  `up_time` timestamp NOT NULL COMMENT '点赞时间',
   PRIMARY KEY (`id`),
   KEY `FK_ACTIVITY_THUMBUP_REFERENCE_ACTIVITY` (`activity_id`),
   KEY `FK_ACTIVITY_THUMBUP_REFERENCE_USERS` (`user_id`),
@@ -138,7 +123,7 @@ CREATE TABLE `activity_watched` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '活动查看记录编号',
   `activity_id` int(11) NOT NULL COMMENT '活动编号',
   `user_id` int(11) NOT NULL COMMENT '用户编号',
-  `watch_time` date NOT NULL COMMENT '查看时间',
+  `watch_time` timestamp NOT NULL COMMENT '查看时间',
   PRIMARY KEY (`id`),
   KEY `FK_ACTIVITY_WATCHED_REFERENCE_ACTIVITY` (`activity_id`),
   KEY `FK_ACTIVITY_WATCHED_REFERENCE_USERS` (`user_id`),
@@ -170,7 +155,7 @@ CREATE TABLE `rolling_image` (
   `upload_file_id` int(11) NOT NULL COMMENT '轮播图文件编号',
   `url` varchar(256) NOT NULL COMMENT '跳转路径',
   `active` bit(1) NOT NULL COMMENT '有效性',
-  `create_date` date NOT NULL COMMENT '创建时间',
+  `create_date` timestamp NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `FK_ROLLING_IMAGE_REFERENCE_UPLOAD_F` (`upload_file_id`),
   CONSTRAINT `FK_ROLLING_IMAGE_REFERENCE_UPLOAD_F` FOREIGN KEY (`upload_file_id`) REFERENCES `upload_file` (`id`)
@@ -186,7 +171,7 @@ CREATE TABLE `upload_file` (
   `real_name` varchar(32) NOT NULL COMMENT '存放名称',
   `file_path` varchar(32) NOT NULL COMMENT '文件路径',
   `file_type` varchar(16) NOT NULL COMMENT '文件类型',
-  `create_date` date NOT NULL COMMENT '创建时间',
+  `create_date` timestamp NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -198,14 +183,13 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户编号',
   `name` varchar(32) NOT NULL COMMENT '用户名称',
   `sex` varchar(2) DEFAULT NULL COMMENT '用户性别',
-  `phone` varchar(11) DEFAULT NULL COMMENT '联系方式',
   `city` varchar(32) DEFAULT NULL COMMENT '城市',
   `province` varchar(32) DEFAULT NULL COMMENT '省份',
   `country` varchar(32) DEFAULT NULL COMMENT '国家',
   `head_img_url` varchar(256) DEFAULT NULL COMMENT '头像',
   `remark` varchar(256) DEFAULT NULL COMMENT '备注',
   `active` bit(1) NOT NULL COMMENT '有效性',
-  `create_date` date NOT NULL COMMENT '创建时间',
+  `create_date` timestamp NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -218,9 +202,9 @@ CREATE TABLE `users_score` (
   `user_id` int(11) NOT NULL COMMENT '用户编号',
   `score` int(11) NOT NULL COMMENT '积分',
   `reason` varchar(128) DEFAULT NULL COMMENT '原因',
-  `create_time` date NOT NULL COMMENT '创建时间',
   `activity_id` int(11) DEFAULT NULL COMMENT '有效性',
   `course_id` int(11) DEFAULT NULL COMMENT '课程编号',
+  `create_time` timestamp NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `FK_USERS_SCORE_REFERENCE_USERS` (`user_id`),
   CONSTRAINT `FK_USERS_SCORE_REFERENCE_USERS` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
@@ -232,14 +216,14 @@ CREATE TABLE `users_score` (
 DROP TABLE IF EXISTS `wechat_user`;
 CREATE TABLE `wechat_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '编号',
-  `openid` varchar(32) DEFAULT NULL COMMENT '微信标识',
+  `openid` varchar(32) DEFAULT NULL UNIQUE COMMENT '微信标识',
   `user_id` int(11) NOT NULL COMMENT '用户编号',
   `nickname` varchar(32) NOT NULL COMMENT '昵称',
-  `subscribe` int(11) NOT NULL COMMENT '关注状态',
+  `subscribe` bit NOT NULL COMMENT '关注状态',
   `union_id` varchar(32) DEFAULT NULL COMMENT '唯一标识',
   `remark` varchar(64) DEFAULT NULL COMMENT '备注',
   `group_id` int(11) DEFAULT NULL COMMENT '分组编号',
-  `create_date` date NOT NULL COMMENT '创建日期',
+  `create_date` timestamp NOT NULL COMMENT '创建日期',
   PRIMARY KEY (`id`),
   KEY `FK_WECHAT_U_REFERENCE_USERS` (`user_id`),
   CONSTRAINT `FK_WECHAT_U_REFERENCE_USERS` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)

@@ -19,3 +19,25 @@ var rsc_bs_pag = {
     go_next_text: '&rarr;',
     go_last_text: '&raquo;'
 };
+
+function loadPagination(data, pageID, initPageFunc, loadPageFunc) {
+    $("#" + pageID).bs_pagination({
+        currentPage: data.pageNum,
+        totalPages: data.pages,
+        totalRows: data.total,
+        rowsPerPage: data.size,
+        visiblePageLinks: 5,
+        showGoToPage: false,
+        showRowsPerPage: false,
+        showRowsInfo: false,
+        showRowsDefaultInfo: false,
+        navListContainerClass: "col-xs-12 col-sm-12 col-md-12",//使分页按钮区域占一整行
+        containerClass: "",//包含按钮的class为空，原为well，有背景
+        onLoad: function (event, pageData) {//分页按钮加载时
+            loadPageFunc(data.list);
+        },
+        onChangePage: function (event, pageData) {//分页按钮改变时
+            initPageFunc(pageData.currentPage - 1);
+        }
+    });
+}

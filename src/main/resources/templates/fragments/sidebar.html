@@ -1,0 +1,71 @@
+<meta charset="UTF-8"/>
+<div th:fragment="sidebar">
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <ul class="sidebar-menu">
+                <!-- 活动管理 -->
+                <li class="treeview" th:classappend="(${level1Menu} eq 'activityManager') ? 'active' : ''">
+                    <a href="#">
+                        <i class="glyphicon glyphicon-fire"></i>
+                        <span>活动管理</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="treeview" th:classappend="(${level2Menu} eq 'activityList') ? 'active' : ''">
+                            <a href="/securities/index" th:classappend="(${level2Menu} eq 'activityList') ? 'highlight' : ''">
+                                <i class="glyphicon glyphicon-fire"></i>
+                                <span>活动列表</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- 用户管理 -->
+                <li class="treeview" th:classappend="(${level1Menu} eq 'userManager') ? 'active' : ''">
+                    <a href="#">
+                        <i class="glyphicon glyphicon-user"></i>
+                        <span>用户管理</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="treeview" th:classappend="(${level2Menu} eq 'userList') ? 'active' : ''">
+                            <a href="/securities/index" th:classappend="(${level2Menu} eq 'userList') ? 'highlight' : ''">
+                                <i class="glyphicon glyphicon-user"></i>
+                                <span>用户列表</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- 信息配置 -->
+                <li class="treeview" th:classappend="(${level1Menu} eq 'infoManager') ? 'active' : ''">
+                    <a href="#">
+                        <i class="glyphicon glyphicon-cog"></i>
+                        <span>信息配置</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="treeview" th:classappend="(${level2Menu} eq 'rollingImgList') ? 'active' : ''">
+                            <a href="/securities/index" th:classappend="(${level2Menu} eq 'rollingImgList') ? 'highlight' : ''">
+                                <i class="glyphicon glyphicon-retweet"></i>
+                                <span>轮播图管理</span>
+                            </a>
+                        </li>
+                        <li class="treeview" th:classappend="(${level2Menu} eq 'adsenseList') ? 'active' : ''">
+                            <a href="/securities/index" th:classappend="(${level2Menu} eq 'adsenseList') ? 'highlight' : ''">
+                                <i class="glyphicon glyphicon-send"></i>
+                                <span>广告位管理</span>
+                            </a>
+                        </li>
+                        <li class="treeview" th:classappend="(${level2Menu} eq 'districtList') ? 'active' : ''">
+                            <a href="/securities/index" th:classappend="(${level2Menu} eq 'districtList') ? 'highlight' : ''">
+                                <i class="glyphicon glyphicon-globe"></i>
+                                <span>区域字典管理</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+    </aside>
+</div>
