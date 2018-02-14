@@ -52,7 +52,6 @@ function BasePage(currentPage) {
     this.name = $("#searchName").val();
 }
 
-function BaseDisabled(id, active) {
+function BaseDisabled(id) {
     this.id = Number(id);
-    this.active = active;
 }
