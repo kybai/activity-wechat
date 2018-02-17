@@ -20,13 +20,18 @@
                         <section class="tab-pane active" id="tab2">
                             <div class="box box-primary">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title" th:utext="区域列表"></h3>
+                                    <h3 class="box-title" th:utext="活动列表"></h3>
                                     <div class="box-tools pull-right">
                                         <section class="pull-right-span-gray">
-                                            <span>区域名称：</span>
-                                            <input type="text" id="searchName" placeholder="请输入区域文字模糊查询"/>
+                                            <span>活动标题：</span>
+                                            <input type="text" placeholder="请输入活动标题模糊查询" id="searchName"/>
+                                            <span>区域：</span>
+                                            <select id="searchDistrict" class="width-90 height-26">
+                                                <option value="">全部</option>
+                                                <option th:each="d : ${districts}" th:value="${d.id}" th:utext="${d.name}"></option>
+                                            </select>
                                             <a href="#" onclick="initPage(1);"><i class="glyphicon glyphicon-search"></i></a>
-                                            <a href="#" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                                            <a th:href="@{/activity/add}"><i class="glyphicon glyphicon-plus-sign"></i></a>
                                         </section>
                                     </div>
                                 </div>
@@ -58,64 +63,12 @@
         </section>
     </div>
 </div>
-<!--新增模态框-->
-<div class="modal fade" tabindex="-1" role="dialog" id="addModal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">新增区域</h4>
-            </div>
-            <div class="modal-body">
-                <form id="addForm" class="form-horizontal">
-                    <div class="form-group">
-                        <label for="name" class="col-sm-2 col-sm-offset-1 control-label label-required">区域文字：</label>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control validate[required]" id="name" placeholder="请输入区域文字"/>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer padding-top-20">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" onclick="save();">保存</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--编辑模态框-->
-<div class="modal fade" tabindex="-1" role="dialog" id="editModal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">编辑区域</h4>
-            </div>
-            <div class="modal-body">
-                <form id="editForm" class="form-horizontal">
-                    <div class="form-group">
-                        <label for="editName" class="col-sm-2 col-sm-offset-1 control-label label-required">区域文字：</label>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control validate[required]" id="editName" placeholder="请输入区域文字"/>
-                        </div>
-                    </div>
-                    <input type="hidden" id="editID" readonly="readonly"/>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" onclick="update();">保存</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div th:replace="fragments/commonJs"></div>
 <script th:src="@{/js/pagination/jquery.bs_pagination.min.js}" type="text/javascript"></script>
 <script th:src="@{/js/pagination/bs_pagination_en.js}" type="text/javascript"></script>
 <script th:src="@{/js/validation/jquery.validationEngine.min.js}" type="text/javascript"></script>
 <script th:src="@{/js/validation/jquery.validationEngine-zh_CN.js}" type="text/javascript"></script>
-<script th:src="@{/js/activity/district/list.js}" type="text/javascript"></script>
+<script th:src="@{/js/activity/activity/list.js}" type="text/javascript"></script>
 </body>
 </html>

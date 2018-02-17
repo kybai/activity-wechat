@@ -7,7 +7,8 @@ DROP TABLE IF EXISTS `activity`;
 CREATE TABLE `activity` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '活动编号',
   `title` varchar(256) NOT NULL COMMENT '活动标题',
-  `district_id` int(11) NOT NULL COMMENT '活动简介编号',
+  `district_id` int(11) NOT NULL COMMENT '活动区域编号',
+  `address` varchar(256) NOT NULL COMMENT '活动地址',
   `begin_time` timestamp NOT NULL COMMENT '开始时间',
   `end_time` timestamp NOT NULL COMMENT '结束时间',
   `max_limit` int(11) DEFAULT NULL COMMENT '人数限制',
@@ -92,8 +93,8 @@ CREATE TABLE `activity_tag` (
   `use_political` bit(1) DEFAULT NULL COMMENT '是否使用政治面貌',
   `use_company` bit(1) DEFAULT NULL COMMENT '是否使用工作单位',
   `use_job` bit(1) DEFAULT NULL COMMENT '是否使用职务',
-  `use_card_face` bit(1) DEFAULT NULL COMMENT '是否上传身份证正面',
-  `use_card_back` bit(1) DEFAULT NULL COMMENT '是否上传身份证反面',
+  `use_card` bit(1) DEFAULT NULL COMMENT '是否使用证件',
+  `use_profile` bit(1) DEFAULT NULL COMMENT '是否使用个人简介',
   PRIMARY KEY (`id`),
   KEY `FK_ACTIVITY_REFERENCE_ACTIVITY` (`activity_id`),
   CONSTRAINT `FK_ACTIVITY_REFERENCE_ACTIVITY` FOREIGN KEY (`activity_id`) REFERENCES `activity` (`id`)

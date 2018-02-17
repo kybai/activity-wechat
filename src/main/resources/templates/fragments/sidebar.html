@@ -12,7 +12,7 @@
                     </a>
                     <ul class="treeview-menu">
                         <li class="treeview" th:classappend="(${level2Menu} eq 'activityList') ? 'active' : ''">
-                            <a href="/securities/index" th:classappend="(${level2Menu} eq 'activityList') ? 'highlight' : ''">
+                            <a th:href="@{/activity/list}" th:classappend="(${level2Menu} eq 'activityList') ? 'highlight' : ''">
                                 <i class="glyphicon glyphicon-fire"></i>
                                 <span>活动列表</span>
                             </a>

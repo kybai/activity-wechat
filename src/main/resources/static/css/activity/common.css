@@ -3,6 +3,7 @@
     height: 30px;
 }
 
+
 .label-required:before {
     content: ' * ';
     color: #ff0000;
@@ -15,4 +16,12 @@
 
 .padding-top-20 {
     padding-top: 20px;
+}
+
+.width-90 {
+    width: 90px;
+}
+
+.height-26 {
+    height: 26px;
 }

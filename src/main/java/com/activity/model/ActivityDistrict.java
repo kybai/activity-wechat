@@ -27,6 +27,10 @@ public class ActivityDistrict implements Serializable {
         this.name = name;
     }
 
+    public ActivityDistrict(Boolean active) {
+        this.active = active;
+    }
+
     public ActivityDistrict(String name, Boolean active) {
         this.name = name;
         this.active = active;

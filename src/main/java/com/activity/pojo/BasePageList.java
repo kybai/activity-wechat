@@ -13,6 +13,8 @@ public class BasePageList extends BasePage implements Serializable {
     private String name;
     //有效性查询
     private Boolean active;
+    //编号
+    private Integer otherID;
 
     public Boolean getActive() {
         return active;
@@ -28,5 +30,13 @@ public class BasePageList extends BasePage implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getOtherID() {
+        return otherID;
+    }
+
+    public void setOtherID(Integer otherID) {
+        this.otherID = otherID;
     }
 }
