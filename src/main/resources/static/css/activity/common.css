@@ -1,8 +1,8 @@
 .form-control {
     border-radius: 4px;
     height: 30px;
+    width: 100% !important;
 }
-
 
 .label-required:before {
     content: ' * ';
@@ -15,13 +15,25 @@
 }
 
 .padding-top-20 {
-    padding-top: 20px;
+    padding-top: 20px !important;
+}
+
+.padding-left-0 {
+    padding-left: 0 !important;
+}
+
+.padding-right-0 {
+    padding-right: 0 !important;
+}
+
+.margin-right-15 {
+    margin-right: 15px !important;
 }
 
 .width-90 {
-    width: 90px;
+    width: 90px !important;
 }
 
 .height-26 {
-    height: 26px;
+    height: 26px !important;
 }

@@ -16,80 +16,104 @@
         <section class="content">
             <div class="row">
                 <section class="col-md-12">
-                    <div class="tab-content">
-                        <section class="tab-pane active" id="tab2">
-                            <div class="box box-primary">
-                                <div class="box-header with-border">
-                                    <h3 class="box-title" th:utext="创建活动"></h3>
-                                    <div class="box-tools pull-right">
-                                        <section class="pull-right-span-gray">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                            <button type="button" class="btn btn-primary" onclick="save();">保存</button>
-                                        </section>
-                                    </div>
-                                </div>
-                                <div class="box-body">
-                                    <div class="row">
-                                        <form id="addForm" class="form-horizontal">
-                                            <div class="form-group">
-                                                <label for="title" class="col-sm-2 control-label label-required">活动标题</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="title" placeholder="请输入标题"/>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="district" class="col-sm-2 control-label label-required">所属区域</label>
-                                                <div class="col-sm-8">
-                                                    <select id="district">
-                                                        <option th:each="d : ${districts}" th:value="${d.id}" th:utext="${d.name}"></option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="address" class="col-sm-2 control-label label-required">活动地址</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="address" placeholder="请输入地址"/>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="beginTime" class="col-sm-2 control-label label-required">活动时间</label>
-                                                <div class="col-sm-4">
-                                                    <input type="text" class="form-control" id="beginTime" placeholder="开始时间"/>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <input type="text" class="form-control" id="endTime" placeholder="结束时间"/>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="maxLimit" class="col-sm-2 control-label label-blank">报名人数限制</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="maxLimit" placeholder="0, 默认不限制人数"/>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="setting" class="col-sm-2 control-label label-blank">报名表单设置</label>
-                                                <div class="col-sm-8" id="setting">
-                                                    <div class="col-sm-4"><input type="checkbox" id="useName"/> 姓名</div>
-                                                    <div class="col-sm-4"><input type="checkbox" id="useSex"/> 性别</div>
-                                                    <div class="col-sm-4"><input type="checkbox" id="usePhone"/> 联系电话</div>
-                                                    <div class="col-sm-4"><input type="checkbox" id="usePolitical"/> 政治面貌</div>
-                                                    <div class="col-sm-4"><input type="checkbox" id="useCompany"/> 工作单位</div>
-                                                    <div class="col-sm-4"><input type="checkbox" id="useJob"/> 职务</div>
-                                                    <div class="col-sm-4"><input type="checkbox" id="useCardFace"/> 证件</div>
-                                                    <div class="col-sm-4"><input type="checkbox" id="useProfile"/> 个人简介</div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="description" class="col-sm-2 control-label label-blank">活动介绍</label>
-                                                <div class="col-sm-8">
-                                                    <textarea type="text" class="form-control" id="description"></textarea>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title" th:utext="创建活动"></h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button type="button" class="btn btn-primary" onclick="save();">保存</button>
                             </div>
-                        </section>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <form id="addForm" class="form-horizontal">
+                                    <div class="form-group">
+                                        <label for="title" class="col-sm-2 control-label label-required">活动标题</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="title" placeholder="请输入标题"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="district" class="col-sm-2 control-label label-required">所属区域</label>
+                                        <div class="col-sm-8">
+                                            <select id="district" class="form-control">
+                                                <option th:each="d : ${districts}" th:value="${d.id}" th:utext="${d.name}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address" class="col-sm-2 control-label label-required">活动地址</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="address" placeholder="请输入地址"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="beginTime" class="col-sm-2 control-label label-required">活动时间</label>
+                                        <div class="col-sm-8">
+                                            <div class="col-md-6 padding-left-0">
+                                                <input type="text" class="form-control" id="beginTime" placeholder="开始时间"/>
+                                            </div>
+                                            <div class="col-md-6 padding-right-0">
+                                                <input type="text" class="form-control" id="endTime" placeholder="结束时间"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="maxLimit" class="col-sm-2 control-label label-blank">报名人数限制</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="maxLimit" placeholder="0, 默认不限制人数"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="setting" class="col-sm-2 control-label label-blank">报名表单设置</label>
+                                        <div class="col-sm-8" id="setting">
+                                            <div class="col-sm-4"><input type="checkbox" id="useName"/> 姓名</div>
+                                            <div class="col-sm-4"><input type="checkbox" id="useSex"/> 性别</div>
+                                            <div class="col-sm-4"><input type="checkbox" id="usePhone"/> 联系电话</div>
+                                            <div class="col-sm-4"><input type="checkbox" id="usePolitical"/> 政治面貌</div>
+                                            <div class="col-sm-4"><input type="checkbox" id="useCompany"/> 工作单位</div>
+                                            <div class="col-sm-4"><input type="checkbox" id="useJob"/> 职务</div>
+                                            <div class="col-sm-4"><input type="checkbox" id="useCardFace"/> 证件</div>
+                                            <div class="col-sm-4"><input type="checkbox" id="useProfile"/> 个人简介</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-2 control-label label-blank">活动介绍</label>
+                                        <div class="col-sm-8">
+                                            <textarea type="text" class="form-control" id="description"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="uploadFileID" class="col-sm-2 control-label label-blank">上传封面</label>
+                                        <div class="col-sm-8">
+                                            <input type="file" class="form-control" id="uploadFileID" accept="image/jpg, image/jpeg, image/png"/>
+                                            <span>只能上传jpg/png图片，文件不能超过500kb</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label label-blank">课程设置</label>
+                                        <div class="col-sm-10" id="courseDiv">
+                                            <section class="form-group col-md-12 course-tr">
+                                                <div class="col-sm-9 padding-left-0">
+                                                    <div class="col-md-4 padding-left-0">
+                                                        <input type="text" class="form-control course-name" placeholder="课程名称"/>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <input type="text" class="form-control course-time begin-time" placeholder="开始时间"/>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <input type="text" class="form-control course-time end-time" placeholder="结束时间"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 group-btn">
+                                                    <button type="button" class="btn btn-default course-add margin-right-15" onclick="copyCourseTr(this);">增加</button>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </div>
