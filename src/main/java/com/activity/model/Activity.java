@@ -2,7 +2,7 @@ package com.activity.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "activity")
@@ -17,9 +17,9 @@ public class Activity implements Serializable {
     //活动地址
     private String address;
     //开始时间
-    private Date beginTime;
+    private Timestamp beginTime;
     //结束时间
-    private Date endTime;
+    private Timestamp endTime;
     //人数限制
     private Integer maxLimit;
     //上传文件编号
@@ -27,7 +27,7 @@ public class Activity implements Serializable {
     //有效性
     private Boolean active;
     //创建时间
-    private Date createDate;
+    private Timestamp createDate;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,12 +52,12 @@ public class Activity implements Serializable {
     }
 
     @Column(name = "begin_time")
-    public Date getBeginTime() {
+    public Timestamp getBeginTime() {
         return beginTime;
     }
 
     @Column(name = "end_time")
-    public Date getEndTime() {
+    public Timestamp getEndTime() {
         return endTime;
     }
 
@@ -76,8 +76,8 @@ public class Activity implements Serializable {
         return active;
     }
 
-    @Column(name = "create_date")
-    public Date getCreateDate() {
+    @Column(name = "create_Timestamp")
+    public Timestamp getCreateDate() {
         return createDate;
     }
 
@@ -97,11 +97,11 @@ public class Activity implements Serializable {
         this.address = address;
     }
 
-    public void setBeginTime(Date beginTime) {
+    public void setBeginTime(Timestamp beginTime) {
         this.beginTime = beginTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(Timestamp endTime) {
         this.endTime = endTime;
     }
 
@@ -117,7 +117,7 @@ public class Activity implements Serializable {
         this.active = active;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
 }

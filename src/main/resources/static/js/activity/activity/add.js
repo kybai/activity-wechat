@@ -3,6 +3,38 @@ $(function () {
     initCourseTime();
 });
 
+function save() {
+    $.ajax({
+        url: base + '/activity/save',
+        method: 'POST',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(new ActivityPojo()),
+        success: function (results) {
+            layer.msg(results.msg);
+        }
+    });
+}
+
+$("#uploadFileID").on("change", function () {
+    var formData = new FormData();
+    formData.append("uploadFile", $("#uploadFileID")[0].files[0]);
+    formData.append("fileType", "ACTIVITY");
+
+    $.ajax({
+        url: base + '/file/upload',
+        type: 'POST',
+        dataType: 'json',
+        enctype: 'multipart/form-data',
+        data: formData,
+        processData: false,  // 告诉jQuery不要去处理发送的数据
+        contentType: false,  // 告诉jQuery不要去设置Content-Type请求头
+        success: function (results) {
+            $("#uploadFileID").attr("fileid", results.data);
+        }
+    });
+});
+
 function copyCourseTr(obj) {
     var $this = $(obj);
     var $section = $this.closest("section");
@@ -70,4 +102,50 @@ function initCourseTime() {
             closeStop: this
         });
     });
+}
+
+function ActivityPojo() {
+    this.activity = new ActivityEntity();
+    this.desc = $("#description").val();
+    this.activityTag = new ActivityTag();
+    this.courseList = getCourseList();
+}
+
+function ActivityEntity() {
+    this.title = $("#title").val();
+    this.districtId = $("#district").val();
+    this.address = $("#address").val();
+    this.beginTime = toTimestamp($("#beginTime").val());
+    this.endTime = toTimestamp($("#endTime").val());
+    this.maxLimit = parseInt($("#maxLimit").val());
+    this.uploadFileId = parseInt($("#uploadFileID").attr("fileid"));
+}
+
+function ActivityTag() {
+    this.useName = $("#useName").prop("checked");
+    this.useSex = $("#useSex").prop("checked");
+    this.usePhone = $("#usePhone").prop("checked");
+    this.usePolitical = $("#usePolitical").prop("checked");
+    this.useCompany = $("#useCompany").prop("checked");
+    this.useJob = $("#useJob").prop("checked");
+    this.useCard = $("#useCard").prop("checked");
+    this.useProfile = $("#useProfile").prop("checked");
+}
+
+function ActivityCourse(name, beginTime, endTime) {
+    this.name = name;
+    this.beginTime = toTimestamp(beginTime);
+    this.endTime = toTimestamp(endTime);
+}
+
+function getCourseList() {
+    var arr = [];
+    $("#courseDiv").find(".course-tr").each(function () {
+        var $this = $(this);
+        var name = $this.find(".course-name");
+        var beginTime = $this.find(".begin-time").val();
+        var endTime = $this.find(".end-time").val();
+        arr.push(new ActivityCourse(name, beginTime, endTime));
+    });
+    return arr;
 }

@@ -26,10 +26,10 @@ public class ActivityTag {
     private Boolean useCompany;
     //使用职务
     private Boolean useJob;
-    //使用身份证正面
-    private Boolean useCardFace;
-    //使用身份证反面
-    private Boolean useCardBack;
+    //使用证件
+    private Boolean useCard;
+    //使用个人简介
+    private Boolean useProfile;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,14 +73,14 @@ public class ActivityTag {
         return useJob;
     }
 
-    @Column(name = "use_card_face")
-    public Boolean getUseCardFace() {
-        return useCardFace;
+    @Column(name = "use_card")
+    public Boolean getUseCard() {
+        return useCard;
     }
 
-    @Column(name = "use_card_back")
-    public Boolean getUseCardBack() {
-        return useCardBack;
+    @Column(name = "use_profile")
+    public Boolean getUseProfile() {
+        return useProfile;
     }
 
     public void setId(Integer id) {
@@ -115,11 +115,11 @@ public class ActivityTag {
         this.useJob = useJob;
     }
 
-    public void setUseCardFace(Boolean useCardFace) {
-        this.useCardFace = useCardFace;
+    public void setUseCard(Boolean useCard) {
+        this.useCard = useCard;
     }
 
-    public void setUseCardBack(Boolean useCardBack) {
-        this.useCardBack = useCardBack;
+    public void setUseProfile(Boolean useProfile) {
+        this.useProfile = useProfile;
     }
 }
