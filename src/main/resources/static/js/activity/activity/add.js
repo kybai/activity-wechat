@@ -142,7 +142,7 @@ function getCourseList() {
     var arr = [];
     $("#courseDiv").find(".course-tr").each(function () {
         var $this = $(this);
-        var name = $this.find(".course-name");
+        var name = $this.find(".course-name").val();
         var beginTime = $this.find(".begin-time").val();
         var endTime = $this.find(".end-time").val();
         arr.push(new ActivityCourse(name, beginTime, endTime));

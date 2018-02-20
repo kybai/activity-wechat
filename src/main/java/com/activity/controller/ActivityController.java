@@ -46,6 +46,7 @@ public class ActivityController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity save(@RequestBody ActivityPojo pojo) {
+        activityService.save(pojo);
         return ResponseEntity.ok(new RestEntity(200, Constants.OPERATOR_SUCCESS, Boolean.TRUE));
     }
 }

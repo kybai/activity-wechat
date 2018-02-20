@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.activity.mapper.ActivityTagMapper">
+    <resultMap id="BaseResultMap" type="com.activity.model.ActivityTag">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="activity_id" property="activityId" jdbcType="INTEGER"/>
+        <result column="use_name" property="useName" jdbcType="BIT"/>
+        <result column="use_sex" property="useSex" jdbcType="BIT"/>
+        <result column="use_phone" property="usePhone" jdbcType="BIT"/>
+        <result column="use_political" property="usePolitical" jdbcType="BIT"/>
+        <result column="use_company" property="useCompany" jdbcType="BIT"/>
+        <result column="use_job" property="useJob" jdbcType="BIT"/>
+        <result column="use_card" property="useCard" jdbcType="BIT"/>
+        <result column="use_profile" property="useProfile" jdbcType="BIT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, activity_id, use_name, use_sex, use_phone, use_political, use_company, use_job,
+        use_card, use_profile
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from activity_tag
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insert" parameterType="com.activity.model.ActivityTag">
+        insert into activity_tag (id, activity_id, use_name, use_sex, use_phone, use_political, use_company, use_job, use_card, use_profile)
+        values (#{id,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{useName,jdbcType=BIT},
+        #{useSex,jdbcType=BIT}, #{usePhone,jdbcType=BIT}, #{usePolitical,jdbcType=BIT},
+        #{useCompany,jdbcType=BIT}, #{useJob,jdbcType=BIT}, #{useCard,jdbcType=BIT}, #{useProfile,jdbcType=BIT})
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.activity.model.ActivityTag">
+        update activity_tag
+        set activity_id = #{activityId,jdbcType=INTEGER},
+        use_name = #{useName,jdbcType=BIT},
+        use_sex = #{useSex,jdbcType=BIT},
+        use_phone = #{usePhone,jdbcType=BIT},
+        use_political = #{usePolitical,jdbcType=BIT},
+        use_company = #{useCompany,jdbcType=BIT},
+        use_job = #{useJob,jdbcType=BIT},
+        use_card = #{useCard,jdbcType=BIT},
+        use_profile = #{useProfile,jdbcType=BIT}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

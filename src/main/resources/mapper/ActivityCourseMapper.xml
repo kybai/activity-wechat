@@ -28,12 +28,18 @@
     </delete>
 
     <insert id="insert" parameterType="com.activity.model.ActivityCourse">
-        insert into activity_course (id, activity_id, name,
-        begin_time, end_time, active,
-        create_date)
+        insert into activity_course (id, activity_id, name, begin_time, end_time, active, create_date)
         values (#{id,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
-        #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{active,jdbcType=BIT},
-        #{createDate,jdbcType=TIMESTAMP})
+        #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{active,jdbcType=BIT}, #{createDate,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into activity_course (id, activity_id, name, begin_time, end_time, active, create_date)
+        values
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{id,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+            #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{active,jdbcType=BIT}, #{createDate,jdbcType=TIMESTAMP}
+        </foreach>
     </insert>
 
     <update id="updateByPrimaryKey" parameterType="com.activity.model.ActivityCourse">

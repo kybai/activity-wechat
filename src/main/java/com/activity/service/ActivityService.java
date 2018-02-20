@@ -1,6 +1,7 @@
 package com.activity.service;
 
 import com.activity.model.Activity;
+import com.activity.pojo.ActivityPojo;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface ActivityService {
     public Activity selectOne(Integer id);
 
     public List<Activity> selectList(Activity record);
+
+    public void save(ActivityPojo pojo);
 }

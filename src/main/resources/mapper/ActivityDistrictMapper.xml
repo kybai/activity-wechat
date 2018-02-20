@@ -23,6 +23,9 @@
         <include refid="Base_Column_List"/>
         from activity_district
         where 1 = 1
+        <if test="active != null">
+            and active = #{active, jdbcType=BIT}
+        </if>
         <if test="name != null and name != ''">
             and name like concat('%', #{name, jdbcType=VARCHAR}, '%')
         </if>

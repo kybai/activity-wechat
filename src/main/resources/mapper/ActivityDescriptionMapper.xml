@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.activity.mapper.ActivityDescriptionMapper">
+    <resultMap id="BaseResultMap" type="com.activity.model.ActivityDescription">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="activity_id" property="activityId" jdbcType="INTEGER"/>
+        <result column="description" property="description" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, activity_id, description
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from activity_description
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insert" parameterType="com.activity.model.ActivityDescription">
+        insert into activity_description (id, activity_id, description)
+        values (#{id,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{description,jdbcType=LONGVARCHAR})
+    </insert>
+
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.activity.model.ActivityDescription">
+        update activity_description
+        set activity_id = #{activityId,jdbcType=INTEGER},
+        description = #{description,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>
