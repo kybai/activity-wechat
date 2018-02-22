@@ -29,6 +29,18 @@ public class Activity implements Serializable {
     //创建时间
     private Timestamp createDate;
 
+    public Activity() {
+    }
+
+    public Activity(Boolean active) {
+        this.active = active;
+    }
+
+    public Activity(String title, Integer districtId) {
+        this.title = title;
+        this.districtId = districtId;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

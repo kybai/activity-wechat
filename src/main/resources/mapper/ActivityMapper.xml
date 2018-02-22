@@ -8,19 +8,20 @@
         <result column="begin_time" property="beginTime" jdbcType="TIMESTAMP"/>
         <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
         <result column="max_limit" property="maxLimit" jdbcType="INTEGER"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
         <result column="upload_file_id" property="uploadFileId" jdbcType="INTEGER"/>
         <result column="active" property="active" jdbcType="BIT"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, title, district_id, begin_time, end_time, max_limit, upload_file_id, active,create_date
+        a.id, title, a.district_id, a.begin_time, a.end_time, a.max_limit, a.address, a.upload_file_id, a.active, a.create_date
     </sql>
 
     <select id="selectOne" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from activity
-        where id = #{id,jdbcType=INTEGER}
+        from activity a
+        where a.id = #{id,jdbcType=INTEGER}
     </select>
 
     <select id="selectList" resultMap="BaseResultMap" parameterType="com.activity.model.Activity">
@@ -29,23 +30,23 @@
         from activity a
         left join activity_district ad on a.district_id = ad.id
         where 1 = 1
-        <if test="districtID != null">
-            AND a.district_id = #{districtID, jdbcType=Integer}
+        <if test="districtId != null">
+            AND a.district_id = #{districtId, jdbcType=Integer}
         </if>
-        <if test="name != null and name != ''">
-            AND a.name like concat('%', #{name, jdbcType=VARCHAR}, '%')
+        <if test="title != null and title != ''">
+            AND a.title like concat('%', #{title, jdbcType=VARCHAR}, '%')
         </if>
+        order by a.id desc
     </select>
 
     <insert id="insert" parameterType="com.activity.model.Activity">
-        insert into activity (id, title, district_id,
-        begin_time, end_time, max_limit,
-        upload_file_id, active, create_date
-        )
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into activity (id, title, district_id, begin_time, end_time, max_limit, address, upload_file_id, active, create_date)
         values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{districtId,jdbcType=INTEGER},
-        #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{maxLimit,jdbcType=INTEGER},
-        #{uploadFileId,jdbcType=INTEGER}, #{active,jdbcType=BIT}, #{createDate,jdbcType=TIMESTAMP}
-        )
+        #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{maxLimit,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR},
+        #{uploadFileId,jdbcType=INTEGER}, #{active,jdbcType=BIT}, #{createDate,jdbcType=TIMESTAMP})
     </insert>
 
     <update id="update" parameterType="com.activity.model.Activity">
@@ -55,6 +56,7 @@
         begin_time = #{beginTime,jdbcType=TIMESTAMP},
         end_time = #{endTime,jdbcType=TIMESTAMP},
         max_limit = #{maxLimit,jdbcType=INTEGER},
+        address = #{address,jdbcType=VARCHAR},
         upload_file_id = #{uploadFileId,jdbcType=INTEGER},
         active = #{active,jdbcType=BIT},
         create_date = #{createDate,jdbcType=TIMESTAMP}

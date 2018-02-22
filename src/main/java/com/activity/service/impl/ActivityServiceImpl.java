@@ -9,8 +9,11 @@ import com.activity.model.ActivityCourse;
 import com.activity.model.ActivityDescription;
 import com.activity.model.ActivityTag;
 import com.activity.pojo.ActivityPojo;
+import com.activity.pojo.BasePageList;
 import com.activity.service.ActivityService;
 import com.activity.utils.DateUtils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,7 +47,13 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public List<Activity> selectList(Activity record) {
-        return null;
+        return activityMapper.selectList(record);
+    }
+
+    @Override
+    public PageInfo<Activity> selectPage(BasePageList page) {
+        PageHelper.startPage(page.getCurrentPage(), page.getPageSize());
+        return new PageInfo<>(selectList(new Activity(page.getName(), page.getOtherId())));
     }
 
     @Override
@@ -71,7 +80,7 @@ public class ActivityServiceImpl implements ActivityService {
 
         //2.保存活动标签
         ActivityTag tag = pojo.getActivityTag();
-        tag.setActivityID(activity.getId());
+        tag.setActivityId(activity.getId());
         activityTagMapper.insert(tag);
 
         //3.保存活动课程

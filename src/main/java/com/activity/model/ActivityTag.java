@@ -13,7 +13,7 @@ public class ActivityTag {
 
     private Integer id;
     //活动编号
-    private Integer activityID;
+    private Integer activityId;
     //使用姓名
     private Boolean useName;
     //使用性别
@@ -39,8 +39,8 @@ public class ActivityTag {
     }
 
     @Column(name = "activity_id")
-    public Integer getActivityID() {
-        return activityID;
+    public Integer getActivityId() {
+        return activityId;
     }
 
     @Column(name = "use_name")
@@ -87,8 +87,8 @@ public class ActivityTag {
         this.id = id;
     }
 
-    public void setActivityID(Integer activityID) {
-        this.activityID = activityID;
+    public void setActivityId(Integer activityId) {
+        this.activityId = activityId;
     }
 
     public void setUseName(Boolean useName) {

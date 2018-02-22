@@ -1,7 +1,10 @@
 package com.activity.controller;
 
+import com.activity.model.Activity;
 import com.activity.model.ActivityDistrict;
 import com.activity.pojo.ActivityPojo;
+import com.activity.pojo.BaseDisabled;
+import com.activity.pojo.BasePageList;
 import com.activity.service.ActivityDistrictService;
 import com.activity.service.ActivityService;
 import com.activity.utils.Constants;
@@ -31,6 +34,12 @@ public class ActivityController {
         return "activity/activity/list";
     }
 
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity listPost(@RequestBody BasePageList page) {
+        return ResponseEntity.ok(new RestEntity(200, Constants.LOAD_SUCCESS, activityService.selectPage(page)));
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addGet(Model model) {
         model.addAttribute("districts", activityDistrictService.selectList(new ActivityDistrict(Boolean.TRUE)));
@@ -40,13 +49,29 @@ public class ActivityController {
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editGet(@PathVariable Integer id, Model model) {
         model.addAttribute("districts", activityDistrictService.selectList(new ActivityDistrict(Boolean.TRUE)));
-        return "activity/activity/add";
+        return "activity/activity/edit";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity save(@RequestBody ActivityPojo pojo) {
         activityService.save(pojo);
+        return ResponseEntity.ok(new RestEntity(200, Constants.OPERATOR_SUCCESS, Boolean.TRUE));
+    }
+
+    @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
+    public String getInfo(@PathVariable Integer id, Model model) {
+        return "activity/activity/info";
+    }
+
+    @RequestMapping(value = "/info/status", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity disabled(@RequestBody BaseDisabled pojo) {
+        Activity activity = activityService.selectOne(pojo.getId());
+        if (activity != null) {
+            activity.setActive(!activity.getActive());
+            activityService.update(activity);
+        }
         return ResponseEntity.ok(new RestEntity(200, Constants.OPERATOR_SUCCESS, Boolean.TRUE));
     }
 }

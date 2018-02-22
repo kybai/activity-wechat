@@ -36,9 +36,9 @@
     <insert id="insertList" parameterType="java.util.List">
         insert into activity_course (id, activity_id, name, begin_time, end_time, active, create_date)
         values
-        <foreach collection="list" item="item" open="(" separator="," close=")">
-            #{id,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
-            #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{active,jdbcType=BIT}, #{createDate,jdbcType=TIMESTAMP}
+        <foreach collection="list" item="item" open="" separator="," close="">
+            (#{item.id,jdbcType=INTEGER}, #{item.activityId,jdbcType=INTEGER}, #{item.name,jdbcType=VARCHAR}, #{item.beginTime,jdbcType=TIMESTAMP},
+            #{item.endTime,jdbcType=TIMESTAMP}, #{item.active,jdbcType=BIT}, #{item.createDate,jdbcType=TIMESTAMP})
         </foreach>
     </insert>
 

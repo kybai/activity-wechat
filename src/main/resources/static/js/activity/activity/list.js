@@ -21,19 +21,25 @@ function loadPage(content) {
         var entity = content[k];
         html += '<tr>';
         html += '<td>' + getVal(entity.id) + '</td>';
-        html += '<td>' + getVal(entity.title) + '</td>';
-        html += '<td>' + getVal(entity.beginTime) + '</td>';
-        html += '<td>' + getNum0(entity.endTime) + '</td>';
-        html += '<td>' + getDate(entity.createDate) + '</td>';
-        html += '<td><button type="button" class="btn-link" onclick=disabledUser("' + getVal(entity.id) + '");>' + (getBoolean(entity.active) ? "禁用" : "激活") + '</button></td>';
+        html += '<td><a href="' + base + '/activity/info/' + entity.id + '">' + getVal(entity.title) + '</a></td>';
+        html += '<td>' + getDate(entity.beginTime) + '</td>';
+        html += '<td>' + getDate(entity.endTime) + '</td>';
+        html += '<td><a href="#">签到码</a></td>';
+        html += '<td><a href="#">已报名人数</a></td>';
+        html += '<td>点赞/访问</td>';
+        html += '<td>' + getDateD(entity.createDate) + '</td>';
+        html += '<td>'
+            + '<button type="button" class="btn-link" onclick="edit(this);">编辑</button>'
+            + '<button type="button" class="btn-link" onclick=disabledActivity("' + getVal(entity.id) + '");>' + (getBoolean(entity.active) ? "失效" : "生效") + '</button>'
+            + '</td>';
         html += '</tr>';
     }
     $("#bodyList").empty().html(html);
 }
 
-function disabledUser(userID) {
+function disabledActivity(userID) {
     $.ajax({
-        url: base + '/users/info/status',
+        url: base + '/activity/info/status',
         method: 'POST',
         dataType: 'json',
         contentType: 'application/json',

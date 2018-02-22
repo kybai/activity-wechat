@@ -2,6 +2,8 @@ package com.activity.service;
 
 import com.activity.model.Activity;
 import com.activity.pojo.ActivityPojo;
+import com.activity.pojo.BasePageList;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -17,6 +19,8 @@ public interface ActivityService {
     public Activity selectOne(Integer id);
 
     public List<Activity> selectList(Activity record);
+
+    public PageInfo<Activity> selectPage(BasePageList page);
 
     public void save(ActivityPojo pojo);
 }

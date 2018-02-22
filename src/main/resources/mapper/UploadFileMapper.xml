@@ -22,8 +22,10 @@
     </select>
 
     <insert id="insert" parameterType="com.activity.model.UploadFile">
-        insert into upload_file (id, file_name, real_name,
-        file_path, file_type, create_date)
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into upload_file (id, file_name, real_name, file_path, file_type, create_date)
         values (#{id,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR},
         #{filePath,jdbcType=VARCHAR}, #{fileType,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP})
     </insert>
