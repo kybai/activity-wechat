@@ -1,6 +1,8 @@
 package com.activity.service;
 
 import com.activity.model.Activity;
+import com.activity.model.ActivityCourse;
+import com.activity.model.ActivityDescription;
 import com.activity.pojo.ActivityPojo;
 import com.activity.pojo.BasePageList;
 import com.github.pagehelper.PageInfo;
@@ -23,4 +25,8 @@ public interface ActivityService {
     public PageInfo<Activity> selectPage(BasePageList page);
 
     public void save(ActivityPojo pojo);
+
+    public List<ActivityCourse> selectCourseList(ActivityCourse record);
+
+    public ActivityDescription selectDesc(Integer activityId);
 }

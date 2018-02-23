@@ -6,9 +6,11 @@ import java.util.List;
 
 public interface ActivityCourseMapper {
 
-    int insert(ActivityCourse record);
-
     ActivityCourse selectByPrimaryKey(Integer id);
+
+    List<ActivityCourse> selectList(ActivityCourse record);
+
+    int insert(ActivityCourse record);
 
     int updateByPrimaryKey(ActivityCourse record);
 

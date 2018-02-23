@@ -7,13 +7,18 @@ import com.activity.pojo.BaseDisabled;
 import com.activity.pojo.BasePageList;
 import com.activity.service.ActivityDistrictService;
 import com.activity.service.ActivityService;
+import com.activity.service.UploadFileService;
 import com.activity.utils.Constants;
 import com.activity.utils.RestEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author Created by ky.bai on 2018-02-17
@@ -27,6 +32,9 @@ public class ActivityController {
 
     @Autowired
     private ActivityDistrictService activityDistrictService;
+
+    @Autowired
+    private UploadFileService uploadFileService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listGet(Model model) {
@@ -49,6 +57,10 @@ public class ActivityController {
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editGet(@PathVariable Integer id, Model model) {
         model.addAttribute("districts", activityDistrictService.selectList(new ActivityDistrict(Boolean.TRUE)));
+        Activity activity = activityService.selectOne(id);
+        model.addAttribute("activity", activity);
+        model.addAttribute("description", activityService.selectDesc(activity.getId()));
+        model.addAttribute("file", uploadFileService.selectOne(activity.getUploadFileId()));
         return "activity/activity/edit";
     }
 
@@ -61,6 +73,11 @@ public class ActivityController {
 
     @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
     public String getInfo(@PathVariable Integer id, Model model) {
+        Activity activity = activityService.selectOne(id);
+        model.addAttribute("activity", activity);
+        model.addAttribute("district", activityDistrictService.selectOne(activity.getDistrictId()));
+        model.addAttribute("description", activityService.selectDesc(activity.getId()));
+        model.addAttribute("file", uploadFileService.selectOne(activity.getUploadFileId()));
         return "activity/activity/info";
     }
 
