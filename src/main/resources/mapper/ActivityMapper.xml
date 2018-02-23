@@ -58,8 +58,7 @@
         max_limit = #{maxLimit,jdbcType=INTEGER},
         address = #{address,jdbcType=VARCHAR},
         upload_file_id = #{uploadFileId,jdbcType=INTEGER},
-        active = #{active,jdbcType=BIT},
-        create_date = #{createDate,jdbcType=TIMESTAMP}
+        active = #{active,jdbcType=BIT}
         where id = #{id,jdbcType=INTEGER}
     </update>
 

@@ -29,12 +29,16 @@ function loadPage(content) {
         html += '<td>点赞/访问</td>';
         html += '<td>' + getDateD(entity.createDate) + '</td>';
         html += '<td>'
-            + '<button type="button" class="btn-link" onclick="edit(this);">编辑</button>'
+            + '<button type="button" class="btn-link" onclick=edit("' + entity.id + '");>编辑</button>'
             + '<button type="button" class="btn-link" onclick=disabledActivity("' + getVal(entity.id) + '");>' + (getBoolean(entity.active) ? "失效" : "生效") + '</button>'
             + '</td>';
         html += '</tr>';
     }
     $("#bodyList").empty().html(html);
+}
+
+function edit(activityId) {
+    window.location.href = base + '/activity/edit/' + activityId;
 }
 
 function disabledActivity(userID) {

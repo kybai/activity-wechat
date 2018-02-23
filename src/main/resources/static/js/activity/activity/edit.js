@@ -86,11 +86,13 @@ function getCourseHtml() {
 function initDate() {
     laydate.render({
         elem: '#beginTime',
-        type: 'datetime'
+        type: 'datetime',
+        format: 'yyyy-MM-dd HH:mm'
     });
     laydate.render({
         elem: '#endTime',
-        type: 'datetime'
+        type: 'datetime',
+        format: 'yyyy-MM-dd HH:mm'
     });
 }
 
@@ -99,6 +101,7 @@ function initCourseTime() {
         laydate.render({
             elem: this,
             type: 'datetime',
+            format: 'yyyy-MM-dd HH:mm',
             closeStop: this
         });
     });

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      th:with="level1Menu='infoManager',level2Menu='districtList'">
+      th:with="level1Menu='activityManager',level2Menu='activityList'">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title th:utext="#{title}"></title>
@@ -96,9 +96,9 @@
                                         <div class="col-sm-10" id="courseDiv">
                                             <section class="form-group col-md-12 course-tr" th:each="course:${courses}">
                                                 <div class="col-sm-9 padding-left-0">
-                                                    <div class="col-md-4 padding-left-0"><input class="label-blank course-name" th:value="${course.name}"/></div>
-                                                    <div class="col-md-4"><input class="label-blank course-time begin-time" th:value="${#dates.format(course.beginTime,'yyyy-MM-dd HH:mm')}"/></div>
-                                                    <div class="col-md-4"><input class="label-blank course-time end-time" th:value="${#dates.format(course.endTime,'yyyy-MM-dd HH:mm')}"/></div>
+                                                    <div class="col-md-4 padding-left-0"><input class="form-control course-name" th:value="${course.name}"/></div>
+                                                    <div class="col-md-4"><input class="form-control course-time begin-time" th:value="${#dates.format(course.beginTime,'yyyy-MM-dd HH:mm')}"/></div>
+                                                    <div class="col-md-4"><input class="form-control course-time end-time" th:value="${#dates.format(course.endTime,'yyyy-MM-dd HH:mm')}"/></div>
                                                 </div>
                                                 <div class="col-sm-3 group-btn">
                                                     <button type="button" class="btn btn-default course-add margin-right-15" th:utext="${course.active} ? '失效' : '激活' "></button>

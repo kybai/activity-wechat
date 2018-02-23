@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      th:with="level1Menu='infoManager',level2Menu='districtList'">
+      th:with="level1Menu='activityManager',level2Menu='activityList'">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title th:utext="#{title}"></title>
@@ -78,8 +78,10 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="uploadFileID" class="col-sm-2 control-label label-blank">上传封面</label>
-                                        <div class="col-sm-8">
-                                            <img id="uploadFileID" th:src="@{'/file/download/'+${activity.uploadFileId}}" alt="活动封面" class="img-rounded"/>
+                                        <div class="col-xs-6 col-md-3">
+                                            <a href="#" class="thumbnail">
+                                                <img id="uploadFileID" th:src="@{'/file/download/'+${activity.uploadFileId}}" alt="活动封面" class="img-rounded"/>
+                                            </a>
                                         </div>
                                     </div>
                                     <div class="form-group">

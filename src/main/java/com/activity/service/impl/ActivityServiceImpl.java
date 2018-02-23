@@ -106,28 +106,29 @@ public class ActivityServiceImpl implements ActivityService {
 
     }
 
+    @Override
+    @Transactional
     public void update(ActivityPojo pojo) {
         //1.保存活动，获取活动编号
         Activity activity = pojo.getActivity();
-        activity.setActive(Boolean.TRUE);
         activityMapper.update(activity);
 
         //2.保存活动标签
         ActivityTag tag = pojo.getActivityTag();
-        tag.setActivityId(activity.getId());
         activityTagMapper.updateByPrimaryKey(tag);
 
         //3.保存活动课程
         List<ActivityCourse> courseList = pojo.getCourseList();
         if (!ObjectUtils.isEmpty(courseList)) {
             for (ActivityCourse course : courseList) {
-                course.setActive(Boolean.TRUE);
                 activityCourseMapper.updateByPrimaryKey(course);
             }
         }
 
         //4.保存活动描述
-        descriptionMapper.updateByPrimaryKeyWithBLOBs(new ActivityDescription(activity.getId(), pojo.getDesc()));
+        ActivityDescription description = descriptionMapper.selectByActivityId(activity.getId());
+        description.setDescription(pojo.getDesc());
+        descriptionMapper.updateByPrimaryKeyWithBLOBs(description);
     }
 
     @Override
