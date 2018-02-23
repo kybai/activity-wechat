@@ -94,24 +94,15 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label label-blank">课程设置</label>
                                         <div class="col-sm-10" id="courseDiv">
-                                            <section class="form-group col-md-12 course-tr" th:each="course:${courses}">
+                                            <section class="form-group col-md-12 course-tr" th:each="course,stat : ${courses}">
                                                 <div class="col-sm-9 padding-left-0">
                                                     <div class="col-md-4 padding-left-0"><input class="form-control course-name" th:value="${course.name}"/></div>
                                                     <div class="col-md-4"><input class="form-control course-time begin-time" th:value="${#dates.format(course.beginTime,'yyyy-MM-dd HH:mm')}"/></div>
                                                     <div class="col-md-4"><input class="form-control course-time end-time" th:value="${#dates.format(course.endTime,'yyyy-MM-dd HH:mm')}"/></div>
                                                 </div>
                                                 <div class="col-sm-3 group-btn">
-                                                    <button type="button" class="btn btn-default course-add margin-right-15" th:utext="${course.active} ? '失效' : '激活' "></button>
-                                                </div>
-                                            </section>
-                                            <section class="form-group col-md-12 course-tr">
-                                                <div class="col-sm-9 padding-left-0">
-                                                    <div class="col-md-4 padding-left-0"><input type="text" class="form-control course-name" placeholder="课程名称"/></div>
-                                                    <div class="col-md-4"><input type="text" class="form-control course-time begin-time" placeholder="开始时间"/></div>
-                                                    <div class="col-md-4"><input type="text" class="form-control course-time end-time" placeholder="结束时间"/></div>
-                                                </div>
-                                                <div class="col-sm-3 group-btn">
-                                                    <button type="button" class="btn btn-default course-add margin-right-15" onclick="copyCourseTr(this);">增加</button>
+                                                    <button type="button" class="btn btn-default course-add margin-right-15" th:if="${stat.last}" onclick="copyCourseTr(this);">增加</button>
+                                                    <button type="button" class="btn btn-default course-remove" onclick="removeCourseTr(this);">删除</button>
                                                 </div>
                                             </section>
                                         </div>
