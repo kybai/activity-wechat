@@ -42,7 +42,11 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public Activity selectOne(Integer id) {
-        return activityMapper.selectOne(id);
+        Activity activity = activityMapper.selectOne(id);
+        if (activity.getMaxLimit() == null) {
+            activity.setMaxLimit(0);
+        }
+        return activity;
     }
 
     @Override
@@ -59,6 +63,9 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     @Transactional
     public int insert(Activity activity) {
+        if (activity.getMaxLimit() == null) {
+            activity.setMaxLimit(0);
+        }
         return activityMapper.insert(activity);
     }
 
@@ -97,5 +104,22 @@ public class ActivityServiceImpl implements ActivityService {
         //4.保存活动描述
         descriptionMapper.insert(new ActivityDescription(activity.getId(), pojo.getDesc()));
 
+    }
+
+    @Override
+    public List<ActivityCourse> selectCourseList(ActivityCourse record) {
+        return activityCourseMapper.selectList(record);
+    }
+
+    @Override
+    public ActivityDescription selectDesc(ActivityDescription record) {
+        List<ActivityDescription> list = descriptionMapper.selectList(record);
+        return ObjectUtils.isEmpty(list) ? new ActivityDescription() : list.get(0);
+    }
+
+    @Override
+    public ActivityTag selectTag(ActivityTag record) {
+        List<ActivityTag> list = activityTagMapper.selectList(record);
+        return ObjectUtils.isEmpty(list) ? new ActivityTag() : list.get(0);
     }
 }

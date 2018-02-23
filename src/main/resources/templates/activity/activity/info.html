@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:with="level1Menu='infoManager',level2Menu='districtList'">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title th:utext="#{title}"></title>
+    <link th:replace="fragments/style"/>
+</head>
+
+<body class="skin-blue sidebar-mini">
+<div class="wrapper">
+    <div th:replace="fragments/header"></div>
+    <div th:replace="fragments/sidebar"></div>
+    <div class="content-wrapper">
+        <section class="content">
+            <div class="row">
+                <section class="col-md-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title" th:utext="创建活动"></h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-default" onclick="goHistory();">返回</button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <form id="addForm" class="form-horizontal">
+                                    <div class="form-group">
+                                        <label for="title" class="col-sm-2 control-label label-blank">活动标题</label>
+                                        <div class="col-sm-8">
+                                            <span id="title" th:utext="${activity.title}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="district" class="col-sm-2 control-label label-blank">所属区域</label>
+                                        <div class="col-sm-8">
+                                            <span id="district" th:utext="${district.name}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address" class="col-sm-2 control-label label-blank">活动地址</label>
+                                        <div class="col-sm-8">
+                                            <span id="address" th:utext="${activity.address}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="beginTime" class="col-sm-2 control-label label-blank">活动时间</label>
+                                        <div class="col-sm-8">
+                                            <span id="beginTime" th:utext="${#dates.format(activity.beginTime,'yyyy-MM-dd HH:mm')}"></span>&ensp; - &ensp;
+                                            <span id="endTime" th:utext="${#dates.format(activity.endTime,'yyyy-MM-dd HH:mm')}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="maxLimit" class="col-sm-2 control-label label-blank">报名人数限制</label>
+                                        <div class="col-sm-8">
+                                            <span id="maxLimit" th:if="${activity.maxLimit==0}" th:utext="无限制"></span>
+                                            <span th:unless="${activity.maxLimit==0}" th:utext="${activity.maxLimit}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="setting" class="col-sm-2 control-label label-blank">报名表单设置</label>
+                                        <div class="col-sm-8 padding-left-0" id="setting">
+                                            <div class="col-sm-4"><input type="checkbox" disabled="disabled" th:checked="${tag.useName}"/> 姓名</div>
+                                            <div class="col-sm-4"><input type="checkbox" disabled="disabled" th:checked="${tag.useSex}"/> 性别</div>
+                                            <div class="col-sm-4"><input type="checkbox" disabled="disabled" th:checked="${tag.usePhone}"/> 联系电话</div>
+                                            <div class="col-sm-4"><input type="checkbox" disabled="disabled" th:checked="${tag.usePolitical}"/> 政治面貌</div>
+                                            <div class="col-sm-4"><input type="checkbox" disabled="disabled" th:checked="${tag.useCompany}"/> 工作单位</div>
+                                            <div class="col-sm-4"><input type="checkbox" disabled="disabled" th:checked="${tag.useJob}"/> 职务</div>
+                                            <div class="col-sm-4"><input type="checkbox" disabled="disabled" th:checked="${tag.useCard}"/> 证件</div>
+                                            <div class="col-sm-4"><input type="checkbox" disabled="disabled" th:checked="${tag.useProfile}"/> 个人简介</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-2 control-label label-blank">活动介绍</label>
+                                        <div class="col-sm-8">
+                                            <span id="description" th:utext="${description.description}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="uploadFileID" class="col-sm-2 control-label label-blank">上传封面</label>
+                                        <div class="col-sm-8">
+                                            <img id="uploadFileID" th:src="@{'/file/download/'+${activity.uploadFileId}}" alt="活动封面" class="img-rounded"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label label-blank">课程设置</label>
+                                        <div class="col-sm-10" id="courseDiv">
+                                            <section class="form-group col-md-12 course-tr" th:each="course:${courses}">
+                                                <div class="col-sm-9 padding-left-0">
+                                                    <div class="col-md-4 padding-left-0">
+                                                        <span class="label-blank course-name" th:utext="${course.name}"></span>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <span class="label-blank course-time begin-time" th:utext="${#dates.format(course.beginTime,'yyyy-MM-dd HH:mm')}"></span>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <span class="label-blank course-time end-time" th:utext="${#dates.format(course.endTime,'yyyy-MM-dd HH:mm')}"></span>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </div>
+</div>
+<div th:replace="fragments/commonJs"></div>
+<script type="text/javascript">
+    function goHistory() {
+        window.location.href = base + "/activity/list";
+    }
+</script>
+</body>
+</html>

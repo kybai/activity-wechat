@@ -26,6 +26,18 @@ public class ActivityCourse {
     //创建时间
     private Timestamp createDate;
 
+    public ActivityCourse() {
+    }
+
+    public ActivityCourse(Integer activityId) {
+        this.activityId = activityId;
+    }
+
+    public ActivityCourse(Integer activityId, Boolean active) {
+        this.activityId = activityId;
+        this.active = active;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

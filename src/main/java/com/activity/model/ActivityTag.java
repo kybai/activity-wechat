@@ -31,6 +31,13 @@ public class ActivityTag {
     //使用个人简介
     private Boolean useProfile;
 
+    public ActivityTag() {
+    }
+
+    public ActivityTag(Integer activityId) {
+        this.activityId = activityId;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

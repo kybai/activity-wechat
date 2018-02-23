@@ -21,6 +21,10 @@ public class ActivityDescription implements Serializable {
     public ActivityDescription() {
     }
 
+    public ActivityDescription(Integer activityId) {
+        this.activityId = activityId;
+    }
+
     public ActivityDescription(Integer activityId, String description) {
         this.activityId = activityId;
         this.description = description;

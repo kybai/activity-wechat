@@ -1,7 +1,10 @@
 package com.activity.controller;
 
 import com.activity.model.Activity;
+import com.activity.model.ActivityCourse;
+import com.activity.model.ActivityDescription;
 import com.activity.model.ActivityDistrict;
+import com.activity.model.ActivityTag;
 import com.activity.pojo.ActivityPojo;
 import com.activity.pojo.BaseDisabled;
 import com.activity.pojo.BasePageList;
@@ -59,7 +62,7 @@ public class ActivityController {
         model.addAttribute("districts", activityDistrictService.selectList(new ActivityDistrict(Boolean.TRUE)));
         Activity activity = activityService.selectOne(id);
         model.addAttribute("activity", activity);
-        model.addAttribute("description", activityService.selectDesc(activity.getId()));
+        model.addAttribute("description", activityService.selectDesc(new ActivityDescription(activity.getId())));
         model.addAttribute("file", uploadFileService.selectOne(activity.getUploadFileId()));
         return "activity/activity/edit";
     }
@@ -76,8 +79,9 @@ public class ActivityController {
         Activity activity = activityService.selectOne(id);
         model.addAttribute("activity", activity);
         model.addAttribute("district", activityDistrictService.selectOne(activity.getDistrictId()));
-        model.addAttribute("description", activityService.selectDesc(activity.getId()));
-        model.addAttribute("file", uploadFileService.selectOne(activity.getUploadFileId()));
+        model.addAttribute("description", activityService.selectDesc(new ActivityDescription(activity.getId())));
+        model.addAttribute("courses", activityService.selectCourseList(new ActivityCourse(activity.getId())));
+        model.addAttribute("tag", activityService.selectTag(new ActivityTag(activity.getId())));
         return "activity/activity/info";
     }
 
