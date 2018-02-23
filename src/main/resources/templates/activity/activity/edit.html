@@ -38,7 +38,7 @@
                                         <label for="district" class="col-sm-2 control-label label-required">所属区域</label>
                                         <div class="col-sm-8">
                                             <select id="district" class="form-control">
-                                                <option th:each="d : ${districts}" th:value="${d.id}" th:utext="${d.name}"></option>
+                                                <option th:each="d : ${districts}" th:value="${d.id}" th:utext="${d.name}" th:selected="${activity.districtId} == ${d.id}"></option>
                                             </select>
                                         </div>
                                     </div>
@@ -52,10 +52,10 @@
                                         <label for="beginTime" class="col-sm-2 control-label label-required">活动时间</label>
                                         <div class="col-sm-8">
                                             <div class="col-md-6 padding-left-0">
-                                                <input type="text" class="form-control" id="beginTime" th:value="${activity.beginTime}" placeholder="开始时间"/>
+                                                <input type="text" class="form-control" id="beginTime" th:value="${#dates.format(activity.beginTime,'yyyy-MM-dd HH:mm')}" placeholder="开始时间"/>
                                             </div>
                                             <div class="col-md-6 padding-right-0">
-                                                <input type="text" class="form-control" id="endTime" th:value="${activity.endTime}" placeholder="结束时间"/>
+                                                <input type="text" class="form-control" id="endTime" th:value="${#dates.format(activity.beginTime,'yyyy-MM-dd HH:mm')}" placeholder="结束时间"/>
                                             </div>
                                         </div>
                                     </div>
@@ -68,43 +68,47 @@
                                     <div class="form-group">
                                         <label for="setting" class="col-sm-2 control-label label-blank">报名表单设置</label>
                                         <div class="col-sm-8 padding-left-0" id="setting">
-                                            <div class="col-sm-4"><input type="checkbox" id="useName"/> 姓名</div>
-                                            <div class="col-sm-4"><input type="checkbox" id="useSex"/> 性别</div>
-                                            <div class="col-sm-4"><input type="checkbox" id="usePhone"/> 联系电话</div>
-                                            <div class="col-sm-4"><input type="checkbox" id="usePolitical"/> 政治面貌</div>
-                                            <div class="col-sm-4"><input type="checkbox" id="useCompany"/> 工作单位</div>
-                                            <div class="col-sm-4"><input type="checkbox" id="useJob"/> 职务</div>
-                                            <div class="col-sm-4"><input type="checkbox" id="useCardFace"/> 证件</div>
-                                            <div class="col-sm-4"><input type="checkbox" id="useProfile"/> 个人简介</div>
+                                            <div class="col-sm-4"><input type="checkbox" id="useName" th:checked="${tag.useName}"/> 姓名</div>
+                                            <div class="col-sm-4"><input type="checkbox" id="useSex" th:checked="${tag.useSex}"/> 性别</div>
+                                            <div class="col-sm-4"><input type="checkbox" id="usePhone" th:checked="${tag.usePhone}"/> 联系电话</div>
+                                            <div class="col-sm-4"><input type="checkbox" id="usePolitical" th:checked="${tag.usePolitical}"/> 政治面貌</div>
+                                            <div class="col-sm-4"><input type="checkbox" id="useCompany" th:checked="${tag.useCompany}"/> 工作单位</div>
+                                            <div class="col-sm-4"><input type="checkbox" id="useJob" th:checked="${tag.useJob}"/> 职务</div>
+                                            <div class="col-sm-4"><input type="checkbox" id="useCard" th:checked="${tag.useCard}"/> 证件</div>
+                                            <div class="col-sm-4"><input type="checkbox" id="useProfile" th:checked="${tag.useProfile}"/> 个人简介</div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="description" class="col-sm-2 control-label label-blank">活动介绍</label>
                                         <div class="col-sm-8">
-                                            <textarea type="text" class="form-control" id="description"></textarea>
+                                            <textarea type="text" class="form-control" id="description" th:utext="${description.description}"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="uploadFileID" class="col-sm-2 control-label label-blank">上传封面</label>
                                         <div class="col-sm-8">
-                                            <input type="file" class="form-control" id="uploadFileID" accept="image/jpg, image/jpeg, image/png"/>
+                                            <input type="file" class="form-control" id="uploadFileID" th:field="${activity.uploadFileId}" accept="image/jpg, image/jpeg, image/png"/>
                                             <span>只能上传jpg/png图片，文件不能超过500kb</span>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label label-blank">课程设置</label>
                                         <div class="col-sm-10" id="courseDiv">
+                                            <section class="form-group col-md-12 course-tr" th:each="course:${courses}">
+                                                <div class="col-sm-9 padding-left-0">
+                                                    <div class="col-md-4 padding-left-0"><input class="label-blank course-name" th:value="${course.name}"/></div>
+                                                    <div class="col-md-4"><input class="label-blank course-time begin-time" th:value="${#dates.format(course.beginTime,'yyyy-MM-dd HH:mm')}"/></div>
+                                                    <div class="col-md-4"><input class="label-blank course-time end-time" th:value="${#dates.format(course.endTime,'yyyy-MM-dd HH:mm')}"/></div>
+                                                </div>
+                                                <div class="col-sm-3 group-btn">
+                                                    <button type="button" class="btn btn-default course-add margin-right-15" th:utext="${course.active} ? '失效' : '激活' "></button>
+                                                </div>
+                                            </section>
                                             <section class="form-group col-md-12 course-tr">
                                                 <div class="col-sm-9 padding-left-0">
-                                                    <div class="col-md-4 padding-left-0">
-                                                        <input type="text" class="form-control course-name" placeholder="课程名称"/>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <input type="text" class="form-control course-time begin-time" placeholder="开始时间"/>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <input type="text" class="form-control course-time end-time" placeholder="结束时间"/>
-                                                    </div>
+                                                    <div class="col-md-4 padding-left-0"><input type="text" class="form-control course-name" placeholder="课程名称"/></div>
+                                                    <div class="col-md-4"><input type="text" class="form-control course-time begin-time" placeholder="开始时间"/></div>
+                                                    <div class="col-md-4"><input type="text" class="form-control course-time end-time" placeholder="结束时间"/></div>
                                                 </div>
                                                 <div class="col-sm-3 group-btn">
                                                     <button type="button" class="btn btn-default course-add margin-right-15" onclick="copyCourseTr(this);">增加</button>
@@ -126,6 +130,6 @@
 <script th:src="@{/js/layer/laydate.js}" type="text/javascript"></script>
 <script th:src="@{/js/validation/jquery.validationEngine.min.js}" type="text/javascript"></script>
 <script th:src="@{/js/validation/jquery.validationEngine-zh_CN.js}" type="text/javascript"></script>
-<script th:src="@{/js/activity/activity/add.js}" type="text/javascript"></script>
+<script th:src="@{/js/activity/activity/edit.js}" type="text/javascript"></script>
 </body>
 </html>

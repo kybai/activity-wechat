@@ -27,6 +27,8 @@ public interface ActivityService {
 
     public void save(ActivityPojo pojo);
 
+    public void update(ActivityPojo pojo);
+
     /**
      * Created by ky.bai on 2018-02-23 15:49
      *

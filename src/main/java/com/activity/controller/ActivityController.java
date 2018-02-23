@@ -62,8 +62,10 @@ public class ActivityController {
         model.addAttribute("districts", activityDistrictService.selectList(new ActivityDistrict(Boolean.TRUE)));
         Activity activity = activityService.selectOne(id);
         model.addAttribute("activity", activity);
+        model.addAttribute("district", activityDistrictService.selectOne(activity.getDistrictId()));
         model.addAttribute("description", activityService.selectDesc(new ActivityDescription(activity.getId())));
-        model.addAttribute("file", uploadFileService.selectOne(activity.getUploadFileId()));
+        model.addAttribute("courses", activityService.selectCourseList(new ActivityCourse(activity.getId())));
+        model.addAttribute("tag", activityService.selectTag(new ActivityTag(activity.getId())));
         return "activity/activity/edit";
     }
 
@@ -71,6 +73,13 @@ public class ActivityController {
     @ResponseBody
     public ResponseEntity save(@RequestBody ActivityPojo pojo) {
         activityService.save(pojo);
+        return ResponseEntity.ok(new RestEntity(200, Constants.OPERATOR_SUCCESS, Boolean.TRUE));
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity update(@RequestBody ActivityPojo pojo) {
+        activityService.update(pojo);
         return ResponseEntity.ok(new RestEntity(200, Constants.OPERATOR_SUCCESS, Boolean.TRUE));
     }
 
