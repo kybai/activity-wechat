@@ -101,7 +101,7 @@ function saveOrUpdate(entity) {
 $("#uploadFileID").on("change", function () {
     var formData = new FormData();
     formData.append("uploadFile", $("#uploadFileID")[0].files[0]);
-    formData.append("fileType", "ADSENSE");
+    formData.append("fileType", "ROLLING");
     uploadImg(formData, "uploadFileID");
 });
 
