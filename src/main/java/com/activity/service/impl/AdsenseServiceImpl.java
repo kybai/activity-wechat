@@ -3,6 +3,7 @@ package com.activity.service.impl;
 import com.activity.mapper.AdsenseMapper;
 import com.activity.model.Adsense;
 import com.activity.service.AdsenseService;
+import com.activity.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +32,14 @@ public class AdsenseServiceImpl implements AdsenseService {
     @Override
     @Transactional
     public int insert(Adsense adsense) {
+        if (adsense.getName() == null) {
+            adsense.setName("");
+        }
+        if (adsense.getPageName() == null) {
+            adsense.setPageName("");
+        }
+        adsense.setActive(Boolean.TRUE);
+        adsense.setCreateDate(DateUtils.getCurrentTimestamp());
         return adsenseMapper.insert(adsense);
     }
 
@@ -40,9 +49,4 @@ public class AdsenseServiceImpl implements AdsenseService {
         return adsenseMapper.update(adsense);
     }
 
-    @Override
-    @Transactional
-    public int delete(Integer id) {
-        return adsenseMapper.delete(id);
-    }
 }

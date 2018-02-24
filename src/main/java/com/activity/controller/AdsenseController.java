@@ -6,10 +6,10 @@ import com.activity.service.AdsenseService;
 import com.activity.utils.Constants;
 import com.activity.utils.RestEntity;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,32 +35,26 @@ public class AdsenseController {
     @ResponseBody
     public ResponseEntity listPost(@RequestBody BasePageList pojo) {
         PageHelper.startPage(pojo.getCurrentPage(), pojo.getPageSize());
-        return ResponseEntity.ok(new RestEntity(200, Constants.LOAD_SUCCESS, adsenseService.selectList(new Adsense(pojo.getName(), pojo.getActive()))));
-    }
-
-    @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
-    public String info(@PathVariable Integer id, Model model) {
-        return "activity/adsense/info";
+        return ResponseEntity.ok(new RestEntity(200, Constants.LOAD_SUCCESS, new PageInfo<>(adsenseService.selectList(new Adsense(pojo.getName())))));
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity save(@RequestBody Adsense adsense) {
-        adsenseService.insert(adsense);
+        if (adsense != null && adsense.getId() != null) {
+            adsenseService.update(adsense);
+        } else if (adsense != null) {
+            adsenseService.insert(adsense);
+        }
         return ResponseEntity.ok(new RestEntity(200, Constants.OPERATOR_SUCCESS, Boolean.TRUE));
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/disabled/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity update(@RequestBody Adsense adsense) {
+    public ResponseEntity disabled(@PathVariable Integer id) {
+        Adsense adsense = adsenseService.selectOne(id);
+        adsense.setActive(!adsense.getActive());
         adsenseService.update(adsense);
-        return ResponseEntity.ok(new RestEntity(200, Constants.OPERATOR_SUCCESS, Boolean.TRUE));
-    }
-
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity delete(@PathVariable Integer id) {
-        adsenseService.delete(id);
         return ResponseEntity.ok(new RestEntity(200, Constants.OPERATOR_SUCCESS, Boolean.TRUE));
     }
 

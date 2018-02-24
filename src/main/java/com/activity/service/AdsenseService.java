@@ -17,6 +17,4 @@ public interface AdsenseService {
 
     public int update(Adsense record);
 
-    public int delete(Integer id);
-
 }

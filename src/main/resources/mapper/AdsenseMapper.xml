@@ -4,46 +4,49 @@
     <resultMap id="BaseResultMap" type="com.activity.model.Adsense">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
-        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="upload_file_id" property="uploadFileId" jdbcType="INTEGER"/>
         <result column="url" property="url" jdbcType="VARCHAR"/>
         <result column="page_name" property="pageName" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
         <result column="active" property="active" jdbcType="BIT"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <select id="selectOne" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        select id, name, content, url, page_name, active from adsense
+        select id, name, upload_file_id, url, page_name, type, active, create_date from adsense
         where id = #{id,jdbcType=INTEGER}
     </select>
 
     <select id="selectList" resultMap="BaseResultMap" parameterType="com.activity.model.Adsense">
-        select id, name, content, url, page_name, active from adsense
+        select id, name, upload_file_id, url, page_name, type, active, create_date from adsense
         where 1 = 1
-        <if test="pageName != null and pageName != ''">
-            and page_name = #{pageName,jdbcType=VARCHAR}
+        <if test="type != null and type !=''">
+            and type = #{type,jdbcType=VARCHAR}
         </if>
         <if test="active != null">
             and active = #{active,jdbcType=BIT}
         </if>
+        <if test="pageName != null and pageName != ''">
+            and page_name = #{pageName,jdbcType=VARCHAR}
+        </if>
+        order by id desc
     </select>
 
     <insert id="insert" parameterType="com.activity.model.Adsense">
-        insert into adsense (name, content, url, page_name, active)
-        values(#{name,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{pageName,jdbcType=VARCHAR}, #{active,jdbcType=BIT})
+        insert into adsense (name, upload_file_id, url, page_name, type, active, create_date)
+        values(#{name,jdbcType=VARCHAR}, #{uploadFileId,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{pageName,jdbcType=VARCHAR},
+         #{type,jdbcType=VARCHAR}, #{active,jdbcType=BIT}, #{createDate,jdbcType=TIMESTAMP})
     </insert>
 
     <update id="update" parameterType="com.activity.model.Adsense">
         update adsense
         set name = #{name,jdbcType=VARCHAR},
-        content = #{content,jdbcType=VARCHAR},
+        upload_file_id = #{uploadFileId,jdbcType=INTEGER},
         url = #{url,jdbcType=VARCHAR},
         page_name = #{pageName,jdbcType=VARCHAR},
+        type = #{type,jdbcType=VARCHAR},
         active = #{active,jdbcType=BIT}
         where id = #{id,jdbcType=INTEGER}
     </update>
-
-    <delete id="delete" parameterType="java.lang.Integer">
-        DELETE FROM adsense
-        WHERE id = #{id,jdbcType=INTEGER}
-    </delete>
 
 </mapper>

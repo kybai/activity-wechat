@@ -137,29 +137,17 @@ CREATE TABLE `activity_watched` (
 -- ----------------------------
 DROP TABLE IF EXISTS `adsense`;
 CREATE TABLE `adsense` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '广告编号',
-  `name` varchar(256) NOT NULL COMMENT '广告名称',
-  `content` varchar(256) DEFAULT NULL COMMENT '广告内容',
-  `url` varchar(256) DEFAULT NULL COMMENT '广告跳转链接',
-  `page_name` varchar(32) NOT NULL COMMENT '对应页面',
-  `active` bit(1) NOT NULL COMMENT '有效性',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for rolling_image
--- ----------------------------
-DROP TABLE IF EXISTS `rolling_image`;
-CREATE TABLE `rolling_image` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '轮播图编号',
-  `name` varchar(256) NOT NULL COMMENT '轮播图名称',
-  `upload_file_id` int(11) NOT NULL COMMENT '轮播图文件编号',
-  `url` varchar(256) NOT NULL COMMENT '跳转路径',
-  `active` bit(1) NOT NULL COMMENT '有效性',
-  `create_date` timestamp NOT NULL COMMENT '创建时间',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `name` varchar(256) NOT NULL COMMENT '图片名称名称',
+  `upload_file_id` int(11) NOT NULL COMMENT '图片文件编号',
+  `url` varchar(256) DEFAULT NULL COMMENT '跳转链接',
+  `page_name` varchar(32) NULL COMMENT '对应页面',
+	`type` varchar(32) NOT NULL COMMENT '类型：轮播图/广告图',
+	`active` bit(1) NOT NULL COMMENT '有效性',
+  `create_date` timestamp NOT NULL COMMENT '创建日期',
   PRIMARY KEY (`id`),
-  KEY `FK_ROLLING_IMAGE_REFERENCE_UPLOAD_F` (`upload_file_id`),
-  CONSTRAINT `FK_ROLLING_IMAGE_REFERENCE_UPLOAD_F` FOREIGN KEY (`upload_file_id`) REFERENCES `upload_file` (`id`)
+  KEY `FK_ADSENSE_REFERENCE_UPLOAD_F` (`upload_file_id`),
+  CONSTRAINT `FK_ADSENSE_REFERENCE_UPLOAD_F` FOREIGN KEY (`upload_file_id`) REFERENCES `upload_file` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
