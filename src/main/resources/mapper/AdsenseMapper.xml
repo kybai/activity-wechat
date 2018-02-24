@@ -10,9 +10,20 @@
         <result column="active" property="active" jdbcType="BIT"/>
     </resultMap>
 
-    <select id="selectByPageName" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <select id="selectOne" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select id, name, content, url, page_name, active from adsense
-        where page_name = #{pageName,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectList" resultMap="BaseResultMap" parameterType="com.activity.model.Adsense">
+        select id, name, content, url, page_name, active from adsense
+        where 1 = 1
+        <if test="pageName != null and pageName != ''">
+            and page_name = #{pageName,jdbcType=VARCHAR}
+        </if>
+        <if test="active != null">
+            and active = #{active,jdbcType=BIT}
+        </if>
     </select>
 
     <insert id="insert" parameterType="com.activity.model.Adsense">
@@ -29,5 +40,10 @@
         active = #{active,jdbcType=BIT}
         where id = #{id,jdbcType=INTEGER}
     </update>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM adsense
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
 
 </mapper>

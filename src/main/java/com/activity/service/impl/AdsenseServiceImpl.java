@@ -19,8 +19,13 @@ public class AdsenseServiceImpl implements AdsenseService {
     private AdsenseMapper adsenseMapper;
 
     @Override
-    public List<Adsense> selectByPageName(String pageName) {
-        return adsenseMapper.selectByPageName(pageName);
+    public Adsense selectOne(Integer id) {
+        return adsenseMapper.selectOne(id);
+    }
+
+    @Override
+    public List<Adsense> selectList(Adsense record) {
+        return adsenseMapper.selectList(record);
     }
 
     @Override
@@ -33,5 +38,11 @@ public class AdsenseServiceImpl implements AdsenseService {
     @Transactional
     public int update(Adsense adsense) {
         return adsenseMapper.update(adsense);
+    }
+
+    @Override
+    @Transactional
+    public int delete(Integer id) {
+        return adsenseMapper.delete(id);
     }
 }

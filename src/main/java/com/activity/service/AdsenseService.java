@@ -9,10 +9,14 @@ import java.util.List;
  */
 public interface AdsenseService {
 
-    public List<Adsense> selectByPageName(String pageName);
+    public Adsense selectOne(Integer id);
 
-    public int insert(Adsense adsense);
+    public List<Adsense> selectList(Adsense record);
 
-    public int update(Adsense adsense);
+    public int insert(Adsense record);
+
+    public int update(Adsense record);
+
+    public int delete(Integer id);
 
 }
