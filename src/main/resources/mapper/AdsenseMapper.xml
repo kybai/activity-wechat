@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.activity.mapper.AdsenseMapper">
+    <resultMap id="BaseResultMap" type="com.activity.model.Adsense">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="page_name" property="pageName" jdbcType="VARCHAR"/>
+        <result column="active" property="active" jdbcType="BIT"/>
+    </resultMap>
+
+    <select id="selectByPageName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select id, name, content, url, page_name, active from adsense
+        where page_name = #{pageName,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" parameterType="com.activity.model.Adsense">
+        insert into adsense (name, content, url, page_name, active)
+        values(#{name,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{pageName,jdbcType=VARCHAR}, #{active,jdbcType=BIT})
+    </insert>
+
+    <update id="update" parameterType="com.activity.model.Adsense">
+        update adsense
+        set name = #{name,jdbcType=VARCHAR},
+        content = #{content,jdbcType=VARCHAR},
+        url = #{url,jdbcType=VARCHAR},
+        page_name = #{pageName,jdbcType=VARCHAR},
+        active = #{active,jdbcType=BIT}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>
