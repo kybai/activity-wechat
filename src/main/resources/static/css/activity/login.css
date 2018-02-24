@@ -1,0 +1,421 @@
+body {
+    background:     url(../../img/body-bg.jpg) repeat top left;
+    padding-bottom: 80px;
+}
+
+.kc-dropdown {
+    position: relative;
+}
+
+.kc-dropdown > a {
+    position:        absolute;
+    right:           0px;
+    display:         block;
+    padding:         11px 10px 12px;
+    line-height:     12px;
+    font-size:       12px;
+    color:           #fff !important;
+    text-decoration: none;
+}
+
+.kc-dropdown > a::after {
+    content:     "\2c5";
+    margin-left: 4px;
+}
+
+.kc-dropdown:hover > a {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.kc-dropdown ul li a {
+    padding:         1px 11px;
+    font-size:       12px;
+    color:           #000 !important;
+    border:          1px solid #fff;
+    text-decoration: none;
+    display:         block;
+    line-height:     20px;
+}
+
+.kc-dropdown ul li a:hover {
+    color:            #4d5258;
+    background-color: #d4edfa;
+    border-color:     #b3d3e7;
+}
+
+.kc-dropdown ul {
+    position:           absolute;
+    right:              0px;
+    top:                35px;
+    z-index:            2000;
+    list-style:         none;
+    display:            none;
+    padding:            5px 0px;
+    margin:             0px;
+    background-color:   #fff !important;
+    border:             1px solid #b6b6b6;
+    border-radius:      1px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    box-shadow:         0 6px 12px rgba(0, 0, 0, 0.175);
+    background-clip:    padding-box;
+    min-width:          100px;
+}
+
+.kc-dropdown:hover ul {
+    display: block;
+}
+
+.login-pf .container {
+    padding-top: 40px;
+}
+
+.login-pf a:hover {
+    color: #0099d3;
+}
+
+#kc-logo {
+    width: 100%;
+}
+
+#kc-header {
+    color:        #333;
+    overflow:     visible;
+    text-align:   center;
+    padding-left: 0px; /*cs*/
+    white-space:  nowrap;
+}
+
+#kc-header-wrapper {
+    font-size:      26px;
+    text-transform: uppercase;
+    line-height:    1.2em;
+    margin-bottom:  15px;
+}
+
+#kc-container-wrapper {
+    position: absolute;
+    width:    100%;
+    height:   350px;
+    margin:   auto;
+    top:      0;
+    right:    0;
+    bottom:   0;
+    left:     0;
+}
+
+#kc-content {
+    position: relative;
+}
+
+#kc-content-wrapper {
+    overflow-y: hidden;
+    width:      460px;
+    min-width:  360px;
+    margin:     0 auto;
+}
+
+#kc-info {
+    padding-bottom: 200px;
+    margin-bottom:  -200px;
+}
+
+#kc-info-wrapper {
+    font-size: 13px;
+}
+
+#kc-form-options span {
+    display: block;
+}
+
+#kc-feedback-wrapper {
+    display:             inline-block;
+    width:               auto;
+    background-position: left bottom;
+    background-repeat:   no-repeat;
+    padding-bottom:      10px;
+}
+
+#kc-feedback span {
+    display:             block;
+    padding:             0.90909090909091em 3.63636363636364em;
+    border-style:        solid;
+    border-width:        1px 1px 0px 1px;
+    background-repeat:   no-repeat;
+    background-position: 1.27272727272727em center;
+    font-weight:         normal;
+    line-height:         1.4em;
+    border-radius:       2px;
+    color:               #4d5258;
+    margin-bottom:       0;
+}
+
+#kc-terms-text {
+    margin-bottom: 20px;
+}
+
+.feedback-error #kc-feedback-wrapper {
+    background-image: url(../../img/feedback-error-arrow-down.png);
+}
+
+.feedback-error span {
+    border-color:     #b91415;
+    background-image: url(../../img/feedback-error-sign.png);
+    background-color: #f8e7e7;
+}
+
+#kc-registration {
+    margin-bottom: 15px;
+}
+
+/* TOTP */
+
+ol#kc-totp-settings {
+    margin:  0;
+    padding: 0;
+}
+
+ol#kc-totp-settings li {
+    margin-top: 1em;
+}
+
+ol#kc-totp-settings li:first-of-type {
+    margin-top: 0;
+}
+
+
+#kc-social-providers ul {
+    padding: 0;
+    margin:  0;
+}
+
+#kc-social-providers li {
+    display:    block;
+    margin-top: 5px;
+}
+
+#kc-social-providers li:first-of-type {
+    margin-top: 0;
+}
+
+.zocial {
+    width: 150px;
+}
+
+.zocial:hover {
+    color: #fff !important;
+}
+
+.zocial.facebook,
+.zocial.github,
+.zocial.google,
+.zocial.twitter {
+    background-image: none;
+    border-radius:    2px;
+    font-family:      "Open Sans", sans-serif;
+    font-weight:      normal;
+    box-shadow:       none;
+    text-shadow:      none;
+}
+
+.zocial.google {
+    background-color: #dd4b39 !important;
+}
+
+.zocial.google .text:after {
+    content: "+";
+}
+
+.zocial.facebook:hover,
+.zocial.github:hover,
+.zocial.google:hover,
+.zocial.twitter:hover {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%) !important;
+}
+
+.login {
+    min-height:    270px;
+    border-top:    2px solid #14844d;
+    border-radius: 5px;
+}
+
+.feedback-error {
+    width:  40%;
+    margin: 0 auto;
+}
+
+#kc-feedback-wrapper {
+    float: right;
+}
+
+#kc-form-wrapper {
+    background-color: #fff;
+    padding:          54px 40px 0;
+    min-height:       270px;
+    border-radius:    0 5px 5px 0;
+    color:            #b5bbc8;
+}
+
+#kc-form-wrapper h2 {
+    font-size:   1.6rem;
+    font-weight: bold;
+}
+
+#kc-form-wrapper .form-group {
+    margin-left:  0;
+    margin-right: 0;
+}
+
+#kc-form-wrapper .form-group .control-label {
+    display: none;
+}
+
+#kc-form-wrapper .form-group input.form-control {
+    height:       34px;
+    padding-left: 34px;
+}
+
+#kc-form-wrapper .form-control-main {
+    position: relative;
+}
+
+#kc-form-wrapper .form-control-main .icon {
+    height:      34px;
+    width:       34px;
+    padding-top: 8px;
+    text-align:  center;
+    position:    absolute;
+    top:         0;
+    font-size:   1.5em;
+}
+
+.submit .checkbox {
+    float: right;
+    color: #b5bbc8;
+}
+
+.submit .checkbox a, .submit .checkbox a:hover {
+    color: #b5bbc8;
+}
+
+.submit > div {
+    float: left;
+}
+
+.submit input[type="submit"] {
+    border:        none;
+    border-radius: 5px;
+}
+
+.fa-user {
+    margin-top:        5px;
+    margin-left:       3px;
+    background-size:   25px 25px;
+    background-image:  url(../../img/user.svg);
+    background-repeat: no-repeat;
+}
+
+.fa-key {
+    margin-top:        5px;
+    margin-left:       3px;
+    background-size:   24px 24px;
+    background-image:  url(../../img/key.svg);
+    background-repeat: no-repeat;
+}
+
+/*greenleft*/
+.greenleft {
+    background:       url(../../img/pic_background.png) no-repeat top right;
+    background-color: #14844d;
+    padding:          20px;
+    min-height:       270px;
+    border-radius:    2px 0 0 5px;
+    position:         relative;
+}
+
+.greenleft h2 {
+    color:     #fff;
+    font-size: 2.5rem;
+    position:  absolute;
+    bottom:    28px;
+}
+
+.greenleft h2 strong {
+    display:   block;
+    font-size: 2rem;
+}
+
+/*.btn-primary*/
+.btn-primary {
+    background-image: none;
+    background-color: #3c8dbc;
+    padding:          8px 16px;
+}
+
+.btn-primary:hover, .btn-primary:active {
+    background-color: #4b99c6;
+}
+
+/*header*/
+.header {
+    height:           60px;
+    background-color: #333;
+    padding-left:     10%;
+    box-sizing:       border-box;
+}
+
+.header h1 {
+    margin:      0;
+    padding:     0;
+    color:       #fff;
+    font-weight: bold;
+    font-style:  normal;
+    line-height: 2;
+}
+
+@media (max-width: 767px) {
+    #kc-logo-wrapper {
+        margin-top:   30px;
+        margin-right: 15px;
+    }
+
+    #kc-header {
+        padding-left:  15px;
+        padding-right: 15px;
+        float:         none;
+    }
+
+    #kc-feedback {
+        padding-left:  15px;
+        padding-right: 15px;
+        float:         none;
+    }
+
+    #kc-form {
+        float: none;
+    }
+
+    #kc-info-wrapper {
+        border-top:    1px solid rgba(255, 255, 255, 0.1);
+        margin-top:    15px;
+        padding-top:   15px;
+        padding-left:  0px;
+        padding-right: 15px;
+    }
+
+    #kc-social-providers li {
+        display:      inline-block;
+        margin-right: 5px;
+    }
+
+    .login-pf .container {
+        padding-top:    15px;
+        padding-bottom: 15px;
+    }
+}
+
+@media (max-height: 500px) {
+    #kc-container-wrapper {
+        position: inherit;
+        float:    none;
+    }
+}

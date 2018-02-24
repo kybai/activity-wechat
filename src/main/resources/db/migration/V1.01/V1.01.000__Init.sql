@@ -229,3 +229,18 @@ CREATE TABLE `wechat_user` (
   KEY `FK_WECHAT_U_REFERENCE_USERS` (`user_id`),
   CONSTRAINT `FK_WECHAT_U_REFERENCE_USERS` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for employee
+-- ----------------------------
+DROP TABLE IF EXISTS `employee`;
+CREATE TABLE `employee` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL COMMENT '用户姓名',
+  `username` varchar(32) NOT NULL COMMENT '用户名',
+  `password` varchar(32) NOT NULL COMMENT '密码',
+  `active` bit(1) NOT NULL COMMENT '有效性',
+  `create_date` timestamp NOT NULL COMMENT '创建日期',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

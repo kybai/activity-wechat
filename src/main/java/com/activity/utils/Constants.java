@@ -5,6 +5,12 @@ package com.activity.utils;
  */
 public class Constants {
 
+    /*登录结果*/
+    public static final String LOGIN_FAILURE_ERROR = "登录失败，帐号密码错误.";
+    public static final String LOGIN_FAILURE_NOT_EMPTY = "登录失败，帐号密码不能为空.";
+    public static final String LOGIN_FAILURE_DISABLED = "登录失败，该用户已被禁用.";
+    public static final String LOGIN_FAILURE_NOT_EXIST = "登录失败，找不到该用户.";
+
     //操作提示
     public static final String OPERATOR_SUCCESS = "操作成功";
     public static final String LOAD_SUCCESS = "加载成功";

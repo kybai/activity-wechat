@@ -1,11 +1,79 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>登陆</title>
-    <link rel="stylesheet" th:href="@{/css/weixin/weui.min.css}"/>
+    <meta charset="utf-8"/>
+    <link th:href="@{/css/bootstrap/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/activity/login.css}" rel="stylesheet" type="text/css"/>
+    <title th:utext="活动管理"></title>
 </head>
 <body>
-登陆页面1
+<div id="kc-container" class="">
+    <div id="kc-container-wrapper" class="">
+
+        <div id="kc-header" class="">
+            <div id="kc-header-wrapper" class=""></div>
+        </div>
+
+        <div id="kc-feedback-placeholder" class="col-xs-12 col-sm-4 col-md-5 col-lg-6">
+            <div id="kc-feedback-placeholder-wrapper"></div>
+        </div>
+
+        <div id="kc-feedback" class="feedback-error" th:if="${param.error}">
+            <div id="kc-feedback-wrapper">
+                <span class="kc-feedback-text">请重新输入帐号和密码.</span>
+            </div>
+        </div>
+
+        <div id="kc-content" class="col-sm-12 col-md-12 col-lg-12 container">
+            <div id="kc-content-wrapper" class="row">
+                <div id="kc-form" class="login">
+                    <div class="col-xs-4 greenleft">
+                        <h2>活动管理</h2>
+                    </div>
+                    <div id="kc-form-wrapper" class="col-xs-8">
+                        <h2>欢迎您!</h2>
+                        <form id="kc-form-login" class="form-horizontal" th:action="@{/login}" method="post">
+                            <div class="form-group">
+                                <div class="">
+                                    <label for="username" class="control-label">用户名</label>
+                                </div>
+
+                                <div class="form-control-main">
+                                    <input id="username" class="form-control" name="username" value="" type="text" placeholder="用户名"/>
+                                    <em class="icon fa-user"></em>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="">
+                                    <label for="password" class="control-label">密码</label>
+                                </div>
+
+                                <div class="form-control-main">
+                                    <input id="password" class="form-control" name="password" type="password" placeholder="密码"/>
+                                    <em class="icon fa fa-key"></em>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div id="kc-form-options" class="">
+                                    <div class=""></div>
+                                </div>
+
+                                <div id="kc-form-buttons" class="submit">
+                                    <div style="margin-left: 20%">
+                                        <input class="btn btn-primary btn-lg" name="login" id="kc-login" type="submit" value="登录"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
+<script th:src="@{/js/jQuery/jQuery-2.1.4.min.js}" type="text/javascript"></script>
 </html>
