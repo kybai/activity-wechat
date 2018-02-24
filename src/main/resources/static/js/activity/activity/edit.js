@@ -12,6 +12,9 @@ function save() {
         data: JSON.stringify(new ActivityPojo()),
         success: function (results) {
             layer.msg(results.msg);
+            setTimeout(function () {
+                goHistory();
+            }, 1500);
         }
     });
 }
@@ -151,4 +154,8 @@ function getCourseList() {
         arr.push(new ActivityCourse(name, beginTime, endTime));
     });
     return arr;
+}
+
+function goHistory() {
+    window.location.href = base + '/activity/list';
 }

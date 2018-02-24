@@ -25,7 +25,7 @@ function loadPage(content) {
         html += '<td>' + getDate(entity.beginTime) + '</td>';
         html += '<td>' + getDate(entity.endTime) + '</td>';
         html += '<td><a href="#">签到码</a></td>';
-        html += '<td><a href="#">已报名人数</a></td>';
+        html += '<td><a href="#">0</a></td>';
         html += '<td>点赞/访问</td>';
         html += '<td>' + getDateD(entity.createDate) + '</td>';
         html += '<td>'

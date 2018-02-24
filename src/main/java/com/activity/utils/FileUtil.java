@@ -31,7 +31,6 @@ public class FileUtil {
             FileCopyUtils.copy(data, new FileOutputStream(file.getPath() + File.separator + realName));
         } catch (IOException e) {
             log.error("FileUtil.upload has error: " + e.getMessage());
-            e.printStackTrace();
             isUpload = false;
         }
         return isUpload;
@@ -62,10 +61,8 @@ public class FileUtil {
             writeFileStreamToOutput(fis, os);
         } catch (FileNotFoundException e) {
             log.error("download has file not found error: " + e.getMessage());
-            e.printStackTrace();
         } catch (IOException e) {
             log.error("download has io error: " + e.getMessage());
-            e.printStackTrace();
         } finally {
             closeFileStream(fis, os);
         }
@@ -103,7 +100,7 @@ public class FileUtil {
         int randomInt = new Random().nextInt(1000);
         String withoutExtension = StringUtils.stripFilenameExtension(fileName);
         String extension = StringUtils.getFilenameExtension(fileName);
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(time).append(randomInt);
         if (!StringUtils.isEmpty(withoutExtension) && !StringUtils.isEmpty(extension))
             sb.append(".").append(extension);

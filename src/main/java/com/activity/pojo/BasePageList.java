@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class BasePageList extends BasePage implements Serializable {
     private static final long serialVersionUID = 8753586475772434694L;
-    //名称查询（亦充当编号）
+    //名称查询（亦充当编号或类型）
     private String name;
     //有效性查询
     private Boolean active;

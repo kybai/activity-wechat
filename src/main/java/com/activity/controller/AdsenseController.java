@@ -40,11 +40,14 @@ public class AdsenseController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity save(@RequestBody Adsense adsense) {
-        if (adsense != null && adsense.getId() != null) {
+    public ResponseEntity save(@RequestBody Adsense record) {
+        if (record != null && record.getId() != null) {
+            Adsense adsense = adsenseService.selectOne(record.getId());
+            adsense.setUploadFileId(record.getUploadFileId());
+            adsense.setUrl(record.getUrl());
             adsenseService.update(adsense);
-        } else if (adsense != null) {
-            adsenseService.insert(adsense);
+        } else if (record != null) {
+            adsenseService.insert(record);
         }
         return ResponseEntity.ok(new RestEntity(200, Constants.OPERATOR_SUCCESS, Boolean.TRUE));
     }

@@ -45,8 +45,8 @@ public class AdsenseServiceImpl implements AdsenseService {
 
     @Override
     @Transactional
-    public int update(Adsense adsense) {
-        return adsenseMapper.update(adsense);
+    public int update(Adsense record) {
+        return adsenseMapper.update(record);
     }
 
 }

@@ -108,7 +108,7 @@ $("#uploadFileID").on("change", function () {
 $("#editUploadFileID").on("change", function () {
     var formData = new FormData();
     formData.append("uploadFile", $("#editUploadFileID")[0].files[0]);
-    formData.append("fileType", "ADSENSE");
+    formData.append("fileType", "ROLLING");
     uploadImg(formData, "editUploadFileID");
 });
 
@@ -134,12 +134,12 @@ function catImg(id) {
 
 function BasePage(currentPage) {
     this.currentPage = currentPage;
-    this.name = "广告图";
+    this.name = "轮播图";
 }
 
 function EntityPojo(id, fileid, url) {
     this.id = id;
     this.uploadFileId = fileid;
     this.url = url;
-    this.type = '广告图';
+    this.type = '轮播图';
 }
