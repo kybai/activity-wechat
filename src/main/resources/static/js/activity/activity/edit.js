@@ -56,7 +56,7 @@ function removeCourseTr(obj) {
 
 function disabledCourseTr(obj) {
     var $this = $(obj);
-    $this.html($this.html() === "激活" ? "禁用" : "激活");
+    $this.html($this.html() === "生效" ? "失效" : "生效");
 }
 
 function appendCourseAddBtn() {
