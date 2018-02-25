@@ -89,7 +89,7 @@ public class ActivityController {
         model.addAttribute("activity", activity);
         model.addAttribute("district", activityDistrictService.selectOne(activity.getDistrictId()));
         model.addAttribute("description", activityService.selectDesc(new ActivityDescription(activity.getId())));
-        model.addAttribute("courses", activityService.selectCourseList(new ActivityCourse(activity.getId())));
+        model.addAttribute("courses", activityService.selectCourseList(new ActivityCourse(activity.getId(), Boolean.TRUE)));
         model.addAttribute("tag", activityService.selectTag(new ActivityTag(activity.getId())));
         return "activity/activity/info";
     }

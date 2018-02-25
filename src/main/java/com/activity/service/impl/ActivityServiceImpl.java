@@ -97,8 +97,8 @@ public class ActivityServiceImpl implements ActivityService {
                 course.setActivityId(activity.getId());
                 course.setActive(Boolean.TRUE);
                 course.setCreateDate(currentTimestamp);
+                activityCourseMapper.insert(course);
             }
-            activityCourseMapper.insertList(courseList);
         }
 
         //4.保存活动描述
@@ -109,24 +109,35 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     @Transactional
     public void update(ActivityPojo pojo) {
-        //1.保存活动，获取活动编号
-        Activity activity = pojo.getActivity();
-        activityMapper.update(activity);
+        //1.更新活动
+        Activity activityRecord = pojo.getActivity();
+        Activity activity = activityMapper.selectOne(activityRecord.getId());
+        activityMapper.update(new Activity(activity.getId(), activityRecord.getTitle(), activityRecord.getDistrictId(), activityRecord.getAddress(),
+                activityRecord.getBeginTime(), activityRecord.getEndTime(), activityRecord.getMaxLimit(), activityRecord.getUploadFileId(), activity.getActive()));
 
-        //2.保存活动标签
-        ActivityTag tag = pojo.getActivityTag();
-        activityTagMapper.updateByPrimaryKey(tag);
+        //2.更新活动标签
+        ActivityTag tagRecord = pojo.getActivityTag();
+        activityTagMapper.updateByPrimaryKey(tagRecord);
 
-        //3.保存活动课程
+        //3.保存或更新活动课程
         List<ActivityCourse> courseList = pojo.getCourseList();
         if (!ObjectUtils.isEmpty(courseList)) {
+            Timestamp currentTimestamp = DateUtils.getCurrentTimestamp();
             for (ActivityCourse course : courseList) {
-                activityCourseMapper.updateByPrimaryKey(course);
+                if (course.getId() != null) {
+                    activityCourseMapper.updateByPrimaryKey(course);
+                } else {
+                    course.setActivityId(activity.getId());
+                    course.setActive(Boolean.TRUE);
+                    course.setCreateDate(currentTimestamp);
+                    activityCourseMapper.insert(course);
+                }
             }
         }
 
-        //4.保存活动描述
-        ActivityDescription description = descriptionMapper.selectByActivityId(activity.getId());
+        //4.更新活动描述
+        List<ActivityDescription> descriptionList = descriptionMapper.selectList(new ActivityDescription(activity.getId()));
+        ActivityDescription description = descriptionList.get(0);
         description.setDescription(pojo.getDesc());
         descriptionMapper.updateByPrimaryKeyWithBLOBs(description);
     }

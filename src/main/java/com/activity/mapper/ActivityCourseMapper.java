@@ -14,5 +14,4 @@ public interface ActivityCourseMapper {
 
     int updateByPrimaryKey(ActivityCourse record);
 
-    int insertList(List<ActivityCourse> list);
 }

@@ -8,7 +8,7 @@ public interface ActivityDescriptionMapper {
 
     int insert(ActivityDescription record);
 
-    ActivityDescription selectByActivityId(Integer activityId);
+    ActivityDescription selectByPrimaryKey(Integer activityId);
 
     List<ActivityDescription> selectList(ActivityDescription record);
 

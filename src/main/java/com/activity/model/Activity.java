@@ -29,6 +29,18 @@ public class Activity implements Serializable {
     //创建时间
     private Timestamp createDate;
 
+    public Activity(Integer id, String title, Integer districtId, String address, Timestamp beginTime, Timestamp endTime, Integer maxLimit, Integer uploadFileId, Boolean active) {
+        this.id = id;
+        this.title = title;
+        this.districtId = districtId;
+        this.address = address;
+        this.beginTime = beginTime;
+        this.endTime = endTime;
+        this.maxLimit = maxLimit;
+        this.uploadFileId = uploadFileId;
+        this.active = active;
+    }
+
     public Activity() {
     }
 

@@ -21,13 +21,13 @@
                             <h3 class="box-title" th:utext="编辑活动"></h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-default" onclick="goHistory();">返回</button>
-                                <button type="button" class="btn btn-primary" onclick="save();">保存</button>
+                                <button type="button" class="btn btn-primary" onclick="update();">保存</button>
                             </div>
                         </div>
                         <div class="box-body">
                             <div class="row">
                                 <form id="addForm" class="form-horizontal">
-                                    <input type="hidden" th:value="${activity.id}" readonly="readonly"/>
+                                    <input id="activityId" type="hidden" th:value="${activity.id}" readonly="readonly"/>
                                     <div class="form-group">
                                         <label for="title" class="col-sm-2 control-label label-required">活动标题</label>
                                         <div class="col-sm-8">
@@ -66,8 +66,8 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="setting" class="col-sm-2 control-label label-blank">报名表单设置</label>
-                                        <div class="col-sm-8 padding-left-0" id="setting">
+                                        <label for="tagId" class="col-sm-2 control-label label-blank">报名表单设置</label>
+                                        <div class="col-sm-8 padding-left-0" id="tagId" th:attr="tagid=${tag.id}">
                                             <div class="col-sm-4"><input type="checkbox" id="useName" th:checked="${tag.useName}"/> 姓名</div>
                                             <div class="col-sm-4"><input type="checkbox" id="useSex" th:checked="${tag.useSex}"/> 性别</div>
                                             <div class="col-sm-4"><input type="checkbox" id="usePhone" th:checked="${tag.usePhone}"/> 联系电话</div>
@@ -81,20 +81,20 @@
                                     <div class="form-group">
                                         <label for="description" class="col-sm-2 control-label label-blank">活动介绍</label>
                                         <div class="col-sm-8">
-                                            <textarea type="text" class="form-control" id="description" th:utext="${description.description}"></textarea>
+                                            <textarea id="description" class="editor" cols="150" rows="42" style="height: 500px;" th:utext="${description.description}"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="uploadFileID" class="col-sm-2 control-label label-blank">上传封面</label>
                                         <div class="col-sm-8">
-                                            <input type="file" class="form-control" id="uploadFileID" th:field="${activity.uploadFileId}" accept="image/jpg, image/jpeg, image/png"/>
+                                            <input type="file" class="form-control" id="uploadFileID" th:attr="fileid=${activity.uploadFileId}" accept="image/jpg, image/jpeg, image/png"/>
                                             <span>只能上传jpg/png图片，文件不能超过500kb</span>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label label-blank">课程设置</label>
                                         <div class="col-sm-10" id="courseDiv">
-                                            <section class="form-group col-md-12 course-tr" th:each="course,stat : ${courses}">
+                                            <section class="form-group col-md-12 course-tr" th:each="course,stat : ${courses}" th:attr="courseid=${course.id}">
                                                 <div class="col-sm-9 padding-left-0">
                                                     <div class="col-md-4 padding-left-0"><input class="form-control course-name" th:value="${course.name}"/></div>
                                                     <div class="col-md-4"><input class="form-control course-time begin-time" th:value="${#dates.format(course.beginTime,'yyyy-MM-dd HH:mm')}"/></div>
@@ -102,7 +102,7 @@
                                                 </div>
                                                 <div class="col-sm-3 group-btn">
                                                     <button type="button" class="btn btn-default course-add margin-right-15" th:if="${stat.last}" onclick="copyCourseTr(this);">增加</button>
-                                                    <button type="button" class="btn btn-default course-remove" onclick="removeCourseTr(this);">删除</button>
+                                                    <button type="button" class="btn btn-default course-remove" onclick="disabledCourseTr(this);" th:utext="${course.active} ? '失效': '生效'"></button>
                                                 </div>
                                             </section>
                                         </div>
@@ -121,6 +121,13 @@
 <script th:src="@{/js/layer/laydate.js}" type="text/javascript"></script>
 <script th:src="@{/js/validation/jquery.validationEngine.min.js}" type="text/javascript"></script>
 <script th:src="@{/js/validation/jquery.validationEngine-zh_CN.js}" type="text/javascript"></script>
+<!-- 配置文件 -->
+<script th:src="@{/js/ueditor/ueditor.config.js}" type="text/javascript"></script>
+<!-- 编辑器源码文件 -->
+<script th:src="@{/js/ueditor/ueditor.all.js}" type="text/javascript"></script>
+<script th:src="@{/js/ueditor/lang/zh-cn/zh-cn.js}" type="text/javascript" charset="utf-8"></script>
+<!-- 实例化编辑器 -->
+<script th:src="@{/js/activity/activity/editor.js}" type="text/javascript"></script>
 <script th:src="@{/js/activity/activity/edit.js}" type="text/javascript"></script>
 </body>
 </html>

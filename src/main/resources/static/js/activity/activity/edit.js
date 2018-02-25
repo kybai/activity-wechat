@@ -3,9 +3,9 @@ $(function () {
     initCourseTime();
 });
 
-function save() {
+function update() {
     $.ajax({
-        url: base + '/activity/save',
+        url: base + '/activity/update',
         method: 'POST',
         dataType: 'json',
         contentType: 'application/json',
@@ -52,6 +52,11 @@ function removeCourseTr(obj) {
     var $this = $(obj);
     $this.closest('section').remove();
     appendCourseAddBtn();
+}
+
+function disabledCourseTr(obj) {
+    var $this = $(obj);
+    $this.html($this.html() === "激活" ? "禁用" : "激活");
 }
 
 function appendCourseAddBtn() {
@@ -112,12 +117,13 @@ function initCourseTime() {
 
 function ActivityPojo() {
     this.activity = new ActivityEntity();
-    this.desc = $("#description").val();
+    this.desc = getUEContent();
     this.activityTag = new ActivityTag();
     this.courseList = getCourseList();
 }
 
 function ActivityEntity() {
+    this.id = $("#activityId").val();
     this.title = $("#title").val();
     this.districtId = $("#district").val();
     this.address = $("#address").val();
@@ -128,6 +134,7 @@ function ActivityEntity() {
 }
 
 function ActivityTag() {
+    this.id = $("#tagId").attr("tagid");
     this.useName = $("#useName").prop("checked");
     this.useSex = $("#useSex").prop("checked");
     this.usePhone = $("#usePhone").prop("checked");
@@ -138,20 +145,24 @@ function ActivityTag() {
     this.useProfile = $("#useProfile").prop("checked");
 }
 
-function ActivityCourse(name, beginTime, endTime) {
+function ActivityCourse(id, name, beginTime, endTime, active) {
+    this.id = (getVal(id) === "") ? null : id;
     this.name = name;
     this.beginTime = toTimestamp(beginTime);
     this.endTime = toTimestamp(endTime);
+    this.active = active;
 }
 
 function getCourseList() {
     var arr = [];
     $("#courseDiv").find(".course-tr").each(function () {
         var $this = $(this);
+        var courseid = $this.attr("courseid");
         var name = $this.find(".course-name").val();
         var beginTime = $this.find(".begin-time").val();
         var endTime = $this.find(".end-time").val();
-        arr.push(new ActivityCourse(name, beginTime, endTime));
+        var active = $this.find(".course-remove").html() !== "生效";
+        arr.push(new ActivityCourse(courseid, name, beginTime, endTime, active));
     });
     return arr;
 }
