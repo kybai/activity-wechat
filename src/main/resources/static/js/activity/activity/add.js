@@ -112,7 +112,7 @@ function initCourseTime() {
 
 function ActivityPojo() {
     this.activity = new ActivityEntity();
-    this.desc = $("#description").val();
+    this.desc = getUEContent();
     this.activityTag = new ActivityTag();
     this.courseList = getCourseList();
 }
