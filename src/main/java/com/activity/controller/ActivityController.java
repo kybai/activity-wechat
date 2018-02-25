@@ -10,7 +10,6 @@ import com.activity.pojo.BaseDisabled;
 import com.activity.pojo.BasePageList;
 import com.activity.service.ActivityDistrictService;
 import com.activity.service.ActivityService;
-import com.activity.service.UploadFileService;
 import com.activity.utils.Constants;
 import com.activity.utils.RestEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +34,6 @@ public class ActivityController {
 
     @Autowired
     private ActivityDistrictService activityDistrictService;
-
-    @Autowired
-    private UploadFileService uploadFileService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listGet(Model model) {

@@ -48,7 +48,6 @@ public class UploadFileServiceImpl implements UploadFileService {
             }
         } catch (IOException e) {
             this.logger.error("文件上传失败；" + e.getMessage());
-            e.printStackTrace();
         }
         return info;
     }

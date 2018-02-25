@@ -47,7 +47,7 @@ public class UEditorController {
         UploadFile info = uploadFileService.insert(file, "UEDITOR");
         return "{\"state\": \"SUCCESS\"," +
                 "\"url\": \"" + "/activity/file/download/" + info.getId() + "\"," +
-                "\"title\": \"" + info.getRealName() + "\"," +
-                "\"original\": \"" + info.getRealName() + "\"}";
+                "\"title\": \"" + info.getFileName() + "\"," +
+                "\"original\": \"" + info.getFileName() + "\"}";
     }
 }
