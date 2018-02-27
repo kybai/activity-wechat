@@ -29,6 +29,15 @@ public class Activity implements Serializable {
     //创建时间
     private Timestamp createDate;
 
+    /*非数据库字段*/
+
+    //点赞人数
+    private int thumbupTotal;
+    //查看人数
+    private int watchedTotal;
+    //报名人数
+    private int enrollTotal;
+
     public Activity(Integer id, String title, Integer districtId, String address, Timestamp beginTime, Timestamp endTime, Integer maxLimit, Integer uploadFileId, Boolean active) {
         this.id = id;
         this.title = title;
@@ -105,6 +114,21 @@ public class Activity implements Serializable {
         return createDate;
     }
 
+    @Transient
+    public int getThumbupTotal() {
+        return thumbupTotal;
+    }
+
+    @Transient
+    public int getWatchedTotal() {
+        return watchedTotal;
+    }
+
+    @Transient
+    public int getEnrollTotal() {
+        return enrollTotal;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -143,5 +167,17 @@ public class Activity implements Serializable {
 
     public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
+    }
+
+    public void setThumbupTotal(int thumbupTotal) {
+        this.thumbupTotal = thumbupTotal;
+    }
+
+    public void setWatchedTotal(int watchedTotal) {
+        this.watchedTotal = watchedTotal;
+    }
+
+    public void setEnrollTotal(int enrollTotal) {
+        this.enrollTotal = enrollTotal;
     }
 }

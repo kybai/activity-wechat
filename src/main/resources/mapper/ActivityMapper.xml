@@ -12,6 +12,9 @@
         <result column="upload_file_id" property="uploadFileId" jdbcType="INTEGER"/>
         <result column="active" property="active" jdbcType="BIT"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="watchedTotal" property="watchedTotal" jdbcType="INTEGER"/>
+        <result column="thumbupTotal" property="thumbupTotal" jdbcType="INTEGER"/>
+        <result column="enrollTotal" property="enrollTotal" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="Base_Column_List">
         a.id, title, a.district_id, a.begin_time, a.end_time, a.max_limit, a.address, a.upload_file_id, a.active, a.create_date
@@ -25,17 +28,20 @@
     </select>
 
     <select id="selectList" resultMap="BaseResultMap" parameterType="com.activity.model.Activity">
-        select
+        select COUNT(w.id) watchedTotal, COUNT(t.id) thumbupTotal, COUNT(e.id) enrollTotal,
         <include refid="Base_Column_List"/>
         from activity a
-        left join activity_district ad on a.district_id = ad.id
+        left join activity_watched w on a.id = w.activity_id
+        left join activity_thumbup t on a.id = t.activity_id
+        left join activity_enroll e on a.id = e.activity_id
         where 1 = 1
         <if test="districtId != null">
-            AND a.district_id = #{districtId, jdbcType=Integer}
+            and a.district_id = #{districtId, jdbcType=Integer}
         </if>
         <if test="title != null and title != ''">
-            AND a.title like concat('%', #{title, jdbcType=VARCHAR}, '%')
+            and a.title like concat('%', #{title, jdbcType=VARCHAR}, '%')
         </if>
+        group by a.id
         order by a.id desc
     </select>
 

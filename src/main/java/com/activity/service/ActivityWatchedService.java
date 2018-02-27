@@ -1,15 +1,15 @@
-package com.activity.mapper;
+package com.activity.service;
 
 import com.activity.model.ActivityWatched;
 
 import java.util.List;
 
 /**
- * @author Create by ky.bai on 2018-02-27 17:11
+ * @author Created by ky.bai on 2018-02-27
  */
-public interface ActivityWatchedMapper {
+public interface ActivityWatchedService {
 
-    public ActivityWatched selectByPrimaryKey(Integer id);
+    public ActivityWatched selectById(Integer id);
 
     public List<ActivityWatched> selectList(ActivityWatched record);
 

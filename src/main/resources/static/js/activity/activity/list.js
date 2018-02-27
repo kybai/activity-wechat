@@ -25,8 +25,8 @@ function loadPage(content) {
         html += '<td>' + getDate(entity.beginTime) + '</td>';
         html += '<td>' + getDate(entity.endTime) + '</td>';
         html += '<td><a href="#">签到码</a></td>';
-        html += '<td><a href="#">0</a></td>';
-        html += '<td>点赞/访问</td>';
+        html += '<td><a href="#">' + getVal(entity.enrollTotal) + '</a></td>';
+        html += '<td>' + getVal(entity.thumbupTotal) + '/' + getVal(entity.watchedTotal) + '</td>';
         html += '<td>' + getDateD(entity.createDate) + '</td>';
         html += '<td>'
             + '<button type="button" class="btn-link" onclick=edit("' + entity.id + '");>编辑</button>'
