@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.activity.mapper.UsersScoreMapper">
+    <resultMap id="BaseResultMap" type="com.activity.model.UsersScore">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="score" property="score" jdbcType="INTEGER"/>
+        <result column="reason" property="reason" jdbcType="VARCHAR"/>
+        <result column="activity_id" property="activityId" jdbcType="INTEGER"/>
+        <result column="course_id" property="courseId" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, user_id, score, reason, activity_id, course_id, create_date
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from users_score
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectList" resultMap="BaseResultMap" parameterType="com.activity.model.UsersScore">
+        select
+        <include refid="Base_Column_List"/>
+        from users_score
+        where 1 = 1
+        <if test="userId!=null">
+            and user_id = #{userId,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="com.activity.model.UsersScore">
+        insert into users_score (user_id, score, reason, activity_id, course_id, create_date)
+        values (#{userId,jdbcType=INTEGER}, #{score,jdbcType=INTEGER}, #{reason,jdbcType=VARCHAR}, #{activityId,jdbcType=INTEGER},
+         #{courseId,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
+    </insert>
+
+</mapper>
