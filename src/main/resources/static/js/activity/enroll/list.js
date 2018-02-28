@@ -35,7 +35,7 @@ function loadPage(content) {
         if (getVal($("#useJob").html()) !== "")
             html += '<td>' + getVal(entity.job) + '</td>';
         if (getVal($("#useProfile").html()) !== "")
-            html += '<td title="'+getVal(entity.profile)+'">' + getValLen(entity.profile) + '</td>';
+            html += '<td title="' + getVal(entity.profile) + '">' + getValLen(entity.profile) + '</td>';
         if (getVal($("#useCard").html()) !== "") {
             html += '<td><a href="#" onclick=catImg("' + getVal(entity.cardFace) + '")>查看图片</a></td>';
             html += '<td><a href="#" onclick=catImg("' + getVal(entity.cardBack) + '")>查看图片</a></td>';
@@ -65,7 +65,8 @@ function catImg(id) {
 }
 
 function exportExcel() {
-
+    var activityId = $("#activityId").val();
+    window.location.href = base + '/enroll/export/' + activityId;
 }
 
 function goHistory() {

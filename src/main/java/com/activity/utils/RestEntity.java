@@ -3,6 +3,8 @@ package com.activity.utils;
 import java.io.Serializable;
 
 /**
+ * 接口返回值工具类
+ *
  * @author Created by ky.bai on 2018-02-12
  */
 public class RestEntity implements Serializable {

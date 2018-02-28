@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      th:with="level1Menu='userManager',level2Menu='userList'">
+      th:with="level1Menu='activityManager',level2Menu='activityList'">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title th:utext="#{title}"></title>
@@ -26,9 +26,8 @@
                                             <input type="text" id="searchName" placeholder="请输入用户昵称查询"/>
                                             <input type="hidden" id="activityId" th:value="${activity.id}"/>
                                             <a href="#" onclick="initPage(1);"><i class="glyphicon glyphicon-search"></i></a>
+                                            <a href="#" th:if="${activity.id!=null}" onclick="exportExcel();"><i class="glyphicon glyphicon-download"></i></a>
                                         </section>
-                                        <button type="button" class="btn btn-default margin-left-15" onclick="goHistory();">返回</button>
-                                        <button type="button" class="btn btn-default" onclick="exportExcel();">导出</button>
                                     </div>
                                 </div>
 

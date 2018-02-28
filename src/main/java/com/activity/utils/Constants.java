@@ -20,4 +20,7 @@ public class Constants {
 
     //分页数据列表的每页条数
     public static final int PAGE_SIZE = 15;
+
+    public static final String CHARTSET_NAME_ISO = "ISO-8859-1";
+    public static final String CHARTSET_NAME_UTF = "UTF-8";
 }

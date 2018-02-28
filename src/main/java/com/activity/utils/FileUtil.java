@@ -6,10 +6,19 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Date;
 import java.util.Random;
 
+/**
+ * 文件工具类
+ * Created by ky.bai on 2018-02-28 14:28
+ */
 public class FileUtil {
     private final static Logger log = Logger.getLogger(FileUtil.class);
 
@@ -19,6 +28,7 @@ public class FileUtil {
      * @param data     文件的byte格式数据
      * @param filePath 保存路径
      * @param realName 文件名称
+     *
      * @return 是否上传成功
      */
     public static boolean upload(byte[] data, String filePath, String realName) {
@@ -44,8 +54,7 @@ public class FileUtil {
      * @param saveName 名称
      */
     public static void download(HttpServletResponse response, File file, String saveName) {
-        if (ObjectUtils.isEmpty(response) || ObjectUtils.isEmpty(file))
-            return;
+        if (ObjectUtils.isEmpty(response) || ObjectUtils.isEmpty(file)) return;
 
         FileInputStream fis = null;
         OutputStream os = null;
@@ -54,9 +63,9 @@ public class FileUtil {
             os = response.getOutputStream();
             response.reset(); //清空输出流
 
-            response.setHeader("Content-disposition", "attachment; filename=" + new String(saveName.getBytes("UTF-8"), "ISO-8859-1"));
+            response.setHeader("Content-disposition", "attachment; filename=" + new String(saveName.getBytes(Constants.CHARTSET_NAME_UTF), Constants.CHARTSET_NAME_ISO));
             response.setContentType("image/png");
-            response.setCharacterEncoding("UTF-8");
+            response.setCharacterEncoding(Constants.CHARTSET_NAME_UTF);
 
             writeFileStreamToOutput(fis, os);
         } catch (FileNotFoundException e) {
@@ -102,8 +111,7 @@ public class FileUtil {
         String extension = StringUtils.getFilenameExtension(fileName);
         StringBuilder sb = new StringBuilder();
         sb.append(time).append(randomInt);
-        if (!StringUtils.isEmpty(withoutExtension) && !StringUtils.isEmpty(extension))
-            sb.append(".").append(extension);
+        if (!StringUtils.isEmpty(withoutExtension) && !StringUtils.isEmpty(extension)) sb.append(".").append(extension);
 
         return sb.toString();
     }
