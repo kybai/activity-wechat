@@ -40,9 +40,7 @@ function disabledUser(userID) {
         data: JSON.stringify(new BaseDisabled(userID)),
         success: function (results) {
             layer.msg(results.msg);
-            setTimeout(function () {
-                initPage(1);
-            }, 1500);
+            initPage(1);
         }
     });
 }

@@ -92,9 +92,7 @@ function disabledStatus(id) {
         data: JSON.stringify(new BaseDisabled(id)),
         success: function (results) {
             layer.msg(results.msg);
-            setTimeout(function () {
-                initPage(1);
-            }, 1500);
+            initPage(1);
         }
     });
 }

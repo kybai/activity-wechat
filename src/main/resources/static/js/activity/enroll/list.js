@@ -35,7 +35,7 @@ function loadPage(content) {
         if (getVal($("#useJob").html()) !== "")
             html += '<td>' + getVal(entity.job) + '</td>';
         if (getVal($("#useProfile").html()) !== "")
-            html += '<td>' + getVal(entity.profile) + '</td>';
+            html += '<td title="'+getVal(entity.profile)+'">' + getValLen(entity.profile) + '</td>';
         if (getVal($("#useCard").html()) !== "") {
             html += '<td><a href="#" onclick=catImg("' + getVal(entity.cardFace) + '")>查看图片</a></td>';
             html += '<td><a href="#" onclick=catImg("' + getVal(entity.cardBack) + '")>查看图片</a></td>';
@@ -54,9 +54,7 @@ function updateStatus(id) {
         contentType: 'application/json',
         success: function (results) {
             layer.msg(results.msg);
-            setTimeout(function () {
-                initPage(1);
-            }, 1500);
+            initPage(1);
         }
     });
 }

@@ -35,6 +35,8 @@ public class ActivityEnroll implements Serializable {
     private Integer cardFace;
     //证件反面对应文件编号
     private Integer cardBack;
+    //个人简介
+    private String profile;
     //有效性
     private Boolean active;
     //创建日期
@@ -115,6 +117,11 @@ public class ActivityEnroll implements Serializable {
         return cardBack;
     }
 
+    @Column(name = "profile")
+    public String getProfile() {
+        return profile;
+    }
+
     @Column(name = "active")
     public Boolean getActive() {
         return active;
@@ -169,51 +176,15 @@ public class ActivityEnroll implements Serializable {
         this.cardBack = cardBack;
     }
 
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
+
     public void setActive(Boolean active) {
         this.active = active;
     }
 
     public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ActivityEnroll that = (ActivityEnroll) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (activityId != null ? !activityId.equals(that.activityId) : that.activityId != null) return false;
-        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (sex != null ? !sex.equals(that.sex) : that.sex != null) return false;
-        if (phone != null ? !phone.equals(that.phone) : that.phone != null) return false;
-        if (political != null ? !political.equals(that.political) : that.political != null) return false;
-        if (company != null ? !company.equals(that.company) : that.company != null) return false;
-        if (job != null ? !job.equals(that.job) : that.job != null) return false;
-        if (cardFace != null ? !cardFace.equals(that.cardFace) : that.cardFace != null) return false;
-        if (cardBack != null ? !cardBack.equals(that.cardBack) : that.cardBack != null) return false;
-        if (active != null ? !active.equals(that.active) : that.active != null) return false;
-        return createDate != null ? createDate.equals(that.createDate) : that.createDate == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (activityId != null ? activityId.hashCode() : 0);
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (sex != null ? sex.hashCode() : 0);
-        result = 31 * result + (phone != null ? phone.hashCode() : 0);
-        result = 31 * result + (political != null ? political.hashCode() : 0);
-        result = 31 * result + (company != null ? company.hashCode() : 0);
-        result = 31 * result + (job != null ? job.hashCode() : 0);
-        result = 31 * result + (cardFace != null ? cardFace.hashCode() : 0);
-        result = 31 * result + (cardBack != null ? cardBack.hashCode() : 0);
-        result = 31 * result + (active != null ? active.hashCode() : 0);
-        result = 31 * result + (createDate != null ? createDate.hashCode() : 0);
-        return result;
     }
 }

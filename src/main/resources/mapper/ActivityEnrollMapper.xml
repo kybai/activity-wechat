@@ -11,6 +11,7 @@
         <result column="political" property="political" jdbcType="VARCHAR"/>
         <result column="company" property="company" jdbcType="VARCHAR"/>
         <result column="job" property="job" jdbcType="VARCHAR"/>
+        <result column="profile" property="profile" jdbcType="VARCHAR"/>
         <result column="card_face" property="cardFace" jdbcType="INTEGER"/>
         <result column="card_back" property="cardBack" jdbcType="INTEGER"/>
         <result column="active" property="active" jdbcType="BIT"/>
@@ -18,7 +19,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, activity_id, user_id, name, sex, phone, political, company, job, card_face, card_back, active, create_date
+        id, activity_id, user_id, name, sex, phone, political, company, job, card_face, card_back, profile, active, create_date
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -52,9 +53,10 @@
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
             select LAST_INSERT_ID()
         </selectKey>
-        insert into activity_enroll (activity_id, user_id, name, sex, phone, political, company, job, card_face, card_back, active, create_date)
+        insert into activity_enroll (activity_id, user_id, name, sex, phone, political, company, job, card_face, card_back, profile, active, create_date)
         values (#{activityId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{political,jdbcType=VARCHAR},
-        #{company,jdbcType=VARCHAR}, #{job,jdbcType=VARCHAR}, #{cardFace,jdbcType=INTEGER}, #{cardBack,jdbcType=INTEGER}, #{active,jdbcType=BIT}, #{createDate,jdbcType=TIMESTAMP})
+        #{company,jdbcType=VARCHAR}, #{job,jdbcType=VARCHAR}, #{cardFace,jdbcType=INTEGER}, #{cardBack,jdbcType=INTEGER}, #{profile, jdbcType=VARCHAR},
+        #{active,jdbcType=BIT}, #{createDate,jdbcType=TIMESTAMP})
     </insert>
 
     <update id="update" parameterType="com.activity.model.ActivityEnroll">
@@ -65,6 +67,7 @@
         political = #{political,jdbcType=VARCHAR},
         company = #{company,jdbcType=VARCHAR},
         job = #{job,jdbcType=VARCHAR},
+        profile = #{profile,jdbcType=VARCHAR},
         card_face = #{cardFace,jdbcType=INTEGER},
         card_back = #{cardBack,jdbcType=INTEGER},
         active = #{active,jdbcType=BIT}

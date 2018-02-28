@@ -5,7 +5,7 @@ function listenSidebar() {
 
     if (winHeight > sidHeight) {
         $('.sidebar').addClass('fixed').css('top', '0px');
-    } else if (winHeight == 0) {
+    } else if (winHeight === 0) {
         $('.sidebar').removeClass('fixed');
     }
 }
@@ -35,6 +35,14 @@ function getVal(val) {
         return "";
     }
     return val;
+}
+
+function getValLen(val) {
+    var value = getVal(val);
+    if (value.length > 5) {
+        return value.substring(0, 5) + "...";
+    }
+    return value;
 }
 
 function getNum0(val) {
