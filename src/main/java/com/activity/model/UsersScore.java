@@ -34,6 +34,18 @@ public class UsersScore implements Serializable {
     //创建日期
     private Timestamp createDate;
 
+    public UsersScore() {
+    }
+
+    public UsersScore(Integer userId, Integer score, String reason, Integer activityId, Integer courseId, Timestamp createDate) {
+        this.userId = userId;
+        this.score = score;
+        this.reason = reason;
+        this.activityId = activityId;
+        this.courseId = courseId;
+        this.createDate = createDate;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

@@ -23,4 +23,8 @@ public class Constants {
 
     public static final String CHARTSET_NAME_ISO = "ISO-8859-1";
     public static final String CHARTSET_NAME_UTF = "UTF-8";
+
+    //积分数量
+    public static final Integer SCORE_SIGN_COURSE = 1;
+    public static final Integer SCORE_MISS_COURSE = -1;
 }

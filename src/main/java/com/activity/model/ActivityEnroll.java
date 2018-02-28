@@ -18,7 +18,7 @@ public class ActivityEnroll implements Serializable {
     //活动编号
     private Integer activityId;
     //用户编号
-    private String userId;
+    private Integer userId;
     //姓名
     private String name;
     //性别
@@ -73,7 +73,7 @@ public class ActivityEnroll implements Serializable {
     }
 
     @Column(name = "user_id")
-    public String getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
@@ -140,7 +140,7 @@ public class ActivityEnroll implements Serializable {
         this.activityId = activityId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
