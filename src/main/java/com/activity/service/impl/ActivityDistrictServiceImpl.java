@@ -32,12 +32,6 @@ public class ActivityDistrictServiceImpl implements ActivityDistrictService {
     }
 
     @Override
-    public PageInfo<ActivityDistrict> selectList(BasePageList page) {
-        PageHelper.startPage(page.getCurrentPage(), page.getPageSize());
-        return new PageInfo<>(selectList(new ActivityDistrict(page.getName())));
-    }
-
-    @Override
     @Transactional
     public int insert(ActivityDistrict record) {
         return activityDistrictMapper.insert(record);

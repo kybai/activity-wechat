@@ -7,6 +7,8 @@ import com.activity.service.ActivityDistrictService;
 import com.activity.utils.Constants;
 import com.activity.utils.DateUtils;
 import com.activity.utils.RestEntity;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -33,7 +35,8 @@ public class ActivityDistrictController {
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity listPost(@RequestBody BasePageList page) {
-        return ResponseEntity.ok(new RestEntity(200, Constants.LOAD_SUCCESS, activityDistrictService.selectList(page)));
+        PageHelper.startPage(page.getCurrentPage(), page.getPageSize());
+        return ResponseEntity.ok(new RestEntity(200, Constants.LOAD_SUCCESS, new PageInfo<>(activityDistrictService.selectList(new ActivityDistrict(page.getName())))));
     }
 
     @RequestMapping(value = "/info", method = RequestMethod.POST)

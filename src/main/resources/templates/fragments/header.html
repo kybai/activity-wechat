@@ -18,23 +18,22 @@
             <ul class="nav navbar-nav">
                 <li class="dropdown user user-menu">
                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
-                        <span class="hidden-xs" th:inline="text">User</span>
+                        <span class="hidden-xs" th:inline="text">[[${#httpServletRequest.remoteUser}]]</span>
                         <span id="myPath" hidden="true" th:text="id"></span>
                         <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="user-header">
-                            <!--[[${#httpServletRequest.remoteUser}]]-->
-                            <p><span class="hidden-xs" th:inline="text">User</span></p>
+                            <p><span class="hidden-xs" th:inline="text">[[${#httpServletRequest.remoteUser}]]</span></p>
                         </li>
                         <li class="user-body">
                             <div class="col-xs-4 text-center">
-                                <a href="#">修改密码</a>
+                                <!--<a href="#">修改密码</a>-->
                             </div>
                         </li>
                         <li class="user-footer">
                             <div class="pull-right">
-                                <form method="post">
+                                <form th:action="@{/logout}" method="post">
                                     <input class="btn btn-default btn-flat" type="submit" value="退出"/>
                                 </form>
                             </div>

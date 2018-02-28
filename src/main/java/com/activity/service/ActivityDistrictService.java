@@ -1,8 +1,6 @@
 package com.activity.service;
 
 import com.activity.model.ActivityDistrict;
-import com.activity.pojo.BasePageList;
-import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -11,13 +9,11 @@ import java.util.List;
  */
 public interface ActivityDistrictService {
 
-    public ActivityDistrict selectOne(Integer id);
+    ActivityDistrict selectOne(Integer id);
 
-    public List<ActivityDistrict> selectList(ActivityDistrict record);
+    List<ActivityDistrict> selectList(ActivityDistrict record);
 
-    public PageInfo<ActivityDistrict> selectList(BasePageList page);
+    int insert(ActivityDistrict record);
 
-    public int insert(ActivityDistrict record);
-
-    public int update(ActivityDistrict record);
+    int update(ActivityDistrict record);
 }
