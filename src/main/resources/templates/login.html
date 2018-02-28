@@ -21,7 +21,7 @@
 
         <div id="kc-feedback" class="feedback-error" th:if="${param.error}">
             <div id="kc-feedback-wrapper">
-                <span class="kc-feedback-text">请重新输入帐号和密码.</span>
+                <span class="kc-feedback-text" th:utext="${session.SPRING_SECURITY_LAST_EXCEPTION?.message}"></span>
             </div>
         </div>
 
