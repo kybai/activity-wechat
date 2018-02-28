@@ -5,6 +5,7 @@ import com.activity.model.UploadFile;
 import com.activity.service.UploadFileService;
 import com.activity.utils.DateUtils;
 import com.activity.utils.FileUtil;
+import com.activity.utils.OSSClientUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,25 +28,20 @@ public class UploadFileServiceImpl implements UploadFileService {
     @Autowired
     private UploadFileMapper uploadFileMapper;
 
-    @Value("${file.upload.path}")
-    private String path;
-
     @Override
     @Transactional
     public UploadFile insert(MultipartFile file, String fileType) {
         UploadFile info = new UploadFile();
-        String fileName = file.getName();
+        String fileName = file.getOriginalFilename();
         String realName = FileUtil.makeFileNameDigital(fileName);
-        String filePath = path + File.separator;
         try {
-            if (FileUtil.upload(file.getBytes(), filePath, realName)) {
-                info.setFileName(fileName);
-                info.setRealName(realName);
-                info.setFilePath(filePath);
-                info.setFileType(fileType);
-                info.setCreateDate(DateUtils.getCurrentTimestamp());
-                uploadFileMapper.insert(info);
-            }
+            OSSClientUtil.putObject(realName, file.getBytes(), file.getContentType());
+            info.setFileName(fileName);
+            info.setRealName(realName);
+            info.setFilePath(OSSClientUtil.getObjectUrl(realName));
+            info.setFileType(fileType);
+            info.setCreateDate(DateUtils.getCurrentTimestamp());
+            uploadFileMapper.insert(info);
         } catch (IOException e) {
             this.logger.error("文件上传失败；" + e.getMessage());
         }

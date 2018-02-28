@@ -142,8 +142,8 @@ CREATE TABLE `adsense` (
   `upload_file_id` int(11) NOT NULL COMMENT '图片文件编号',
   `url` varchar(256) DEFAULT NULL COMMENT '跳转链接',
   `page_name` varchar(32) NULL COMMENT '对应页面',
-	`type` varchar(32) NOT NULL COMMENT '类型：轮播图/广告图',
-	`active` bit(1) NOT NULL COMMENT '有效性',
+  `type` varchar(32) NOT NULL COMMENT '类型：轮播图/广告图',
+  `active` bit(1) NOT NULL COMMENT '有效性',
   `create_date` timestamp NOT NULL COMMENT '创建日期',
   PRIMARY KEY (`id`),
   KEY `FK_ADSENSE_REFERENCE_UPLOAD_F` (`upload_file_id`),
@@ -157,9 +157,9 @@ DROP TABLE IF EXISTS `upload_file`;
 CREATE TABLE `upload_file` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '上传文件编号',
   `file_name` varchar(256) NOT NULL COMMENT '文件名称',
-  `real_name` varchar(32) NOT NULL COMMENT '存放名称',
-  `file_path` varchar(32) NOT NULL COMMENT '文件路径',
-  `file_type` varchar(16) NOT NULL COMMENT '文件类型',
+  `real_name` varchar(64) NOT NULL COMMENT '存放名称',
+  `file_path` varchar(512) NOT NULL COMMENT '文件路径',
+  `file_type` varchar(32) NOT NULL COMMENT '文件类型',
   `create_date` timestamp NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -223,7 +223,7 @@ CREATE TABLE `wechat_user` (
 -- ----------------------------
 DROP TABLE IF EXISTS `employee`;
 CREATE TABLE `employee` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '编号',
   `name` varchar(32) NOT NULL COMMENT '用户姓名',
   `username` varchar(32) NOT NULL COMMENT '用户名',
   `password` varchar(32) NOT NULL COMMENT '密码',
@@ -232,3 +232,49 @@ CREATE TABLE `employee` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for activity_enroll
+-- ----------------------------
+DROP TABLE if EXISTS `activity_enroll`;
+CREATE TABLE `activity_enroll` (
+  `id` int(11) NOT NULL AUTO_INCREMENT  COMMENT '编号',
+  `activity_id` int(11) NOT NULL COMMENT '活动编号',
+  `user_id` int(11) NOT NULL COMMENT '用户编号',
+  `name` varchar(32) DEFAULT NULL COMMENT '姓名',
+  `sex` varchar(2) DEFAULT NULL COMMENT '性别',
+  `phone` varchar(11) DEFAULT NULL COMMENT '联系方式',
+  `political` varchar(32) DEFAULT NULL COMMENT '政治面貌',
+  `company` varchar(64) DEFAULT NULL COMMENT '工作单位',
+  `job` varchar(64) DEFAULT NULL COMMENT '职务',
+  `card_face` int(11) DEFAULT NULL COMMENT '证件正面',
+  `card_back` int(11) DEFAULT NULL COMMENT '证件反面',
+  `profile` varchar(256) DEFAULT NULL COMMENT '个人简介',
+  `active` bit(1) NOT NULL COMMENT '有效性',
+  `create_date` timestamp NOT NULL COMMENT '创建日期',
+  PRIMARY KEY (`id`),
+  KEY `FK_ACTIVITY_REFERENCE_UPLOAD_FACE` (`card_face`),
+  KEY `FK_ENROLL_REFERENCE_ACTIVITY` (`activity_id`),
+  KEY `FK_ENROLL_REFERENCE_USERS_ID` (`user_id`),
+  KEY `FK_ENROLL_REFERENCE_UPLOAD_BACK` (`card_back`),
+  CONSTRAINT `FK_ACTIVITY_REFERENCE_UPLOAD_FACE` FOREIGN KEY (`card_face`) REFERENCES `upload_file` (`id`),
+  CONSTRAINT `FK_ENROLL_REFERENCE_ACTIVITY` FOREIGN KEY (`activity_id`) REFERENCES `activity` (`id`),
+  CONSTRAINT `FK_ENROLL_REFERENCE_UPLOAD_BACK` FOREIGN KEY (`card_back`) REFERENCES `upload_file` (`id`),
+  CONSTRAINT `FK_ENROLL_REFERENCE_USERS_ID` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for etl_task_activity
+-- ----------------------------
+DROP TABLE if EXISTS `etl_task_activity`;
+CREATE TABLE `etl_task_activity` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `name` varchar(32) NOT NULL COMMENT '定时任务实体类名',
+  `success_time` timestamp NOT NULL COMMENT '成功时间',
+  `success` bit(1) NOT NULL COMMENT '是否成功',
+  `created_date` timestamp NOT NULL COMMENT '创建时间',
+  `modified_date` timestamp NOT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

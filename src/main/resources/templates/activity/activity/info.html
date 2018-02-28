@@ -80,7 +80,7 @@
                                         <label for="uploadFileID" class="col-sm-2 control-label label-blank">上传封面</label>
                                         <div class="col-xs-6 col-md-3">
                                             <a href="#" class="thumbnail">
-                                                <img id="uploadFileID" th:src="@{'/file/download/'+${activity.uploadFileId}}" alt="活动封面" class="img-rounded"/>
+                                                <img id="uploadFileID" th:src="${filePath}" alt="活动封面" class="img-rounded"/>
                                             </a>
                                         </div>
                                     </div>

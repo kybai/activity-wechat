@@ -38,16 +38,11 @@ public class UploadFileController {
      *
      * @param id 下载文件的id
      */
-    @RequestMapping(value = "/download/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/download/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public void download(@PathVariable Integer id, HttpServletResponse response) {
+    public String download(@PathVariable Integer id) {
         UploadFile info = uploadFileService.selectOne(id);
-        if (!ObjectUtils.isEmpty(info)) {
-            String filePath = info.getFilePath();
-            String realName = info.getRealName();
-            File file = new File(filePath + File.separator + realName);
-            FileUtil.download(response, file, realName);
-        }
+        return info.getFilePath();
     }
 
 }

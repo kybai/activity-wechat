@@ -20,19 +20,17 @@ public class WechatUserServiceTest {
 
     @Test
     public void insertByWxMpUserTest() {
-        for (int i = 0; i < 88; i++) {
-            WxMpUser mp = new WxMpUser();
-            Integer openid = 1432422323;
-            mp.setOpenId("470274" + openid + i);
-            mp.setSubscribe(Boolean.TRUE);
-            mp.setNickname("小五");
-            mp.setSex("男");
-            mp.setCity("商丘");
-            mp.setProvince("河南");
-            mp.setCountry("中国");
-            mp.setHeadImgUrl("http://img.taopic.com/uploads/allimg/120727/201995-120HG1030762.jpg");
-            mp.setRemark("这世间唯梦想与好姑娘不可辜负");
-            int num = wechatUserService.insertByWxMpUser(mp);
-        }
+        WxMpUser mp = new WxMpUser();
+        Integer openid = 1432422323;
+        mp.setOpenId("470274" + openid);
+        mp.setSubscribe(Boolean.TRUE);
+        mp.setNickname("小五");
+        mp.setSex("男");
+        mp.setCity("商丘");
+        mp.setProvince("河南");
+        mp.setCountry("中国");
+        mp.setHeadImgUrl("http://img.taopic.com/uploads/allimg/120727/201995-120HG1030762.jpg");
+        mp.setRemark("这世间唯梦想与好姑娘不可辜负");
+        int num = wechatUserService.insertByWxMpUser(mp);
     }
 }

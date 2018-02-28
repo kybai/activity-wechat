@@ -1,15 +1,12 @@
 package com.activity.controller;
 
-import com.activity.model.Activity;
-import com.activity.model.ActivityCourse;
-import com.activity.model.ActivityDescription;
-import com.activity.model.ActivityDistrict;
-import com.activity.model.ActivityTag;
+import com.activity.model.*;
 import com.activity.pojo.ActivityPojo;
 import com.activity.pojo.BaseDisabled;
 import com.activity.pojo.BasePageList;
 import com.activity.service.ActivityDistrictService;
 import com.activity.service.ActivityService;
+import com.activity.service.UploadFileService;
 import com.activity.utils.Constants;
 import com.activity.utils.RestEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +31,9 @@ public class ActivityController {
 
     @Autowired
     private ActivityDistrictService activityDistrictService;
+
+    @Autowired
+    private UploadFileService uploadFileService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listGet(Model model) {
@@ -82,7 +82,9 @@ public class ActivityController {
     @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
     public String getInfo(@PathVariable Integer id, Model model) {
         Activity activity = activityService.selectOne(id);
+        UploadFile file = uploadFileService.selectOne(activity.getUploadFileId());
         model.addAttribute("activity", activity);
+        model.addAttribute("filePath", file.getFilePath());
         model.addAttribute("district", activityDistrictService.selectOne(activity.getDistrictId()));
         model.addAttribute("description", activityService.selectDesc(new ActivityDescription(activity.getId())));
         model.addAttribute("courses", activityService.selectCourseList(new ActivityCourse(activity.getId(), Boolean.TRUE)));

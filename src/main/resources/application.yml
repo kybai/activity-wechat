@@ -29,10 +29,6 @@ logging:
     org.springframework.web: warn
     com.activity: debug
 
-file:
-  upload:
-    path: opt/files
-
 wechat:
   mp:
     appId: wx84a8649ef7a1171d

@@ -60,8 +60,14 @@ function updateStatus(id) {
 }
 
 function catImg(id) {
-    $("#imgFile").attr("src", base + "/file/download/" + id);
-    $("#imgModal").modal("show");
+    $.ajax({
+        url: base + '/file/download/' + id,
+        type: 'POST',
+        success: function (result) {
+            $("#imgFile").attr("src", result);
+            $("#imgModal").modal("show");
+        }
+    });
 }
 
 function exportExcel() {

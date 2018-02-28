@@ -46,7 +46,7 @@ public class UEditorController {
     public String upload(MultipartFile file) {
         UploadFile info = uploadFileService.insert(file, "UEDITOR");
         return "{\"state\": \"SUCCESS\"," +
-                "\"url\": \"" + "/activity/file/download/" + info.getId() + "\"," +
+                "\"url\": \""  + info.getFilePath() + "\"," +
                 "\"title\": \"" + info.getFileName() + "\"," +
                 "\"original\": \"" + info.getFileName() + "\"}";
     }
