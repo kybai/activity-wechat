@@ -13,31 +13,31 @@ public class WechatUser implements Serializable {
     //微信标识
     private String openid;
     //用户编号
-    private Integer userID;
+    private Integer userId;
     //用户昵称
     private String nickname;
     //用户关注
     private Boolean subscribe;
     //用户关联编号
-    private String unionID;
+    private String unionId;
     //备注
     private String remark;
     //分组编号
-    private Integer groupID;
+    private Integer groupId;
     //创建时间
     private Timestamp createDate;
 
     public WechatUser() {
     }
 
-    public WechatUser(String openid, Integer userID, String nickname, Boolean subscribe, String unionID, String remark, Integer groupID, Timestamp createDate) {
+    public WechatUser(String openid, Integer userId, String nickname, Boolean subscribe, String unionId, String remark, Integer groupId, Timestamp createDate) {
         this.openid = openid;
-        this.userID = userID;
+        this.userId = userId;
         this.nickname = nickname;
         this.subscribe = subscribe;
-        this.unionID = unionID;
+        this.unionId = unionId;
         this.remark = remark;
-        this.groupID = groupID;
+        this.groupId = groupId;
         this.createDate = createDate;
     }
 
@@ -54,8 +54,8 @@ public class WechatUser implements Serializable {
     }
 
     @Column(name = "user_id")
-    public Integer getUserID() {
-        return userID;
+    public Integer getUserId() {
+        return userId;
     }
 
     @Column(name = "nickname")
@@ -69,8 +69,8 @@ public class WechatUser implements Serializable {
     }
 
     @Column(name = "union_id")
-    public String getUnionID() {
-        return unionID;
+    public String getUnionId() {
+        return unionId;
     }
 
     @Column(name = "remark")
@@ -79,8 +79,8 @@ public class WechatUser implements Serializable {
     }
 
     @Column(name = "group_id")
-    public Integer getGroupID() {
-        return groupID;
+    public Integer getGroupId() {
+        return groupId;
     }
 
     @Column(name = "create_date")
@@ -96,8 +96,8 @@ public class WechatUser implements Serializable {
         this.openid = openid;
     }
 
-    public void setUserID(Integer userID) {
-        this.userID = userID;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public void setNickname(String nickname) {
@@ -108,16 +108,16 @@ public class WechatUser implements Serializable {
         this.subscribe = subscribe;
     }
 
-    public void setUnionID(String unionID) {
-        this.unionID = unionID;
+    public void setUnionId(String unionId) {
+        this.unionId = unionId;
     }
 
     public void setRemark(String remark) {
         this.remark = remark;
     }
 
-    public void setGroupID(Integer groupID) {
-        this.groupID = groupID;
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
     }
 
     public void setCreateDate(Timestamp createDate) {

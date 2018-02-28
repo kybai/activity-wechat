@@ -52,6 +52,12 @@ public class ActivityEnroll implements Serializable {
         this.active = active;
     }
 
+    public ActivityEnroll(Integer activityId, Boolean active, String name) {
+        this.activityId = activityId;
+        this.active = active;
+        this.name = name;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

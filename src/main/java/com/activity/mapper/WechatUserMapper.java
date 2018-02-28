@@ -8,9 +8,9 @@ public interface WechatUserMapper {
 
     WechatUser selectOne(Integer id);
 
-    WechatUser selectByOpenID(String openid);
+    WechatUser selectByOpenid(String openid);
 
-    List<WechatUser> selectByUserID(Integer userID);
+    List<WechatUser> selectByUserId(Integer userId);
 
     int insert(WechatUser record);
 

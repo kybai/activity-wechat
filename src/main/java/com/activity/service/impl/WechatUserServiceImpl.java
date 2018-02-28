@@ -25,7 +25,7 @@ public class WechatUserServiceImpl implements WechatUserService {
 
     @Override
     public WechatUser findByOpenid(String openid) {
-        return wechatUserMapper.selectByOpenID(openid);
+        return wechatUserMapper.selectByOpenid(openid);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class WechatUserServiceImpl implements WechatUserService {
     @Override
     @Transactional
     public int insertByWxMpUser(WxMpUser mp) {
-        WechatUser model = wechatUserMapper.selectByOpenID(mp.getOpenId());
+        WechatUser model = wechatUserMapper.selectByOpenid(mp.getOpenId());
         if (model != null) {
             model.setSubscribe(mp.getSubscribe());
         } else {

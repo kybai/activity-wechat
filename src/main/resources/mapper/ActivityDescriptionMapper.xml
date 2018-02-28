@@ -30,6 +30,9 @@
     </select>
 
     <insert id="insert" parameterType="com.activity.model.ActivityDescription">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID()
+        </selectKey>
         insert into activity_description (id, activity_id, description)
         values (#{id,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{description,jdbcType=LONGVARCHAR})
     </insert>

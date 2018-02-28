@@ -33,6 +33,9 @@
     </select>
 
     <insert id="insert" parameterType="com.activity.model.ActivityThumbup">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID()
+        </selectKey>
         insert into activity_thumbup (activity_id, user_id, up_time)
         values (#{activityId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{upTime,jdbcType=TIMESTAMP})
     </insert>

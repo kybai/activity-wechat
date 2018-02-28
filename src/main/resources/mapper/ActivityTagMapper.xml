@@ -37,6 +37,9 @@
     </select>
 
     <insert id="insert" parameterType="com.activity.model.ActivityTag">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID()
+        </selectKey>
         insert into activity_tag (id, activity_id, use_name, use_sex, use_phone, use_political, use_company, use_job, use_card, use_profile)
         values (#{id,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{useName,jdbcType=BIT},
         #{useSex,jdbcType=BIT}, #{usePhone,jdbcType=BIT}, #{usePolitical,jdbcType=BIT},

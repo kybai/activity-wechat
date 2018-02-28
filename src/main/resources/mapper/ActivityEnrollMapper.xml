@@ -18,7 +18,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, activity_id, user_id, name, sex, phone, political, company, job, card_face, card_bace, active, create_date
+        id, activity_id, user_id, name, sex, phone, political, company, job, card_face, card_back, active, create_date
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -42,10 +42,17 @@
         <if test="active != null">
             and active = #{active,jdbcType=BIT}
         </if>
+        <if test="name!=null and name!=''">
+            and name like concat('%', #{name, jdbcType=VARCHAR}, '%')
+        </if>
+        order by id desc
     </select>
 
     <insert id="insert" parameterType="com.activity.model.ActivityEnroll">
-        insert into activity_enroll (activity_id, user_id, name, sex, phone, political, company, job, card_face, card_bace, active, create_date)
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into activity_enroll (activity_id, user_id, name, sex, phone, political, company, job, card_face, card_back, active, create_date)
         values (#{activityId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{political,jdbcType=VARCHAR},
         #{company,jdbcType=VARCHAR}, #{job,jdbcType=VARCHAR}, #{cardFace,jdbcType=INTEGER}, #{cardBack,jdbcType=INTEGER}, #{active,jdbcType=BIT}, #{createDate,jdbcType=TIMESTAMP})
     </insert>

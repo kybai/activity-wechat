@@ -39,6 +39,9 @@
     </select>
 
     <insert id="insert" parameterType="com.activity.model.Users">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID()
+        </selectKey>
         insert into users (id, name, sex, city, province, country, head_img_url, remark,active, create_date)
         values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR},
         #{country,jdbcType=VARCHAR}, #{headImgUrl,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{active,jdbcType=BIT},

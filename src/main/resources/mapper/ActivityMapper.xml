@@ -33,7 +33,7 @@
         from activity a
         left join activity_watched w on a.id = w.activity_id
         left join activity_thumbup t on a.id = t.activity_id
-        left join activity_enroll e on a.id = e.activity_id
+        left join activity_enroll e on a.id = e.activity_id and e.active is true
         where 1 = 1
         <if test="districtId != null">
             and a.district_id = #{districtId, jdbcType=Integer}

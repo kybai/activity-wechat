@@ -33,6 +33,9 @@
     </select>
 
     <insert id="insert" parameterType="com.activity.model.UsersScore">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID()
+        </selectKey>
         insert into users_score (user_id, score, reason, activity_id, course_id, create_date)
         values (#{userId,jdbcType=INTEGER}, #{score,jdbcType=INTEGER}, #{reason,jdbcType=VARCHAR}, #{activityId,jdbcType=INTEGER},
          #{courseId,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})

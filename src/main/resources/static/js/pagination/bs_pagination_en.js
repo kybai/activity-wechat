@@ -21,7 +21,8 @@ var rsc_bs_pag = {
 };
 
 function loadPagination(data, pageID, initPageFunc, loadPageFunc) {
-    $("#" + pageID).bs_pagination({
+    var pageId = "#" + pageID;
+    $(pageId).bs_pagination({
         currentPage: data.pageNum,
         totalPages: data.pages,
         totalRows: data.total,
@@ -35,9 +36,10 @@ function loadPagination(data, pageID, initPageFunc, loadPageFunc) {
         containerClass: "",//包含按钮的class为空，原为well，有背景
         onLoad: function (event, pageData) {//分页按钮加载时
             loadPageFunc(data.list);
+            $(pageId + " " + "#nav_list_" + pageId.split("#")[1] + " li:last-child").after("<li><span class='page-total-color'>" + data.total + "条</span></li>")
         },
         onChangePage: function (event, pageData) {//分页按钮改变时
-            initPageFunc(pageData.currentPage - 1);
+            initPageFunc(pageData.currentPage);
         }
     });
 }

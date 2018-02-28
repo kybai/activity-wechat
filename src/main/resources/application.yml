@@ -7,9 +7,12 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://120.78.141.210:3306/activity?useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://120.78.141.210:3306/activity?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8
     username: root
     password: 123456
+    test-on-borrow: false
+    test-while-idle: true
+    time-between-eviction-runs-millis: 3600000
   thymeleaf:
     cache: false
   jpa:

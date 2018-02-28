@@ -23,9 +23,23 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
 
+    <select id="selectByOpenid" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from wechat_user
+        where openid = #{openid,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from wechat_user
+        where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
     <insert id="insert" parameterType="com.activity.model.WechatUser">
-        insert into wechat_user (id, openid, user_id, nickname, subscribe, union_id, remark, group_id, create_date)
-        values (#{id,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER},
+        insert into wechat_user (openid, user_id, nickname, subscribe, union_id, remark, group_id, create_date)
+        values (#{openid,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER},
         #{nickname,jdbcType=VARCHAR}, #{subscribe,jdbcType=BIT}, #{unionId,jdbcType=VARCHAR},
         #{remark,jdbcType=VARCHAR}, #{groupId,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
     </insert>

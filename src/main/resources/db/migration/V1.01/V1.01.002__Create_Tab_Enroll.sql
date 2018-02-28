@@ -1,6 +1,6 @@
 DROP TABLE if EXISTS activity_enroll;
 CREATE TABLE `activity_enroll` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT  COMMENT '编号',
   `activity_id` int(11) NOT NULL COMMENT '活动编号',
   `user_id` int(11) NOT NULL COMMENT '用户编号',
   `name` varchar(32) DEFAULT NULL COMMENT '姓名',
