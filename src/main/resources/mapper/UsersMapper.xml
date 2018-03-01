@@ -26,6 +26,13 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
 
+    <select id="selectUserScore" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select u.id, u.name, u.head_img_url, u.active, u.create_date, IFNULL(SUM(us.score), 0) score
+        from users u
+        left join users_score us on u.id = us.user_id
+        where u.id = #{id,jdbcType=INTEGER}
+    </select>
+
     <select id="selectList" resultMap="BaseResultMap" parameterType="com.activity.model.Users">
         select u.id, u.name, u.head_img_url, u.active, u.create_date, SUM(us.score) score
         from users u

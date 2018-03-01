@@ -4,12 +4,17 @@ import com.activity.mapper.ActivityCourseMapper;
 import com.activity.mapper.ActivityDescriptionMapper;
 import com.activity.mapper.ActivityMapper;
 import com.activity.mapper.ActivityTagMapper;
+import com.activity.mapper.WechatUserMapper;
 import com.activity.model.Activity;
 import com.activity.model.ActivityCourse;
 import com.activity.model.ActivityDescription;
 import com.activity.model.ActivityTag;
+import com.activity.model.Users;
+import com.activity.model.WechatUser;
 import com.activity.pojo.ActivityPojo;
 import com.activity.pojo.BasePageList;
+import com.activity.pojo.WechatActivityDTO;
+import com.activity.pojo.WechatPojo;
 import com.activity.service.ActivityService;
 import com.activity.utils.DateUtils;
 import com.github.pagehelper.PageHelper;
@@ -39,6 +44,9 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Autowired
     private ActivityDescriptionMapper descriptionMapper;
+
+    @Autowired
+    private WechatUserMapper wechatUserMapper;
 
     @Override
     public Activity selectOne(Integer id) {
@@ -112,8 +120,8 @@ public class ActivityServiceImpl implements ActivityService {
         //1.更新活动
         Activity activityRecord = pojo.getActivity();
         Activity activity = activityMapper.selectOne(activityRecord.getId());
-        activityMapper.update(new Activity(activity.getId(), activityRecord.getTitle(), activityRecord.getDistrictId(), activityRecord.getAddress(),
-                activityRecord.getBeginTime(), activityRecord.getEndTime(), activityRecord.getMaxLimit(), activityRecord.getUploadFileId(), activity.getActive()));
+        activityMapper.update(new Activity(activity.getId(), activityRecord.getTitle(), activityRecord.getDistrictId(), activityRecord.getAddress(), activityRecord.getBeginTime(), activityRecord
+                .getEndTime(), activityRecord.getMaxLimit(), activityRecord.getUploadFileId(), activity.getActive()));
 
         //2.更新活动标签
         ActivityTag tagRecord = pojo.getActivityTag();
@@ -157,5 +165,21 @@ public class ActivityServiceImpl implements ActivityService {
     public ActivityTag selectTag(ActivityTag record) {
         List<ActivityTag> list = activityTagMapper.selectList(record);
         return ObjectUtils.isEmpty(list) ? new ActivityTag() : list.get(0);
+    }
+
+    @Override
+    public List<WechatActivityDTO> selectWechatList(WechatPojo pojo) {
+        return activityMapper.selectWechatList(new Activity(pojo.getDistrictId(), pojo.getActive(), DateUtils.getCurrentTimestamp()));
+    }
+
+    @Override
+    public List<WechatActivityDTO> selectWechatReviewList(WechatPojo pojo) {
+        return activityMapper.selectWechatReviewList(new Activity(pojo.getDistrictId(), pojo.getActive(), DateUtils.getCurrentTimestamp()));
+    }
+
+    @Override
+    public List<WechatActivityDTO> selectUserWechatList(WechatPojo pojo) {
+        WechatUser user = wechatUserMapper.selectByOpenid(pojo.getOpenid());
+        return activityMapper.selectUserWechatList(new Users(user.getId(), Boolean.TRUE, pojo.getDistrictId()));
     }
 }

@@ -11,6 +11,8 @@ public interface UsersService {
 
     public Users selectOne(Integer id);
 
+    public Users selectUserScore(Integer id);
+
     public PageInfo<Users> findList(BasePageList page);
 
     public int insert(Users users);

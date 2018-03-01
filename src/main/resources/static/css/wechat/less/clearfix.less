@@ -1,0 +1,19 @@
+/**
+ * 清除浮动 兼容标准浏览器
+ */
+.clearfix {
+  zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: " ";
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.cf {
+    &:extend(.clearfix all);
+}

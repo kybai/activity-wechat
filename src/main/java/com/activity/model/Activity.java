@@ -1,6 +1,12 @@
 package com.activity.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -38,18 +44,6 @@ public class Activity implements Serializable {
     //报名人数
     private int enrollTotal;
 
-    public Activity(Integer id, String title, Integer districtId, String address, Timestamp beginTime, Timestamp endTime, Integer maxLimit, Integer uploadFileId, Boolean active) {
-        this.id = id;
-        this.title = title;
-        this.districtId = districtId;
-        this.address = address;
-        this.beginTime = beginTime;
-        this.endTime = endTime;
-        this.maxLimit = maxLimit;
-        this.uploadFileId = uploadFileId;
-        this.active = active;
-    }
-
     public Activity() {
     }
 
@@ -60,6 +54,24 @@ public class Activity implements Serializable {
     public Activity(String title, Integer districtId) {
         this.title = title;
         this.districtId = districtId;
+    }
+
+    public Activity(Integer districtId, Boolean active, Timestamp endTime) {
+        this.districtId = districtId;
+        this.active = active;
+        this.endTime = endTime;
+    }
+
+    public Activity(Integer id, String title, Integer districtId, String address, Timestamp beginTime, Timestamp endTime, Integer maxLimit, Integer uploadFileId, Boolean active) {
+        this.id = id;
+        this.title = title;
+        this.districtId = districtId;
+        this.address = address;
+        this.beginTime = beginTime;
+        this.endTime = endTime;
+        this.maxLimit = maxLimit;
+        this.uploadFileId = uploadFileId;
+        this.active = active;
     }
 
     @Id

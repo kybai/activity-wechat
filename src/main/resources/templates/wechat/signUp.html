@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>活动报名</title>
+    <link th:href="@{/css/wechat/index.css}" rel="stylesheet"/>
+</head>
+<body>
+<div id="header">
+    <a href="javascript:history.back(-1);" class="goback"></a>
+</div>
+<div class="main sign box">
+    <h2 class="title">法定放假啊速度就发烧的加法的发烧反倒是</h2>
+    <div class="course">
+        <div class="course-time"><i class="circle"></i>2018-01-23至2018-01-31 每周二 18:30-20:00</div>
+        <div class="course-list">
+            <i class="circle"></i>
+            <ul class="fl">
+                <li>常熟市图书馆第九教室（剪纸）</li>
+                <li>常熟市图书馆第九教室（剪纸）</li>
+            </ul>
+        </div>
+    </div>
+    <div class="contact">
+        <h4>联系方式</h4>
+        <div class="formlist">
+            <form>
+                <div class="form-li">
+                    <label>姓名</label>
+                    <input type="text" name="name" id="name" placeholder="请填写真实姓名"/>
+                </div>
+                <div class="form-li">
+                    <label>性别</label>
+                    <div class="choice">
+                        <label class="radio">男<input id="man" type="radio" name="sex" value="1" checked><i></i></label>
+                        <label class="radio">女<input id="woman" type="radio" name="sex" value="2"><i></i></label>
+                    </div>
+                </div>
+                <div class="form-li">
+                    <label>证件</label>
+                    <input type="text" name="card" id="cardFront" placeholder="请选择上传身份证人像面照片"/>
+                </div>
+                <div class="form-li">
+                    <label></label>
+                    <input type="text" name="card" id="cardBack" placeholder="请选择上传身份证国徽面照片"/>
+                </div>
+                <div class="form-li">
+                    <label>政治面貌</label>
+                    <input type="text" name="political" id="political" placeholder="请填写政治面貌"/>
+                </div>
+                <div class="form-li">
+                    <label>联系电话</label>
+                    <input type="text" name="tel" id="tel" placeholder="非常重要，请准确填写"/>
+                </div>
+                <div class="form-li">
+                    <label>工作单位</label>
+                    <input type="text" name="company" id="company" placeholder="请填写您所在工作单位名称"/>
+                </div>
+                <div class="form-li">
+                    <label>职务</label>
+                    <input type="text" name="work" id="work" placeholder="请填写您所在工作单位的职务"/>
+                </div>
+                <div class="form-li intro">
+                    <label>个人简介</label>
+                    <input type="textarea" name="introduce" id="introduce" placeholder="请用简短的文字介绍自己（30字以内）"/>
+                </div>
+            </form>
+            <div class="error-tip none">请填写真实姓名</div>
+        </div>
+        <div class="submit J_submit"><span>确定</span></div>
+    </div>
+</div>
+
+<script th:src="@{/js/jQuery/jQuery-2.1.4.min.js}"></script>
+<script th:src="@{/js/wechat/signUp.js}"></script>
+</body>
+</html>

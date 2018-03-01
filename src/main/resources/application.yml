@@ -30,6 +30,7 @@ logging:
     com.activity: debug
 
 wechat:
+  uri: http://kybai.s1.natapp.cc/activity
   mp:
     appId: wx84a8649ef7a1171d
     secret: 7082b585c84f6b346fe9478ebfe7f382

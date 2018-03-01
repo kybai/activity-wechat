@@ -36,12 +36,61 @@
         left join activity_enroll e on a.id = e.activity_id and e.active is true
         where 1 = 1
         <if test="districtId != null">
-            and a.district_id = #{districtId, jdbcType=Integer}
+            and a.district_id = #{districtId, jdbcType=INTEGER}
         </if>
         <if test="title != null and title != ''">
             and a.title like concat('%', #{title, jdbcType=VARCHAR}, '%')
         </if>
         group by a.id
+        order by a.id desc
+    </select>
+
+    <!-- 未结束活动列表: 活动列表 -->
+    <select id="selectWechatList" resultType="com.activity.pojo.WechatActivityDTO" parameterType="com.activity.model.Activity">
+        select a.id, a.title, a.address, a.begin_time beginTime, a.end_time endTime, f.file_path coverPath
+        from activity a
+        inner join upload_file f on f.id = a.upload_file_id
+        where 1 = 1 and a.end_time &gt; now()
+        <if test="districtId!=null">
+            and a.district_id = #{districtId,jdbcType=INTEGER}
+        </if>
+        <if test="active!=null">
+            and a.active = #{active,jdbcType=BIT}
+        </if>
+        order by a.id desc
+    </select>
+
+    <!-- 已结束活动列表: 活动回顾 -->
+    <select id="selectWechatReviewList" resultType="com.activity.pojo.WechatActivityDTO" parameterType="com.activity.model.Activity">
+        select a.id, a.title, a.address, a.begin_time beginTime, a.end_time endTime, f.file_path coverPath
+        from activity a
+        inner join upload_file f on f.id = a.upload_file_id
+        where 1 = 1 and a.end_time &lt; now()
+        <if test="districtId!=null">
+            and a.district_id = #{districtId,jdbcType=INTEGER}
+        </if>
+        <if test="active!=null">
+            and a.active = #{active,jdbcType=BIT}
+        </if>
+        order by a.id desc
+    </select>
+
+    <!-- 个人参与活动列表 -->
+    <select id="selectUserWechatList" resultType="com.activity.pojo.WechatActivityDTO" parameterType="com.activity.model.Users">
+        select a.id, a.title, a.address, a.begin_time beginTime, a.end_time endTime, f.file_path coverPath
+        from activity a
+        inner join activity_enroll e on e.activity_id = a.id
+        inner join upload_file f on f.id = a.upload_file_id
+        where 1 = 1
+        <if test="id!=null">
+            and e.user_id = #{id,jdbcType=INTEGER}
+        </if>
+        <if test="districtId!=null">
+            and a.district_id = #{districtId,jdbcType=INTEGER}
+        </if>
+        <if test="active!=null">
+            and e.active = #{active,jdbcType=BIT}
+        </if>
         order by a.id desc
     </select>
 

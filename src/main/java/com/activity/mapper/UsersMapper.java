@@ -8,6 +8,8 @@ public interface UsersMapper {
 
     Users selectOne(Integer id);
 
+    Users selectUserScore(Integer id);
+
     List<Users> selectList(Users users);
 
     int insert(Users record);

@@ -26,6 +26,13 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
+    public Users selectUserScore(Integer id) {
+        return usersMapper.selectUserScore(id);
+    }
+
+
+
+    @Override
     public PageInfo<Users> findList(BasePageList page) {
         PageHelper.startPage(page.getCurrentPage(), page.getPageSize());
         return new PageInfo<>(usersMapper.selectList(new Users(page.getName())));

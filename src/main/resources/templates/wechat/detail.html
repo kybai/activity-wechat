@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>活动详情</title>
+    <link th:href="@{/css/wechat/index.css}" rel="stylesheet"/>
+</head>
+<body>
+<div id="header">
+    <a href="javascript:history.back(-1);" class="goback"></a>
+</div>
+<div class="main detail">
+    <div class="img-box">
+        <img th:src="@{/img/wechat/photo.jpg}"/>
+    </div>
+    <div class="box">
+        <h2 class="title">第五期<br/>英语口语培训圆满结束</h2>
+        <div class="course">
+            <div class="course-time"><i class="circle"></i>2018-01-23至2018-01-31 每周二 18:30-20:00</div>
+            <div class="course-address"><i class="circle"></i>苏州市吴中区</div>
+        </div>
+    </div>
+
+    <div class="act box">
+        <div class="act-name">
+            <div class="fl">活动简介</div>
+            <div class="fr">
+                <em class="views"><i class="icon-view"></i>800</em>
+                <em class="collect"><i class="icon-collect"></i>800</em>
+            </div>
+        </div>
+        <div class="act-info">asdfjasdfdafasfdj</div>
+        <div class="enter isfull">
+            <p>剩余名额<b>25</b></p>
+            <span>名额已满</span>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/jQuery/jQuery-2.1.4.min.js}"></script>
+</body>
+</html>

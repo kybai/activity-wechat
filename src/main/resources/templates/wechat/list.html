@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <title>活动列表</title>
+    <link th:href="@{/js/wechat/slider/swipeslider.css}" rel="stylesheet"/>
+    <link th:href="@{/css/wechat/index.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="main list">
+    <div class="top box">
+        <div class="title">
+            <img th:src="@{/img/wechat/logo.png}" class="logo"/>
+            <div class="add">
+                <select id="district" onchange="loadData();">
+                    <option value="">全部</option>
+                    <option th:each="d : ${districts}" th:value="${d.id}" th:utext="${d.name}"></option>
+                </select>
+            </div>
+            <input type="hidden" id="openid" th:value="${openid}" readonly="readonly"/>
+        </div>
+        <div class="slider">
+            <div id="full_feature" class="swipslider">
+                <ul class="sw-slides" id="cover">
+                    <li class="sw-slide" th:each="f : ${fileList}">
+                        <img th:src="${f.coverPath}"/>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab">
+        <div class="tab-li box">
+            <ul id="title-ul">
+                <li id="actList" class="title-li active" onclick="showTabAndLoadData(this);"><span>活动列表</span></li>
+                <li id="actReview" class="title-li" onclick="showTabAndLoadData(this);"><span>活动回顾</span></li>
+                <li id="actMy" class="title-li" onclick="showTabAndLoadData(this);"><span>我的</span></li>
+            </ul>
+        </div>
+        <div id="tab-ul" class="tab-con">
+            <div id="actListTab" class="act-list box">
+                <div class="act-info" id="actListInfo"></div>
+            </div>
+            <div id="actReviewTab" class="act-review box none">
+                <div class="act-info" id="actReviewListInfo"></div>
+            </div>
+            <div id="actMyTab" class="my none">
+                <div class="my-top box">
+                    <div class="fl">
+                        <span>Bobby</span>
+                        <p>我的积分：<b th:utext="${user.score}"></b>
+                            <a href="my.html" class="icon-left"></a>
+                        </p>
+                    </div>
+                    <div class="fr">
+                        <img th:src="${user.headImgUrl}"/>
+                    </div>
+                </div>
+                <div class="my-class">
+                    <span class="title">我参加的活动</span>
+                    <div th:if="${#lists.isEmpty(mylist)}" class="no-class">
+                        <img th:src="@{/img/wechat/nojoin.png}"/>
+                        <span>尚未参加任何活动</span>
+                    </div>
+                    <div th:if="${not #lists.isEmpty(mylist)}" class="my-list none">
+                        <ul class="scroll-tab">
+                            <li th:each="m:${mylist}">
+                                <div class="act-info">
+                                    <a th:href="@{'/wechat/activity/info/'+${m}}">
+                                        <img class="img-box" th:src="${m.coverPath}"/>
+                                        <div class="title" th:utext="${m.title}"></div>
+                                        <div class="info">
+                                            <div class="info-time" th:utext="${#dates.format(m.beginTime,'MM月dd日')+'-'+#dates.format(m.endTime,'MM月dd日')}"></div>
+                                            <div class="info-address" th:utext="${m.address}"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/wechatJs"></div>
+<script th:src="@{/js/wechat/slider/swipeslider.js}" charset="utf-8"></script>
+<script th:src="@{/js/wechat/list.js}" charset="utf-8"></script>
+<script type="text/javascript">
+    $(window).load(function () {
+        $('#full_feature').swipeslider();
+    });
+</script>
+</body>
+</html>

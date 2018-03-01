@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>我的积分</title>
+    <link th:href="@{/css/wechat/index.css}" rel="stylesheet"/>
+</head>
+<body>
+<div id="header">
+    <a href="javascript:history.back(-1);" class="goback"></a>
+</div>
+<div class="main score">
+    <div class="myscore box"><b>10</b><span>个积分</span></div>
+    <img class="banner" th:src="@{/img/wechat/banner.jpg}"/>
+    <div class="score-info box">
+        <span class="title">积分明细</span>
+        <p class="noscore none">暂无积分</p>
+        <ul class="score-list">
+            <li>
+                <div class="fl">
+                    <span>参加课程：剪纸</span>
+                    <p>2018-02-22 10:17:56</p>
+                </div>
+                <div class="fr"><span>+1</span></div>
+            </li>
+            <li>
+                <div class="fl">
+                    <span>参加课程：剪纸</span>
+                    <p>2018-02-22 10:17:56</p>
+                </div>
+                <div class="fr"><span>+1</span></div>
+            </li>
+            <li>
+                <div class="fl">
+                    <span>参加课程：剪纸</span>
+                    <p>2018-02-22 10:17:56</p>
+                </div>
+                <div class="fr"><span>+1</span></div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script th:src="@{/js/jQuery/jQuery-2.1.4.min.js}"></script>
+</body>
+</html>

@@ -36,12 +36,25 @@ public class Users implements Serializable {
 
     //积分--非数据库字段
     private Integer score;
+    //活动区域
+    private Integer districtId;
 
     public Users() {
     }
 
     public Users(String name) {
         this.name = name;
+    }
+
+    public Users(Integer id, Boolean active) {
+        this.id = id;
+        this.active = active;
+    }
+
+    public Users(Integer id, Boolean active, Integer districtId) {
+        this.id = id;
+        this.active = active;
+        this.districtId = districtId;
     }
 
     public Users(String name, String sex, String city, String province, String country, String headImgUrl, Boolean active, Timestamp createDate) {
@@ -112,6 +125,11 @@ public class Users implements Serializable {
         return score;
     }
 
+    @Transient
+    public Integer getDistrictId() {
+        return districtId;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -154,5 +172,9 @@ public class Users implements Serializable {
 
     public void setScore(Integer score) {
         this.score = score;
+    }
+
+    public void setDistrictId(Integer districtId) {
+        this.districtId = districtId;
     }
 }

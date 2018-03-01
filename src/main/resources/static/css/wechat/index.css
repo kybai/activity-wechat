@@ -1,0 +1,739 @@
+body{
+    font-family: '微软雅黑';
+    font-size: 14px;
+    background: #f9f9f9;
+}
+em, i {
+    font-style: normal;
+}
+a{
+    text-decoration: none;
+    color: #000;
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+ul,li{
+    list-style: none;
+}
+.pb10{
+    padding-bottom: 10px;
+}
+.none {
+    display: none !important;
+}
+
+.main{
+    width: 100%;
+    height: 100%;
+}
+
+img{
+    width: 100%;
+    height: auto;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.onfocus{
+    border: 1px solid #feec00;
+}
+.error-tip{
+    background: #000;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 80%;
+    z-index: 100;
+    position: fixed;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+}
+
+.box{
+    background: #fff;
+    overflow: hidden;
+}
+i.circle{
+    display: inline-block;
+    margin: 9px 10px 0 0;
+    width: 9px;
+    height: 9px;
+    border: 1px solid #000;
+    background: #feec00;
+    border-radius: 9px;
+}
+.btn{
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    border: 1px solid #000;   
+    border-radius: 5px;
+}
+.fixed{
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+}
+
+.scroll-tab {
+    font-size: 0;
+    display: block;
+    width: 100%;
+    padding-right: 10px;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+    z-index: 3;
+}
+.scroll-tab li {
+    display: inline-block;
+    position: relative;
+    z-index: 2;
+}
+
+/*列表页*/
+.list .top{
+    width: 100%;
+}
+.list .top .title{
+    width: 90%;
+    padding: 0 5% 0 0;
+    margin-left: 5%;
+    height: 40px;
+    line-height: 40px;
+    border-bottom:  1px solid #e5e5e5;
+}
+.list .top .title .logo{
+    float: left;
+    width: 40%;
+    margin-top: 10px;
+}
+
+.list .top .title .add{
+    float: right;
+}
+.list .top .title .add select{
+    background: transparent;
+    border: none;
+    appearance:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+    background: url("../../img/wechat/down.png") no-repeat scroll right center transparent;
+    background-size: 14px 7px;
+    padding-right: 10px;
+}
+
+.list .top .slider{
+    border-bottom:  1px solid #e5e5e5;
+    margin-left: 5%;
+    padding: 20px 5% 20px 0;
+}
+.list .top .slider img{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.list .tab{
+    width: 100%;
+}
+.list .tab .tab-li{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    padding-bottom: 10px;
+}
+.list .tab .tab-li ul{
+    width: 90%;
+    padding: 0 5%;
+    border-bottom: 1px solid #e5e5e5;
+    overflow: hidden;
+}
+.list .tab .tab-li.fixed{
+    top: 41px;
+}
+.list .tab .tab-li li{
+    float: left;
+    width: 33.333%;
+    text-align: center;
+}
+.list .tab .tab-li li span{
+    display: inline-block;
+    height: 36px;
+}
+.list .tab .tab-li li.active span{
+    border-bottom: 4px solid #feec00;
+}
+.list .tab .tab-con .act-list,.list .tab .tab-con .act-review{
+    width: 90%;
+    padding: 0 5% 20px 5%;
+}
+.list .tab .tab-con .act-info{
+    width: 100%;
+    margin-top: 25px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0px 5px 10px #c3c3c3;
+    overflow: hidden;
+}
+.list .tab .tab-con .act-info img{
+    width: 100%;
+    height: 230px;
+}
+.list .tab .tab-con .act-info .title{
+    width: 94%;
+    padding: 0 3%;
+    font-size: 16px;
+}
+.list .tab .tab-con .act-info .info{
+    width: 94%;
+    padding: 5px 3% 15px 3%;
+    color: #999;
+    font-size: 12px;
+}
+.list .tab .tab-con .act-info .info .info-time{
+    float: left;
+}
+.list .tab .tab-con .act-info .info .info-time::before{
+    display: inline-block;
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: url('../../img/wechat/time.png') no-repeat;
+    background-size: contain;
+    margin-right: 5px;
+}
+.list .tab .tab-con .act-info .info .info-address{
+    display: inline-block;
+    margin-left: 20px;
+}
+.list .tab .tab-con .act-info .info .info-address::before{
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: url('../../img/wechat/adress.png') no-repeat;
+    background-size: contain;
+    margin-right: 5px;
+}
+.list .tab .tab-con .my{
+    width: 100%;
+    padding-bottom: 30px;
+}
+.list .tab .tab-con .my .my-top{
+    width: 90%;
+    padding: 20px 5%;
+}
+.list .tab .tab-con .my .my-top .fl{
+    width: 60%;
+    overflow: hidden;
+}
+.list .tab .tab-con .my .my-top .fl span{
+    font-size: 22px;
+    font-weight: bold;
+    position: relative;
+    background: url('../../img/wechat/line.png') repeat-x;
+    background-position-y: 18px;
+}
+.list .tab .tab-con .my .my-top .fl p{
+    margin-top: 20px;
+}
+.icon-left{
+    margin-left: 10px;
+    display: inline-block;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+    width: 7px;
+    height: 7px;
+    transform: rotate(-45deg);
+}
+.list .tab .tab-con .my .my-top .fr img{
+    border: 1px solid #feec00;
+    width: 78px;
+    height: 78px;
+    border-radius: 78px;
+    overflow: hidden;
+}
+.list .tab .tab-con .my .my-class{
+    margin-top: 20px;
+    width: 100%;
+    overflow: hidden;
+}
+.list .tab .tab-con .my .my-class .no-class{
+    text-align: center;
+    color: #999;
+    line-height: 40px;
+}
+.list .tab .tab-con .my .my-class .no-class img{
+    width: 20%;
+    margin: 50px auto 0;
+    display: block;
+}
+.list .tab .tab-con .my .my-class span.title{
+    margin-left: 5%;
+    font-size: 18px;
+    background: url('../../img/wechat/line.png') repeat-x;
+    background-position-y: 17px;
+}
+.list .tab .tab-con .my .my-class .my-list li{
+    width: 90%;
+    margin-left: 5%;
+    padding-bottom: 20px;
+}
+.list .tab .tab-con .my .my-class .act-info{
+    float: left;
+}
+
+/*我的积分*/
+.score .myscore{
+    width: 90%;
+    padding: 0 5% 30px 5%;
+    text-align: center;
+}
+.score .myscore b{
+    font-size: 50px;
+    line-height: 50px;
+    font-weight: bold;
+    color: #ca0718;
+}
+.score .myscore span{
+    display: block;
+    width: 100px;
+    color: #999;
+    margin: 0 auto;
+}
+.score .myscore span::before{
+    content: '';
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    background: url('../../img/wechat/money.png') no-repeat;
+    background-size: contain;
+    position: relative;
+    top: 2px;
+    margin-right: 5px;
+}
+.score .banner{
+    margin: 15px 0;
+}
+.score .score-info{
+    width: 100%;
+}
+.score .score-info span.title{
+    display: block;
+    font-size: 18px;
+    height: 44px;
+    line-height: 44px;
+    border-bottom: 1px solid #e5e5e5;
+    margin-left: 5%;
+}
+.score .score-info .noscore{
+    margin-left: 5%;
+    line-height: 40px;
+}
+.score .score-info .score-list{
+    margin-left: 5%;
+}
+.score .score-info .score-list li{
+    height: 50px;
+    border-bottom: 1px solid #e5e5e5;
+}
+.score .score-info .score-list li:last-child{
+    border: none;
+}
+.score .score-info .score-list li .fl{
+    width: 80%;
+    margin-top: 6px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.score .score-info .score-list li .fl p{
+    color: #999;
+    font-size: 11px;
+}
+.score .score-info .score-list li .fr{
+    margin-right: 5%;
+    color: #ca0718;
+    font-weight: bold;
+    line-height: 50px;
+}
+
+/*活动报名*/
+.sign .course{
+    width: 95%;
+    padding: 5px 0;
+    margin-left: 5%;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+}
+.sign .contact{
+    width: 95%;
+    margin-left: 5%;
+    margin-top: 10px;
+    padding-bottom: 80px;
+}
+.sign .contact h4{
+    font-size: 18px;
+    height: 40px;
+    line-height: 40px;
+    font-weight: normal;
+}
+.sign .contact .formlist{
+    overflow: hidden;
+}
+.sign .contact .form-li{
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #e5e5e5;
+}
+.sign .contact .form-li.intro{
+    height: 82px;
+}
+.sign .contact .form-li label{
+    float: left;
+    width: 20%;
+}
+.sign .contact .form-li input{
+    width: auto;
+    border: none;
+    float: right;
+    margin-right: 5%;
+}
+.sign .contact .form-li input[type=text]{
+    width: 75%;
+    height: 40px;
+    line-height: 40px;
+}
+.sign .contact .form-li input[type=radio]{
+    position: absolute;  
+    left: -9999px;  
+    height: 40px;
+    line-height: 40px;
+} 
+.choice{  
+    position: relative;  
+}  
+.choice .radio{  
+    position: relative;  
+    display: inline-block;  
+    padding-left: 20px;  
+    cursor: pointer;  
+}  
+.choice .radio i{  
+    display: block;  
+    position: absolute;  
+    top: 14px;  
+    left: 0;  
+    width: 9px;  
+    height: 9px;  
+    outline: 0;  
+    border: 1px solid #000;  
+    background: #fff;  
+    border-radius: 50%;  
+}  
+.choice .radio input:checked+i{  
+    border-color: #000;  
+}  
+.choice .radio input+i:after{  
+    position: absolute;  
+    content: '';  
+    top: 0;  
+    left: 0;  
+    width: 9px;  
+    height: 9px;  
+    border-radius: 50%;  
+    background-color: #feec00;  
+    opacity: 0;  
+    transition: opacity .1s;  
+    -webkit-transition: opacity .1s;  
+}  
+.choice .radio input:checked+i:after{  
+    opacity: 1;  
+}  
+.sign .contact .form-li input[type=textarea]{
+    width: 75%;
+    height: 82px;
+    line-height: 27px;
+}
+.sign .contact .submit{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 90%;
+    padding: 10px 5%;
+    text-align: center;
+    background: #fff;
+}
+.sign .contact .submit span{
+    display: block;
+    font-size: 16px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 5px;
+    background: linear-gradient(to right,#feec01, #fff19e);
+}
+
+/*报名成功*/
+#header{
+    width: 90%;
+    height: 44px;
+    padding: 0 5%;
+    overflow: hidden;
+    background: #fff;
+}
+.goback{
+    display: block;
+    width: 16px;
+    height: 22px;
+    margin-top: 11px;
+    background: url(../../img/wechat/goback.png) no-repeat;
+    background-size: contain;
+}
+
+.main h2{
+    width: 90%;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 38px;
+    padding: 10px 5%;
+}
+.main p.acinfo{
+    width: 90%;
+    padding: 20px 5%;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+}
+.main .link{
+    width: 90%;
+    padding: 20px 5%;
+    overflow: hidden;
+}
+.main .link a{
+    width: 45%;
+    display: inline-block;
+}
+
+/*课程安排*/
+.class .title{
+    font-size: 18px;
+    padding: 10px 5%;
+}
+.class .action{
+    width: 100%;
+    height: 45px;
+    line-height: 45px;
+    background: #ffd62b;
+    text-align: center;
+}
+.class ul{ 
+   width: 100%; 
+   margin-top: 20px;
+}
+.class li{
+    width: 90%;
+    margin-left: 5%;
+    border-bottom: 1px solid #e5e5e5;
+    height: 50px;
+    line-height: 50px;
+}
+.class li:first-child{
+    border-top: 1px solid #e5e5e5;
+}
+.class li p{
+    float: left;
+    width: 70%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.class li span{
+    float: right;
+    display: block;
+    background: #e5e5e5;
+    width: 65px;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 15px;
+}
+.class li span.orange{
+    background: #ff0000;
+    color: #fff;
+}
+.class li span.green{
+    background: #22ac38;
+    color: #fff;
+}
+.class .sign-aciton{
+    width: 90%;
+    margin: 20px 0 0 5%;
+}
+
+.overbg{
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .4);
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.sign-aciton-con{
+    width: 70%;
+    height: auto;
+    z-index: 10;
+    position: fixed;
+    top: 30%;
+    left: 15%;
+}
+.sign-aciton-info{
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px 5%;
+}
+.sign-aciton-info .title{
+    font-size: 20px;
+    font-weight: bold;
+    background: url('../../img/wechat/line.png') repeat-x;
+    background-position-y: 19px;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translate(-50%, 50%)
+}
+.sign-aciton-info p{
+    line-height: 24px;
+    margin-top: 50px;
+}
+.close{
+    width: 45px;
+    height: 45px;
+    background: url(../../img/wechat/x.png) no-repeat;
+    background-size: contain;
+    position: relative;
+    margin: 20px auto;
+}
+.act-address{
+    margin-top: 35px;
+    padding: 10px 5% 20px 5%;
+    background: #fff;
+}
+.act-address span{
+    font-size: 18px;
+}
+.act-address p{
+    color: #999;
+    margin-top: 10px;
+}
+
+/*活动详情*/
+.detail .img-box{
+    width: 100%;
+    height: 230px;
+}
+.detail .img-box img{
+    width: 100%;
+    height: 100%;
+}
+.course{
+    width: 90%;
+    padding: 0 5% 10px 5%;
+    line-height: 30px;
+}
+.course div{
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.detail .act{
+    margin-top: 10px;
+}
+.detail .act .act-name{
+    width: 95%;
+    height: 43px;
+    line-height: 43px;
+    margin-left: 5%;
+    border-bottom: 1px solid #e5e5e5;
+}
+.detail .act .act-name .views{
+    display: inline-block;
+    margin-right: 20px;
+}
+.detail .act .act-name .collect{
+    margin-right: 20px;
+}
+i.icon-view{
+    display: inline-block;
+    margin-right: 5px;
+    width: 18px;
+    height: 10px;
+    margin-top: 15px;
+    background: url(../../img/wechat/eye.png) no-repeat;
+    background-size: contain;
+}
+i.icon-collect{
+    display: inline-block;
+    margin-right: 5px;
+    width: 11px;
+    height: 10px;
+    margin-top: 15px;
+    background: url(../../img/wechat/nocollect.png) no-repeat;
+    background-size: contain;
+}
+i.icon-collect.active{
+    background: url(../../img/wechat/collect.png) no-repeat;
+    background-size: contain;
+}
+.detail .act .act-info{
+    width: 90%;
+    padding: 20px 5%;
+    color: #999;
+}
+.detail .enter{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 90%;
+    padding: 10px 5%;
+    background: #fff;
+    height: 55px;
+    line-height: 55px;
+    border-top: 1px solid #e5e5e5;
+}
+.detail .enter p{
+    float: left;
+}
+.detail .enter.isfull b{
+    color: red;
+}
+.detail .enter b{
+    margin-left: 5px;
+}
+.detail .enter span{
+    text-align: center;
+    float: right;
+    display: block;
+    width: 140px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 5px;
+    background: linear-gradient(to right,#feec01, #fff19e);
+}
+.detail .enter.isfull span{
+    color: #fff;
+    background: linear-gradient(to right,#b1b1b1, #dad9da);
+}

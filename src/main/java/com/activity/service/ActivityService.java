@@ -6,6 +6,8 @@ import com.activity.model.ActivityDescription;
 import com.activity.model.ActivityTag;
 import com.activity.pojo.ActivityPojo;
 import com.activity.pojo.BasePageList;
+import com.activity.pojo.WechatActivityDTO;
+import com.activity.pojo.WechatPojo;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -15,19 +17,19 @@ import java.util.List;
  */
 public interface ActivityService {
 
-    public int insert(Activity activity);
+    int insert(Activity activity);
 
-    public int update(Activity activity);
+    int update(Activity activity);
 
-    public Activity selectOne(Integer id);
+    Activity selectOne(Integer id);
 
-    public List<Activity> selectList(Activity record);
+    List<Activity> selectList(Activity record);
 
-    public PageInfo<Activity> selectPage(BasePageList page);
+    PageInfo<Activity> selectPage(BasePageList page);
 
-    public void save(ActivityPojo pojo);
+    void save(ActivityPojo pojo);
 
-    public void update(ActivityPojo pojo);
+    void update(ActivityPojo pojo);
 
     /**
      * Created by ky.bai on 2018-02-23 15:49
@@ -36,7 +38,7 @@ public interface ActivityService {
      *
      * @return 活动课程列表
      */
-    public List<ActivityCourse> selectCourseList(ActivityCourse record);
+    List<ActivityCourse> selectCourseList(ActivityCourse record);
 
     /**
      * Created by ky.bai on 2018-02-23 15:29
@@ -45,7 +47,7 @@ public interface ActivityService {
      *
      * @return 活动介绍
      */
-    public ActivityDescription selectDesc(ActivityDescription record);
+    ActivityDescription selectDesc(ActivityDescription record);
 
     /**
      * Created by ky.bai on 2018-02-23 15:29
@@ -54,5 +56,32 @@ public interface ActivityService {
      *
      * @return 活动标签
      */
-    public ActivityTag selectTag(ActivityTag record);
+    ActivityTag selectTag(ActivityTag record);
+
+    /**
+     * Created by ky.bai on 2018-03-01 11:27
+     *
+     * @param pojo 参数
+     *
+     * @return 微信端活动列表(未结束)
+     */
+    List<WechatActivityDTO> selectWechatList(WechatPojo pojo);
+
+    /**
+     * Created by ky.bai on 2018-03-01 13:16
+     *
+     * @param pojo 参数
+     *
+     * @return 微信端活动回顾
+     */
+    List<WechatActivityDTO> selectWechatReviewList(WechatPojo pojo);
+
+    /**
+     * Created by ky.bai on 2018-03-01 13:16
+     *
+     * @param pojo 参数
+     *
+     * @return 微信端个人参与活动
+     */
+    List<WechatActivityDTO> selectUserWechatList(WechatPojo pojo);
 }

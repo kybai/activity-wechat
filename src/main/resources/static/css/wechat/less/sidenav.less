@@ -1,0 +1,134 @@
+//侧边栏代码 start
+#common-silder .topimg {
+    height: 146px;
+    position: relative;
+
+    a >img {
+        height: 146px;
+    }
+
+    div {
+        position: absolute!important;
+        width: 190px;
+        height: 235px;
+        left: -190px;
+        top: 0;
+        display: none;
+
+        img {
+            width: 100%;
+            height: 100%
+        }
+    }
+
+    &:hover div {
+        display: block
+    }
+
+
+}
+
+.common-silder-tools {
+    li.WeChat{
+        background:url(../../img/chujing-silder2.png) no-repeat -82px -190px;
+        width: 40px;
+        height: 46px;
+        cursor: pointer;
+        a{
+            color: #fff;
+            span{
+                padding: 0;
+                margin-right: 200px;
+                left: -199px;
+                top: 3px;
+                width: 181px;
+                height:auto;
+                background:#fff;
+                opacity: 0;
+                img{
+                    margin-top:-83px;
+                    color:#fff;
+                    width: 100%;
+                }
+                i{
+                    top: 20%;
+                    margin-top: -19px;
+                    border-top: 5px solid transparent;
+                    border-left: 5px solid #ffef5b;
+                    border-bottom: 5px solid transparent;
+                }
+            }
+        }
+        &:hover {
+            background-position:-39px -190px;
+            span {
+                left: -181px;
+                opacity:1;
+                visibility:visible;
+            }
+        }
+    }
+}
+#T_scomsilder {
+    right:0!important;
+    bottom:25px!important;
+    z-index: 1000!important;
+    li.WeChat{
+        background:url(../../img/chujing-silder2.png) no-repeat -82px -190px;
+        width: 40px;
+        height: 46px;
+        cursor: pointer;
+        a{
+            color: #fff;
+            span{
+                padding: 0;
+                margin-right: 200px;
+                margin-top:-83px;
+                left: -199px;
+                top: 3px;
+                width: 181px;
+                height:236px;
+                background:#fff;
+                opacity: 0;
+                img{
+                    color:#fff;
+                    width: 100%;
+                }
+                i{
+                    margin-top: -20px;
+                    border-top: 5px solid transparent;
+                    border-left: 5px solid #ffef5b;
+                    border-bottom: 5px solid transparent;
+                }
+            }
+        }
+        &:hover {
+            background-position:-39px -190px;
+            span {
+                left: -181px;
+                opacity:1;
+                visibility:visible;
+            }
+        }
+    }
+    #c-p {
+        background-position: -120px -47px;
+        &:hover span{
+            left: -86px;
+        }
+    }
+
+    .c-phone {
+        span {
+            left:-160px;
+        }
+
+        &:hover span {
+            left: -122px;
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
+
+//侧边栏代码 end

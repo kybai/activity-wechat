@@ -1,0 +1,39 @@
+.vip-level {
+    display: inline-block;
+    vertical-align: -12%;
+
+    width: 15px;
+    height: 15px;
+
+    background: url('../../img/member.png') no-repeat;
+    background-size: 550%;
+    &.vip-complete {
+        width: 100px;
+        height: 25px;
+        background-size: initial;
+        &.v1 {
+            background-position: -40px -114px;
+        }
+        &.v2 {
+            background-position: -40px -77px;
+        }
+        &.v3 {
+            background-position: -40px -38px;
+        }
+        &.v4 {
+            background-position: -45px 0;
+        }
+    }
+    &.v1 {
+        background-position: 0 -65px;
+    }
+    &.v2 {
+        background-position: 0 -45px;
+    }
+    &.v3 {
+        background-position: 0 -22px;
+    }
+    &.v4 {
+        background-position: 0 0;
+    }
+}
