@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
     <title>课程安排</title>
     <link th:href="@{/css/wechat/media.css}" rel="stylesheet"/>
     <link th:href="@{/css/wechat/index.css}" rel="stylesheet"/>
@@ -13,18 +13,22 @@
 </div>
 <div class="main class">
     <div class="box pb10">
-        <div class="title">打开的房间爱看书的激发了快速的叫法是发生的解放大道</div>
+        <div class="title" th:utext="${activity.title}"></div>
         <p class="action">请扫描主办方二维码签到</p>
         <ul>
-            <li><p>2018-02-22 周五 10:10:10</p><span class="green">已签到</span></li>
-            <li><p>2018-02-22 周五 10:10:10</p><span class="orange">缺勤</span></li>
-            <li><p>2018-02-22 周五 10:10:10</p><span>未开始</span></li>
+            <li th:each="c:${courses}">
+                <p th:utext="${#dates.format(c.beginTime,'yyyy-MM-dd HH:mm:ss')}"></p>
+                <span th:if="${c.signInTime!=null}" class="green">已签到</span>
+                <span class="compare-time" th:if="${c.signInTime==null}" th:attr="time=${#dates.format(c.beginTime,'yyyy-MM-dd HH:mm:ss')}"></span>
+                <!--<span class="orange">缺勤</span>-->
+                <!--<span>未开始</span>-->
+            </li>
         </ul>
         <div class="sign-aciton btn J_sign">签到说明</div>
     </div>
     <div class="act-address">
         <span>活动地址</span>
-        <p>的房间爱对方就挨打发生的发生</p>
+        <p th:utext="${activity.address}"></p>
     </div>
 </div>
 
@@ -44,7 +48,7 @@
     <div class="close"></div>
 </div>
 
-<script th:src="@{/js/jQuery/jQuery-2.1.4.min.js}"></script>
+<div th:replace="fragments/wechatJs"></div>
 <script th:src="@{/js/wechat/class.js}" charset="utf-8"></script>
 </body>
 </html>

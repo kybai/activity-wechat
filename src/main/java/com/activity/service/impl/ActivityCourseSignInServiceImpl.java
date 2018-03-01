@@ -51,4 +51,9 @@ public class ActivityCourseSignInServiceImpl implements ActivityCourseSignInServ
         //课程签到
         return activityCourseSignInMapper.insert(record);
     }
+
+    @Override
+    public List<ActivityCourseSignIn> selectSignList(ActivityCourseSignIn record) {
+        return null;
+    }
 }

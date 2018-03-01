@@ -22,6 +22,21 @@ public class ActivityCourseSignIn implements Serializable {
     //签到时间
     private Timestamp signInTime;
 
+    //活动编号 -- 非数据库字段
+    private Integer activityId;
+
+    public ActivityCourseSignIn() {
+    }
+
+    public ActivityCourseSignIn(Integer courseId) {
+        this.courseId = courseId;
+    }
+
+    public ActivityCourseSignIn(Integer userId, Integer activityId) {
+        this.userId = userId;
+        this.activityId = activityId;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -44,6 +59,11 @@ public class ActivityCourseSignIn implements Serializable {
         return signInTime;
     }
 
+    @Transient
+    public Integer getActivityId() {
+        return activityId;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -60,25 +80,7 @@ public class ActivityCourseSignIn implements Serializable {
         this.signInTime = signInTime;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ActivityCourseSignIn that = (ActivityCourseSignIn) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (courseId != null ? !courseId.equals(that.courseId) : that.courseId != null) return false;
-        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
-        return signInTime != null ? signInTime.equals(that.signInTime) : that.signInTime == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (courseId != null ? courseId.hashCode() : 0);
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
-        result = 31 * result + (signInTime != null ? signInTime.hashCode() : 0);
-        return result;
+    public void setActivityId(Integer activityId) {
+        this.activityId = activityId;
     }
 }

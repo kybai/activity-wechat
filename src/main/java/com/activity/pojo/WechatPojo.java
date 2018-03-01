@@ -1,9 +1,11 @@
 package com.activity.pojo;
 
+import java.io.Serializable;
+
 /**
  * @author Create by ky.bai on 2018-03-01 11:44
  */
-public class WechatPojo extends BasePage {
+public class WechatPojo extends BasePage implements Serializable {
     private static final long serialVersionUID = -3487649199624739070L;
 
     //用户微信openid

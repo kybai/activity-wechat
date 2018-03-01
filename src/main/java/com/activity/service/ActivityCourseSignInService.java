@@ -13,4 +13,12 @@ public interface ActivityCourseSignInService {
 
     public int insert(ActivityCourseSignIn record);
 
+    /**
+     * Created by ky.bai on 2018-03-01 17:10
+     *
+     * @param record 活动编号、用户编号
+     * @return 某活动下用户的签到记录
+     */
+    List<ActivityCourseSignIn> selectSignList(ActivityCourseSignIn record);
+
 }

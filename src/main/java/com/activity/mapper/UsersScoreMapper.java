@@ -16,4 +16,6 @@ public interface UsersScoreMapper {
     public int insert(UsersScore record);
 
     public int delete(UsersScore record);
+
+    public int insertList(List<UsersScore> list);
 }

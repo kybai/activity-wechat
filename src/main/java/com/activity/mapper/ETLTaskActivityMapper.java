@@ -9,7 +9,7 @@ public interface ETLTaskActivityMapper {
 
     public ETLTaskActivity findByName(String name);
 
-    public ETLTaskActivity save(ETLTaskActivity record);
+    public int insert(ETLTaskActivity record);
 
-    public ETLTaskActivity update(ETLTaskActivity record);
+    public int update(ETLTaskActivity record);
 }

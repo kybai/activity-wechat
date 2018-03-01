@@ -1,4 +1,5 @@
 (function(){
+    compareTime();
     var Index = {
         init: function(){
             this.clickEvent();
@@ -16,3 +17,16 @@
     };
     Index.init();
 })();
+
+function compareTime() {
+    var currentTime = new Date().valueOf();
+    $(".compare-time").each(function () {
+       var $this = $(this);
+       var time = toTimestamp($this.attr("time"));
+       if (time < currentTime) {
+           $this.addClass("orange").html("缺勤");
+       } else {
+           $this.html("未开始");
+       }
+    });
+}

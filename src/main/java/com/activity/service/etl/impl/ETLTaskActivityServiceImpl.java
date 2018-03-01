@@ -18,14 +18,14 @@ public class ETLTaskActivityServiceImpl implements ETLTaskActivityService {
     public Timestamp getLastSuccessTime(String taskName) {
         ETLTaskActivity etlTaskActivity = etlTaskActivityMapper.findByName(taskName);
 
-        if (null == etlTaskActivity) return (new Timestamp(1970, 1, 1, 0, 0, 0, 0));
+        // this time is 1970/01/01 00:00:00.000
+        if (null == etlTaskActivity) return (new Timestamp(-28800000L));
         else return etlTaskActivity.getSuccessTime();
     }
 
     @Override
     public boolean updateLastSuccessTime(String taskName, Timestamp executionTime) {
         ETLTaskActivity etlTaskActivity = etlTaskActivityMapper.findByName(taskName);
-
         if (null == etlTaskActivity) {
             // first time to execute the etl Task
             etlTaskActivity = new ETLTaskActivity();
@@ -34,16 +34,16 @@ public class ETLTaskActivityServiceImpl implements ETLTaskActivityService {
             etlTaskActivity.setSuccessTime(executionTime);
             etlTaskActivity.setSuccess(true);
 
-            etlTaskActivity = etlTaskActivityMapper.save(etlTaskActivity);
+            etlTaskActivityMapper.insert(etlTaskActivity);
         } else {
             // Not the first time, update it
             etlTaskActivity.setSuccessTime(executionTime);
             etlTaskActivity.setSuccess(true);
 
-            etlTaskActivity = etlTaskActivityMapper.update(etlTaskActivity);
+            etlTaskActivityMapper.update(etlTaskActivity);
         }
 
-        return (null != etlTaskActivity && etlTaskActivity.getId() > 0);
+        return etlTaskActivity.getId() > 0;
     }
 
 }

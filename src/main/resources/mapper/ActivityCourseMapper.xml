@@ -35,6 +35,24 @@
         </if>
     </select>
 
+    <select id="selectListByTime" resultMap="BaseResultMap" parameterType="com.activity.model.ActivityCourse">
+        select
+        <include refid="Base_Column_List"/>
+        from activity_course
+        where end_time between #{beginTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+        <if test="active != null">
+            and active = #{active,jdbcType=BIT}
+        </if>
+    </select>
+
+    <select id="selectSignList" resultType="com.activity.model.ActivityCourse" parameterType="com.activity.pojo.WechatParamDTO">
+        select c.id, c.activity_id activityId, c.name, c.begin_time beginTime, c.end_time endTime, c.active, s.sign_in_time signInTime
+        from activity_course c
+        inner join activity a on a.id = c.activity_id
+        left join activity_course_signin s on c.id = s.course_id and s.user_id = #{userId,jdbcType=INTEGER}
+        where a.id = #{activityId,jdbcType=INTEGER} and c.active = #{active,jdbcType=BIT}
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         DELETE FROM activity_course
         WHERE id = #{id,jdbcType=INTEGER}

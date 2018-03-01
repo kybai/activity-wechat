@@ -1,6 +1,13 @@
 package com.activity.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
@@ -9,7 +16,8 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "activity_course")
-public class ActivityCourse {
+public class ActivityCourse implements Serializable {
+    private static final long serialVersionUID = 1229139653216757995L;
 
     //编号
     private Integer id;
@@ -26,6 +34,9 @@ public class ActivityCourse {
     //创建时间
     private Timestamp createDate;
 
+    //用户签到时间 -- 非数据库字段
+    private Timestamp signInTime;
+
     public ActivityCourse() {
     }
 
@@ -35,6 +46,12 @@ public class ActivityCourse {
 
     public ActivityCourse(Integer activityId, Boolean active) {
         this.activityId = activityId;
+        this.active = active;
+    }
+
+    public ActivityCourse(Timestamp beginTime, Timestamp endTime, Boolean active) {
+        this.beginTime = beginTime;
+        this.endTime = endTime;
         this.active = active;
     }
 
@@ -75,6 +92,11 @@ public class ActivityCourse {
         return createDate;
     }
 
+    @Transient
+    public Timestamp getSignInTime() {
+        return signInTime;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -101,5 +123,9 @@ public class ActivityCourse {
 
     public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
+    }
+
+    public void setSignInTime(Timestamp signInTime) {
+        this.signInTime = signInTime;
     }
 }

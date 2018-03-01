@@ -26,5 +26,6 @@ public class Constants {
 
     //积分数量
     public static final Integer SCORE_SIGN_COURSE = 1;
-    public static final Integer SCORE_MISS_COURSE = -1;
+    public static final Integer SCORE_MISS_COURSE = -2;
+
 }
