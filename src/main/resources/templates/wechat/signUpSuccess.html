@@ -2,7 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
     <title>签到成功</title>
     <link th:href="@{/css/wechat/media.css}" rel="stylesheet"/>
     <link th:href="@{/css/wechat/index.css}" rel="stylesheet"/>
@@ -15,11 +18,11 @@
     <h2>签到成功</h2>
     <p class="acinfo">积分+1<br/>积分详情可在我的积分中查看</p>
     <div class="link">
-        <a class="fl btn" href="detail.html">课程安排</a>
-        <a class="fr btn" href="my.html">我的积分</a>
+        <a class="fl btn" th:href="@{/wechat/course/info/${activityId}(openid=${openid})}">课程安排</a>
+        <a class="fr btn" th:href="@{/wechat/user/score(openid=${openid})}">我的积分</a>
     </div>
 </div>
 
-<script th:src="@{/js/jQuery/jQuery-2.1.4.min.js}"></script>
+<div th:replace="fragments/wechatJs"></div>
 </body>
 </html>

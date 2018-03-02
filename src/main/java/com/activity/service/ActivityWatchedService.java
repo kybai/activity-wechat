@@ -9,10 +9,10 @@ import java.util.List;
  */
 public interface ActivityWatchedService {
 
-    public ActivityWatched selectById(Integer id);
+    ActivityWatched selectById(Integer id);
 
-    public List<ActivityWatched> selectList(ActivityWatched record);
+    List<ActivityWatched> selectList(ActivityWatched record);
 
-    public int insert(ActivityWatched record);
+    int insert(ActivityWatched record);
 
 }

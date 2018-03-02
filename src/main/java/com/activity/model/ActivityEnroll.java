@@ -54,6 +54,12 @@ public class ActivityEnroll implements Serializable {
         this.active = active;
     }
 
+    public ActivityEnroll(Integer activityId, Integer userId, Boolean active) {
+        this.activityId = activityId;
+        this.userId = userId;
+        this.active = active;
+    }
+
     public ActivityEnroll(Integer activityId, Boolean active, String name) {
         this.activityId = activityId;
         this.active = active;

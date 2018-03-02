@@ -8,11 +8,11 @@
         <result column="reason" property="reason" jdbcType="VARCHAR"/>
         <result column="activity_id" property="activityId" jdbcType="INTEGER"/>
         <result column="course_id" property="courseId" jdbcType="INTEGER"/>
-        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createDate" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, user_id, score, reason, activity_id, course_id, create_date
+        id, user_id, score, reason, activity_id, course_id, create_time
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -30,19 +30,20 @@
         <if test="userId!=null">
             and user_id = #{userId,jdbcType=INTEGER}
         </if>
+        order by id desc
     </select>
 
     <insert id="insert" parameterType="com.activity.model.UsersScore">
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
             select LAST_INSERT_ID()
         </selectKey>
-        insert into users_score (user_id, score, reason, activity_id, course_id, create_date)
+        insert into users_score (user_id, score, reason, activity_id, course_id, create_time)
         values (#{userId,jdbcType=INTEGER}, #{score,jdbcType=INTEGER}, #{reason,jdbcType=VARCHAR}, #{activityId,jdbcType=INTEGER},
         #{courseId,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
     </insert>
 
     <insert id="insertList" parameterType="java.util.List">
-        insert into users_score (user_id, score, reason, activity_id, course_id, create_date)
+        insert into users_score (user_id, score, reason, activity_id, course_id, create_time)
         values
         <foreach collection="list" item="item" separator=",">
             (#{item.userId,jdbcType=INTEGER}, #{item.score,jdbcType=INTEGER}, #{item.reason,jdbcType=VARCHAR}, #{item.activityId,jdbcType=INTEGER},

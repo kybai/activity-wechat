@@ -15,16 +15,18 @@
             <div class="add">
                 <select id="district" onchange="loadData();">
                     <option value="">全部</option>
-                    <option th:each="d : ${districts}" th:value="${d.id}" th:utext="${d.name}"></option>
+                    <option th:each="d:${districts}" th:value="${d.id}" th:utext="${d.name}"></option>
                 </select>
             </div>
             <input type="hidden" id="openid" th:value="${openid}" readonly="readonly"/>
         </div>
-        <div class="slider">
+        <div id="slider" class="slider">
             <div id="full_feature" class="swipslider">
                 <ul class="sw-slides" id="cover">
-                    <li class="sw-slide" th:each="f : ${fileList}">
-                        <img th:src="${f.coverPath}"/>
+                    <li class="sw-slide" th:each="f:${fileList}">
+                        <a th:href="@{'/wechat/activity/info/'+${f.id}(openid=${openid})}">
+                            <img th:src="${f.coverPath}"/>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -34,24 +36,24 @@
     <div class="tab">
         <div class="tab-li box">
             <ul id="title-ul">
-                <li id="actList" class="title-li active" onclick="showTabAndLoadData(this);"><span>活动列表</span></li>
-                <li id="actReview" class="title-li" onclick="showTabAndLoadData(this);"><span>活动回顾</span></li>
-                <li id="actMy" class="title-li" onclick="showTabAndLoadData(this);"><span>我的</span></li>
+                <li class="title-li active"><span>活动列表</span></li>
+                <li class="title-li"><span>活动回顾</span></li>
+                <li class="title-li"><span>我的</span></li>
             </ul>
         </div>
         <div id="tab-ul" class="tab-con">
-            <div id="actListTab" class="act-list box">
+            <div class="act-list box">
                 <div class="act-info" id="actListInfo"></div>
             </div>
-            <div id="actReviewTab" class="act-review box none">
+            <div class="act-review box none">
                 <div class="act-info" id="actReviewListInfo"></div>
             </div>
-            <div id="actMyTab" class="my none">
+            <div class="my none">
                 <div class="my-top box">
                     <div class="fl">
                         <span>Bobby</span>
                         <p>我的积分：<b th:utext="${user.score}"></b>
-                            <a href="my.html" class="icon-left"></a>
+                            <a th:href="@{/wechat/user/score(openid=${openid})}" class="icon-left"></a>
                         </p>
                     </div>
                     <div class="fr">
@@ -64,21 +66,8 @@
                         <img th:src="@{/img/wechat/nojoin.png}"/>
                         <span>尚未参加任何活动</span>
                     </div>
-                    <div th:if="${not #lists.isEmpty(mylist)}" class="my-list none">
-                        <ul class="scroll-tab">
-                            <li th:each="m:${mylist}">
-                                <div class="act-info">
-                                    <a th:href="@{'/wechat/activity/info/'+${m}}">
-                                        <img class="img-box" th:src="${m.coverPath}"/>
-                                        <div class="title" th:utext="${m.title}"></div>
-                                        <div class="info">
-                                            <div class="info-time" th:utext="${#dates.format(m.beginTime,'MM月dd日')+'-'+#dates.format(m.endTime,'MM月dd日')}"></div>
-                                            <div class="info-address" th:utext="${m.address}"></div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
+                    <div th:if="${not #lists.isEmpty(mylist)}" class="my-list">
+                        <ul class="scroll-tab" id="mylist"></ul>
                     </div>
                 </div>
             </div>

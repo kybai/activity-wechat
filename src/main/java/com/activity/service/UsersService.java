@@ -9,13 +9,14 @@ import com.github.pagehelper.PageInfo;
  */
 public interface UsersService {
 
-    public Users selectOne(Integer id);
+    Users selectOne(Integer id);
 
-    public Users selectUserScore(Integer id);
+    //获取用户信息与用户总积分
+    Users selectUserScore(Integer id);
 
-    public PageInfo<Users> findList(BasePageList page);
+    PageInfo<Users> findList(BasePageList page);
 
-    public int insert(Users users);
+    int insert(Users users);
 
-    public int update(Users users);
+    int update(Users users);
 }

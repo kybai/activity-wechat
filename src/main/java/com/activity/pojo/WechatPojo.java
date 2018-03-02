@@ -12,6 +12,10 @@ public class WechatPojo extends BasePage implements Serializable {
     private String openid;
     //区域编号
     private Integer districtId;
+    //活动编号
+    private Integer activityId;
+    //课程编号
+    private Integer courseId;
     //有效性
     private Boolean active;
 
@@ -41,6 +45,22 @@ public class WechatPojo extends BasePage implements Serializable {
 
     public void setDistrictId(Integer districtId) {
         this.districtId = districtId;
+    }
+
+    public Integer getActivityId() {
+        return activityId;
+    }
+
+    public void setActivityId(Integer activityId) {
+        this.activityId = activityId;
+    }
+
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
     }
 
     public Boolean getActive() {

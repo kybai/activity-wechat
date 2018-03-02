@@ -2,7 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
     <title>课程安排</title>
     <link th:href="@{/css/wechat/media.css}" rel="stylesheet"/>
     <link th:href="@{/css/wechat/index.css}" rel="stylesheet"/>
@@ -20,8 +23,6 @@
                 <p th:utext="${#dates.format(c.beginTime,'yyyy-MM-dd HH:mm:ss')}"></p>
                 <span th:if="${c.signInTime!=null}" class="green">已签到</span>
                 <span class="compare-time" th:if="${c.signInTime==null}" th:attr="time=${#dates.format(c.beginTime,'yyyy-MM-dd HH:mm:ss')}"></span>
-                <!--<span class="orange">缺勤</span>-->
-                <!--<span>未开始</span>-->
             </li>
         </ul>
         <div class="sign-aciton btn J_sign">签到说明</div>

@@ -37,6 +37,10 @@ public class UsersScore implements Serializable {
     public UsersScore() {
     }
 
+    public UsersScore(Integer userId) {
+        this.userId = userId;
+    }
+
     public UsersScore(Integer userId, Integer score, String reason, Integer activityId, Integer courseId, Timestamp createDate) {
         this.userId = userId;
         this.score = score;

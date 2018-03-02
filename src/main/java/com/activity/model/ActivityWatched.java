@@ -27,6 +27,18 @@ public class ActivityWatched implements Serializable {
     //点赞日期
     private Timestamp watchTime;
 
+    public ActivityWatched() {
+    }
+
+    public ActivityWatched(Integer activityId) {
+        this.activityId = activityId;
+    }
+
+    public ActivityWatched(Integer activityId, Integer userId) {
+        this.activityId = activityId;
+        this.userId = userId;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

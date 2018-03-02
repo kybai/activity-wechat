@@ -28,6 +28,18 @@ public class ActivityThumbup implements Serializable {
     //点赞日期
     private Timestamp upTime;
 
+    public ActivityThumbup() {
+    }
+
+    public ActivityThumbup(Integer activityId) {
+        this.activityId = activityId;
+    }
+
+    public ActivityThumbup(Integer activityId, Integer userId) {
+        this.activityId = activityId;
+        this.userId = userId;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta charset="utf-8"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
     <title>我的积分</title>
     <link th:href="@{/css/wechat/index.css}" rel="stylesheet"/>
 </head>
@@ -11,37 +14,23 @@
     <a href="javascript:history.back(-1);" class="goback"></a>
 </div>
 <div class="main score">
-    <div class="myscore box"><b>10</b><span>个积分</span></div>
+    <div class="myscore box"><b th:utext="${user.score}"></b><span>个积分</span></div>
     <img class="banner" th:src="@{/img/wechat/banner.jpg}"/>
     <div class="score-info box">
         <span class="title">积分明细</span>
-        <p class="noscore none">暂无积分</p>
-        <ul class="score-list">
-            <li>
+        <p class="noscore" th:if="${#lists.isEmpty(scores)}">暂无积分</p>
+        <ul class="score-list" th:unless="${#lists.isEmpty(scores)}">
+            <li th:each="c:${scores}">
                 <div class="fl">
-                    <span>参加课程：剪纸</span>
-                    <p>2018-02-22 10:17:56</p>
+                    <span th:utext="${c.reason}"></span>
+                    <p th:utext="${#dates.format(c.createDate,'yyyy-MM-dd HH:mm:ss')}"></p>
                 </div>
-                <div class="fr"><span>+1</span></div>
-            </li>
-            <li>
-                <div class="fl">
-                    <span>参加课程：剪纸</span>
-                    <p>2018-02-22 10:17:56</p>
-                </div>
-                <div class="fr"><span>+1</span></div>
-            </li>
-            <li>
-                <div class="fl">
-                    <span>参加课程：剪纸</span>
-                    <p>2018-02-22 10:17:56</p>
-                </div>
-                <div class="fr"><span>+1</span></div>
+                <div class="fr"><span th:utext="${c.score}">+1</span></div>
             </li>
         </ul>
     </div>
 </div>
 
-<script th:src="@{/js/jQuery/jQuery-2.1.4.min.js}"></script>
+<div th:replace="fragments/wechatJs"></div>
 </body>
 </html>

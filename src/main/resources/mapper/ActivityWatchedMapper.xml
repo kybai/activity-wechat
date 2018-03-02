@@ -5,11 +5,11 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="activity_id" property="activityId" jdbcType="INTEGER"/>
         <result column="user_id" property="userId" jdbcType="INTEGER"/>
-        <result column="up_time" property="upTime" jdbcType="TIMESTAMP"/>
+        <result column="watch_time" property="watchTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, activity_id, user_id, up_time
+        id, activity_id, user_id, watch_time
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -36,8 +36,8 @@
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
             select LAST_INSERT_ID()
         </selectKey>
-        insert into activity_watched (activity_id, user_id, up_time)
-        values (#{activityId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{upTime,jdbcType=TIMESTAMP})
+        insert into activity_watched (activity_id, user_id, watch_time)
+        values (#{activityId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{watchTime,jdbcType=TIMESTAMP})
     </insert>
 
 </mapper>
