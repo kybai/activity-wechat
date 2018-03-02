@@ -25,7 +25,10 @@
                     <span th:utext="${c.reason}"></span>
                     <p th:utext="${#dates.format(c.createDate,'yyyy-MM-dd HH:mm')}"></p>
                 </div>
-                <div class="fr"><span th:utext="${c.score}">+1</span></div>
+                <div class="fr">
+                    <span th:if="${c.score>0}" th:utext="'+'+${c.score}"></span>
+                    <span th:if="${c.score<0}" th:utext="${c.score}"></span>
+                </div>
             </li>
         </ul>
     </div>
