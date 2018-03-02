@@ -3,7 +3,6 @@ package com.activity.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 /**
  * 广告图/轮播图
@@ -31,11 +30,19 @@ public class Adsense implements Serializable {
     //创建日期
     private Timestamp createDate;
 
+    //文件路径
+    private String filePath;
+
     public Adsense() {
     }
 
     public Adsense(String type) {
         this.type = type;
+    }
+
+    public Adsense(String type, Boolean active) {
+        this.type = type;
+        this.active = active;
     }
 
     @Id
@@ -80,6 +87,11 @@ public class Adsense implements Serializable {
         return active;
     }
 
+    @Transient
+    public String getFilePath() {
+        return filePath;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -112,16 +124,7 @@ public class Adsense implements Serializable {
         this.active = active;
     }
 
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Adsense adsense = (Adsense) o;
-        return Objects.equals(id, adsense.id) && Objects.equals(name, adsense.name) && Objects.equals(uploadFileId, adsense.uploadFileId) && Objects.equals(url, adsense.url) && Objects.equals
-                (pageName, adsense.pageName) && Objects.equals(type, adsense.type) && Objects.equals(active, adsense.active) && Objects.equals(createDate, adsense.createDate);
-    }
-
-    public int hashCode() {
-
-        return Objects.hash(id, name, uploadFileId, url, pageName, type, active, createDate);
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 }

@@ -43,22 +43,25 @@
 })();
 
 function loadData() {
+    var entity = new WechatPojo();
     $.ajax({
         url: base + '/wechat/activity/list',
         type: 'post',
         dataType: 'json',
         contentType: 'application/json',
-        data: JSON.stringify(new WechatPojo()),
+        data: JSON.stringify(entity),
         success: function (results) {
             loadHtml("actListInfo", results.data.wechatList);
             loadHtml("actReviewListInfo", results.data.reviewList);
-            loadMyHtml(results.data.myList);
+            if (getVal(entity.openid) !== "") {
+                loadMyHtml(results.data.myList);
+            }
         }
     });
 }
 
 function loadHtml(id, list) {
-    var openid = $("#openid").val();
+    var openid = getVal($("#openid").val());
     var html = '';
     for (key in list) {
         var e = list[key];
@@ -75,7 +78,7 @@ function loadHtml(id, list) {
 }
 
 function loadMyHtml(list) {
-    var openid = $("#openid").val();
+    var openid = getVal($("#openid").val());
     var html = '';
     for (key in list) {
         var e = list[key];

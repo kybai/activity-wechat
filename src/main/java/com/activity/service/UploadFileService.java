@@ -8,8 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface UploadFileService {
 
-    public UploadFile insert(MultipartFile file, String fileType);
+    UploadFile insert(MultipartFile file, String fileType);
 
-    public UploadFile selectOne(Integer id);
+    UploadFile selectOne(Integer id);
 
 }

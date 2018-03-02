@@ -15,7 +15,7 @@
 </div>
 <div class="main detail">
     <div class="img-box">
-        <img th:src="@{/img/wechat/photo.jpg}"/>
+        <img th:src="${file.filePath}"/>
     </div>
     <div class="box">
         <h2 class="title" th:utext="${activity.title}"></h2>
@@ -53,7 +53,7 @@
                 <b th:unless="${activity.maxLimit!=null} and ${activity.maxLimit!=0}" th:utext="无限制"></b>
             </p>
             <span th:if="${activityStatus=='我要报名'}" th:utext="${activityStatus}" onclick="enrollActivity();"></span>
-            <span th:if="${activityStatus!='我要报名'}" th:utext="${activityStatus}"></span>
+            <span th:if="${activityStatus!='我要报名'} and ${activityStatus!='微信报名'}" th:utext="${activityStatus}"></span>
         </div>
     </div>
 </div>

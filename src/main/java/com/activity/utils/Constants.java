@@ -35,6 +35,7 @@ public class Constants {
     public static final String ENROLL_FULL = "名额已满";
     public static final String ENROLL_END = "已结束";
     public static final String ENROLL_SIGN = "已报名";
+    public static final String ENROLL_WECHAT = "微信报名";
 
     //活动报名提示结果
     public static final String ENROLL_RESULT_NOT_FOUND = "未发现该活动，报名失败。";
@@ -42,4 +43,8 @@ public class Constants {
     public static final String ENROLL_RESULT_WAS_END = "该活动已经结束，报名失败。";
     public static final String ENROLL_RESULT_WAS_FULL = "该活动名额已满，报名失败。";
     public static final String ENROLL_RESULT_WAS_SIGN = "该活动您已报名，报名失败。";
+
+    //图片类型
+    public static final String IMAGE_TYPE_ADSENSE = "广告图";
+    public static final String IMAGE_TYPE_ROLLING = "轮播图";
 }

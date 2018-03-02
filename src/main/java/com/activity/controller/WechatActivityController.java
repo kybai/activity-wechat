@@ -1,24 +1,8 @@
 package com.activity.controller;
 
-import com.activity.model.Activity;
-import com.activity.model.ActivityCourse;
-import com.activity.model.ActivityDescription;
-import com.activity.model.ActivityDistrict;
-import com.activity.model.ActivityEnroll;
-import com.activity.model.ActivityTag;
-import com.activity.model.ActivityThumbup;
-import com.activity.model.ActivityWatched;
-import com.activity.model.UploadFile;
-import com.activity.model.WechatUser;
+import com.activity.model.*;
 import com.activity.pojo.WechatPojo;
-import com.activity.service.ActivityDistrictService;
-import com.activity.service.ActivityEnrollService;
-import com.activity.service.ActivityService;
-import com.activity.service.ActivityThumbupService;
-import com.activity.service.ActivityWatchedService;
-import com.activity.service.UploadFileService;
-import com.activity.service.UsersService;
-import com.activity.service.WechatUserService;
+import com.activity.service.*;
 import com.activity.utils.Constants;
 import com.activity.utils.DateUtils;
 import com.activity.utils.RestEntity;
@@ -31,12 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
@@ -72,6 +51,9 @@ public class WechatActivityController {
     private ActivityEnrollService activityEnrollService;
 
     @Autowired
+    private AdsenseService adsenseService;
+
+    @Autowired
     private UploadFileService uploadFileService;
 
     @Autowired
@@ -84,18 +66,20 @@ public class WechatActivityController {
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String list(@RequestParam(required = false) String code, @RequestParam(required = false) String openid, Model model) throws WxErrorException {
-        if (StringUtils.isEmpty(openid)) {
+        if (StringUtils.isEmpty(openid) && !StringUtils.isEmpty(code)) {
             WxMpOAuth2AccessToken auth = wxMpService.oauth2getAccessToken(code);
             openid = auth.getOpenId();
         }
         model.addAttribute("openid", openid);
         model.addAttribute("districts", activityDistrictService.selectList(new ActivityDistrict(Boolean.TRUE)));
-        //未结束活动的封面图
-        model.addAttribute("fileList", activityService.selectWechatList(new WechatPojo(Boolean.TRUE)));
-        model.addAttribute("mylist", activityService.selectUserWechatList(new WechatPojo(openid, Boolean.TRUE)));
-        //我的信息与积分
-        WechatUser wechatUser = wechatUserService.findByOpenid(openid);
-        model.addAttribute("user", usersService.selectUserScore(wechatUser.getUserId()));
+        //轮播图
+        model.addAttribute("imgList", adsenseService.selectList(new Adsense(Constants.IMAGE_TYPE_ROLLING, Boolean.TRUE)));
+        if (!StringUtils.isEmpty(openid)) {
+            model.addAttribute("mylist", activityService.selectUserWechatList(new WechatPojo(openid, Boolean.TRUE)));
+            //我的信息与积分
+            WechatUser wechatUser = wechatUserService.findByOpenid(openid);
+            model.addAttribute("user", usersService.selectUserScore(wechatUser.getUserId()));
+        }
         return "wechat/list";
     }
 
@@ -112,9 +96,9 @@ public class WechatActivityController {
             return "wechat/detail";
         }
         model.addAttribute("openid", openid);
-        WechatUser user = wechatUserService.findByOpenid(openid);
         //活动与活动简介
         model.addAttribute("activity", activity);
+        model.addAttribute("file", uploadFileService.selectOne(activity.getUploadFileId()));
         model.addAttribute("desc", activityService.selectDesc(new ActivityDescription(activityId)));
         //活动查看人数
         List<ActivityWatched> watchedList = activityWatchedService.selectList(new ActivityWatched(activityId));
@@ -122,17 +106,25 @@ public class WechatActivityController {
         //活动点赞人数
         List<ActivityThumbup> thumbupList = activityThumbupService.selectList(new ActivityThumbup(activityId));
         model.addAttribute("thumbupTotal", (thumbupList == null ? 0 : thumbupList.size()));
-        //我是否点赞
-        List<ActivityThumbup> myThumbupList = activityThumbupService.selectList(new ActivityThumbup(activityId, user.getUserId()));
-        model.addAttribute("isThumbup", !ObjectUtils.isEmpty(myThumbupList));
         //活动已报名人数
         List<ActivityEnroll> enrollList = activityEnrollService.selectList(new ActivityEnroll(activityId, Boolean.TRUE));
         int enrollTotal = (enrollList == null) ? 0 : enrollList.size();
         model.addAttribute("enrollTotal", enrollTotal);
+
+        Integer userId = null;
+        if (!StringUtils.isEmpty(openid)) {
+            WechatUser user = wechatUserService.findByOpenid(openid);
+            userId = user.getUserId();
+            //我是否点赞
+            List<ActivityThumbup> thumbups = activityThumbupService.selectList(new ActivityThumbup(activityId, userId));
+            model.addAttribute("isThumbup", !ObjectUtils.isEmpty(thumbups));
+            //该活动添加一条查看记录
+            activityWatchedService.insert(new ActivityWatched(activityId, userId));
+        } else {
+            activityWatchedService.insert(new ActivityWatched(activityId, null));
+        }
         //活动状态
-        model.addAttribute("activityStatus", getActivityStatus(activity, user.getUserId(), enrollTotal));
-        //该活动添加一条查看记录
-        activityWatchedService.insert(new ActivityWatched(activityId, user.getUserId()));
+        model.addAttribute("activityStatus", getActivityStatus(activity, userId, enrollTotal));
         return "wechat/detail";
     }
 
@@ -140,7 +132,6 @@ public class WechatActivityController {
      * Created by ky.bai on 2018-03-01 11:30
      *
      * @param pojo 微信端请求参数
-     *
      * @return 微信端活动列表
      */
     @RequestMapping(value = "/list", method = RequestMethod.POST)
@@ -149,7 +140,9 @@ public class WechatActivityController {
         Map<String, Object> results = new HashMap<>();
         results.put("wechatList", activityService.selectWechatList(pojo));
         results.put("reviewList", activityService.selectWechatReviewList(pojo));
-        results.put("myList", activityService.selectUserWechatList(pojo));
+        if (!StringUtils.isEmpty(pojo.getOpenid())) {
+            results.put("myList", activityService.selectUserWechatList(pojo));
+        }
         return ResponseEntity.ok(new RestEntity(200, Constants.LOAD_SUCCESS, results));
     }
 
@@ -157,7 +150,6 @@ public class WechatActivityController {
      * Created by ky.bai on 2018-03-02 09:26
      *
      * @param pojo 活动编号, 用户微信openid
-     *
      * @return 活动点赞记录
      */
     @RequestMapping(value = "/thumbup", method = RequestMethod.POST)
@@ -182,7 +174,6 @@ public class WechatActivityController {
      *
      * @param activityId 活动编号
      * @param openid     微信用户openid
-     *
      * @return 活动报名页
      */
     @RequestMapping(value = "/enroll/{activityId}", method = RequestMethod.GET)
@@ -201,7 +192,6 @@ public class WechatActivityController {
      * Created by ky.bai on 2018-03-02 13:56
      *
      * @param record 报名信息
-     *
      * @return 活动报名结果
      */
     @RequestMapping(value = "/enroll", method = RequestMethod.POST)
@@ -238,7 +228,6 @@ public class WechatActivityController {
      * Created by ky.bai on 2018-03-02 13:55
      *
      * @param file 上传文件
-     *
      * @return 上传文件编号
      */
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
@@ -261,14 +250,15 @@ public class WechatActivityController {
      * @param activity    活动
      * @param userId      用户编号
      * @param enrollTotal 活动已报名人数
-     *
      * @return 活动状态: --未开始，--我要报名，--已报名，--名额已满，--已结束
      */
     private String getActivityStatus(Activity activity, Integer userId, int enrollTotal) {
         String status = Constants.ENROLL_NON_BEGIN;
         List<ActivityEnroll> enrolls = activityEnrollService.selectList(new ActivityEnroll(activity.getId(), userId, Boolean.TRUE));
         long currentTime = DateUtils.getCurrentTimestamp().getTime();
-        if (!ObjectUtils.isEmpty(enrolls)) {
+        if (userId == null) {
+            status = Constants.ENROLL_WECHAT;
+        } else if (!ObjectUtils.isEmpty(enrolls)) {
             status = Constants.ENROLL_SIGN;
         } else if (activity.getEndTime().getTime() <= currentTime) {
             status = Constants.ENROLL_END;

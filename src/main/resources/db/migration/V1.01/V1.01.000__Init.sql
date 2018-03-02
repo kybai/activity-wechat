@@ -123,7 +123,7 @@ DROP TABLE IF EXISTS `activity_watched`;
 CREATE TABLE `activity_watched` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '活动查看记录编号',
   `activity_id` int(11) NOT NULL COMMENT '活动编号',
-  `user_id` int(11) NOT NULL COMMENT '用户编号',
+  `user_id` int(11) NULL COMMENT '用户编号',
   `watch_time` timestamp NOT NULL COMMENT '查看时间',
   PRIMARY KEY (`id`),
   KEY `FK_ACTIVITY_WATCHED_REFERENCE_ACTIVITY` (`activity_id`),

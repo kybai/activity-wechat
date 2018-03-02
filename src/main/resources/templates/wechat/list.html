@@ -2,7 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
     <title>活动列表</title>
     <link th:href="@{/js/wechat/slider/swipeslider.css}" rel="stylesheet"/>
     <link th:href="@{/css/wechat/index.css}" rel="stylesheet"/>
@@ -23,9 +26,9 @@
         <div id="slider" class="slider">
             <div id="full_feature" class="swipslider">
                 <ul class="sw-slides" id="cover">
-                    <li class="sw-slide" th:each="f:${fileList}">
-                        <a th:href="@{'/wechat/activity/info/'+${f.id}(openid=${openid})}">
-                            <img th:src="${f.coverPath}"/>
+                    <li class="sw-slide" th:each="img:${imgList}">
+                        <a th:href="${img.url}">
+                            <img th:src="${img.filePath}"/>
                         </a>
                     </li>
                 </ul>
@@ -38,7 +41,7 @@
             <ul id="title-ul">
                 <li class="title-li active"><span>活动列表</span></li>
                 <li class="title-li"><span>活动回顾</span></li>
-                <li class="title-li"><span>我的</span></li>
+                <li class="title-li" th:if="${openid!=null}"><span>我的</span></li>
             </ul>
         </div>
         <div id="tab-ul" class="tab-con">
@@ -48,7 +51,7 @@
             <div class="act-review box none">
                 <div class="act-info" id="actReviewListInfo"></div>
             </div>
-            <div class="my none">
+            <div class="my none" th:if="${openid!=null}">
                 <div class="my-top box">
                     <div class="fl">
                         <span>Bobby</span>

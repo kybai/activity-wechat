@@ -10,26 +10,31 @@
         <result column="type" property="type" jdbcType="VARCHAR"/>
         <result column="active" property="active" jdbcType="BIT"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="file_path" property="filePath" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id="selectOne" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        select id, name, upload_file_id, url, page_name, type, active, create_date from adsense
-        where id = #{id,jdbcType=INTEGER}
+        select a.id, a.name, a.upload_file_id, a.url, a.page_name, a.type, a.active, a.create_date, u.file_path
+        from adsense a
+        inner join upload_file u on u.id = a.upload_file_id
+        where a.id = #{id,jdbcType=INTEGER}
     </select>
 
     <select id="selectList" resultMap="BaseResultMap" parameterType="com.activity.model.Adsense">
-        select id, name, upload_file_id, url, page_name, type, active, create_date from adsense
+        select a.id, a.name, a.upload_file_id, a.url, a.page_name, a.type, a.active, a.create_date, u.file_path
+        from adsense a
+        inner join upload_file u on u.id = a.upload_file_id
         where 1 = 1
         <if test="type != null and type !=''">
-            and type = #{type,jdbcType=VARCHAR}
+            and a.type = #{type,jdbcType=VARCHAR}
         </if>
         <if test="active != null">
-            and active = #{active,jdbcType=BIT}
+            and a.active = #{active,jdbcType=BIT}
         </if>
         <if test="pageName != null and pageName != ''">
-            and page_name = #{pageName,jdbcType=VARCHAR}
+            and a.page_name = #{pageName,jdbcType=VARCHAR}
         </if>
-        order by id desc
+        order by a.id desc
     </select>
 
     <insert id="insert" parameterType="com.activity.model.Adsense">

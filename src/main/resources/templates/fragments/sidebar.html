@@ -65,6 +65,23 @@
                         </li>
                     </ul>
                 </li>
+
+                <!-- 微信体验 -->
+                <li class="treeview" th:classappend="(${level1Menu} eq 'wechatManager') ? 'active' : ''">
+                    <a href="#">
+                        <i class="glyphicon glyphicon-cog"></i>
+                        <span>微信体验</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="treeview" th:classappend="(${level2Menu} eq 'wechatActivity') ? 'active' : ''">
+                            <a th:href="@{/wechat/activity}" th:classappend="(${level2Menu} eq 'wechatActivity') ? 'highlight' : ''">
+                                <i class="glyphicon glyphicon-retweet"></i>
+                                <span>活动入口</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </section>
     </aside>

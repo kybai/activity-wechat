@@ -27,6 +27,8 @@ import java.util.List;
 @Service
 public class UserScoreSettlementETLTask extends ETLTask {
 
+    private static final String ETL_TASK_NAME = "UserScoreSettlementETLTask";
+
     @Autowired
     private ActivityCourseMapper activityCourseMapper;
 
@@ -38,6 +40,10 @@ public class UserScoreSettlementETLTask extends ETLTask {
 
     @Autowired
     private UsersScoreMapper usersScoreMapper;
+
+    public UserScoreSettlementETLTask() {
+        super(ETL_TASK_NAME);
+    }
 
     @Override
     @Transactional
@@ -64,7 +70,8 @@ public class UserScoreSettlementETLTask extends ETLTask {
                             }
                         }
                         //缺席活动课程人员扣2分
-                        if (!sign) list.add(new UsersScore(enroll.getUserId(), Constants.SCORE_MISS_COURSE, "缺席课程:" + course.getName(), course.getActivityId(), course.getId(), endTime));
+                        if (!sign)
+                            list.add(new UsersScore(enroll.getUserId(), Constants.SCORE_MISS_COURSE, "缺席课程:" + course.getName(), course.getActivityId(), course.getId(), endTime));
                     }
                 }
             }
