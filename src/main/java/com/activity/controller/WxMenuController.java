@@ -63,7 +63,7 @@ public class WxMenuController implements WxMpMenuService {
         button3.getSubButtons().add(button33);
 
         //todo 自己用的路径
-        String href = uri + "/activity/wechat/activity/";
+        String href = "http://tt.51meiy.com/activity/wechat/activity/";
         WxMenuButton button34 = new WxMenuButton();
         button34.setType(MenuButtonType.VIEW);
         button34.setName("团建");
