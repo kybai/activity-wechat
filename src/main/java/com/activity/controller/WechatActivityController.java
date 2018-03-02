@@ -199,25 +199,21 @@ public class WechatActivityController {
     public ResponseEntity saveEnroll(@RequestBody ActivityEnroll record) {
         Activity activity = activityService.selectOne(record.getActivityId());
         if (activity == null) {
-            return ResponseEntity.ok(new RestEntity(100, Constants.OPERATOR_FAILED, Constants.ENROLL_RESULT_NOT_FOUND));
+            return ResponseEntity.ok(new RestEntity(100, Constants.ENROLL_RESULT_NOT_FOUND, Boolean.FALSE));
         }
         //判断当前活动是否在开始与结束时间范围内
-        long currentTime = DateUtils.getCurrentTimestamp().getTime();
-        if (activity.getBeginTime().getTime() > currentTime) {
-            return ResponseEntity.ok(new RestEntity(100, Constants.OPERATOR_FAILED, Constants.ENROLL_RESULT_NOT_BEGIN));
-        }
-        if (activity.getEndTime().getTime() < currentTime) {
-            return ResponseEntity.ok(new RestEntity(100, Constants.OPERATOR_FAILED, Constants.ENROLL_RESULT_WAS_END));
+        if (activity.getEndTime().getTime() < DateUtils.getCurrentTimestamp().getTime()) {
+            return ResponseEntity.ok(new RestEntity(100, Constants.ENROLL_RESULT_WAS_END, Boolean.FALSE));
         }
         //判断是否已经报名
         List<ActivityEnroll> enrolls = activityEnrollService.selectList(new ActivityEnroll(activity.getId(), record.getUserId(), Boolean.TRUE));
         if (!ObjectUtils.isEmpty(enrolls)) {
-            return ResponseEntity.ok(new RestEntity(100, Constants.OPERATOR_FAILED, Constants.ENROLL_RESULT_WAS_SIGN));
+            return ResponseEntity.ok(new RestEntity(100, Constants.ENROLL_RESULT_WAS_SIGN, Boolean.FALSE));
         }
         //判断已报名人数是否已满
         List<ActivityEnroll> enrollList = activityEnrollService.selectList(new ActivityEnroll(activity.getId(), Boolean.TRUE));
         if (activity.getMaxLimit() != null && activity.getMaxLimit() != 0 && activity.getMaxLimit() <= enrollList.size()) {
-            return ResponseEntity.ok(new RestEntity(100, Constants.OPERATOR_FAILED, Constants.ENROLL_RESULT_WAS_FULL));
+            return ResponseEntity.ok(new RestEntity(100, Constants.ENROLL_RESULT_WAS_FULL, Boolean.FALSE));
         }
 
         activityEnrollService.insert(record);
@@ -250,24 +246,21 @@ public class WechatActivityController {
      * @param activity    活动
      * @param userId      用户编号
      * @param enrollTotal 活动已报名人数
-     * @return 活动状态: --未开始，--我要报名，--已报名，--名额已满，--已结束
+     * @return 活动状态: --我要报名，--已报名，--名额已满，--已结束
      */
     private String getActivityStatus(Activity activity, Integer userId, int enrollTotal) {
-        String status = Constants.ENROLL_NON_BEGIN;
+        if (userId == null) return Constants.ENROLL_WECHAT;
+
         List<ActivityEnroll> enrolls = activityEnrollService.selectList(new ActivityEnroll(activity.getId(), userId, Boolean.TRUE));
         long currentTime = DateUtils.getCurrentTimestamp().getTime();
-        if (userId == null) {
-            status = Constants.ENROLL_WECHAT;
-        } else if (!ObjectUtils.isEmpty(enrolls)) {
-            status = Constants.ENROLL_SIGN;
+        if (!ObjectUtils.isEmpty(enrolls)) {
+            return Constants.ENROLL_SIGN;
         } else if (activity.getEndTime().getTime() <= currentTime) {
-            status = Constants.ENROLL_END;
+            return Constants.ENROLL_END;
         } else if (activity.getMaxLimit() != null && activity.getMaxLimit() != 0 && activity.getMaxLimit() <= enrollTotal) {
-            status = Constants.ENROLL_FULL;
-        } else if (activity.getBeginTime().getTime() >= currentTime) {
-            status = Constants.ENROLL_BEGIN;
+            return Constants.ENROLL_FULL;
         }
 
-        return status;
+        return Constants.ENROLL_BEGIN;
     }
 }

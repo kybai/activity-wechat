@@ -28,7 +28,7 @@
     </select>
 
     <select id="selectList" resultMap="BaseResultMap" parameterType="com.activity.model.Activity">
-        select COUNT(w.id) watchedTotal, COUNT(t.id) thumbupTotal, COUNT(e.id) enrollTotal,
+        select COUNT(distinct w.id) watchedTotal, COUNT(distinct t.id) thumbupTotal, COUNT(distinct e.id) enrollTotal,
         <include refid="Base_Column_List"/>
         from activity a
         left join activity_watched w on a.id = w.activity_id

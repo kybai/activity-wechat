@@ -1,6 +1,7 @@
 package com.activity.controller;
 
 import com.activity.mapper.ActivityCourseMapper;
+import com.activity.model.ActivityCourse;
 import com.activity.model.WechatUser;
 import com.activity.pojo.WechatParamDTO;
 import com.activity.service.ActivityService;
@@ -8,6 +9,7 @@ import com.activity.service.WechatUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,13 +36,16 @@ public class WechatCourseController {
      *
      * @param activityId 活动编号
      * @param openid     微信用户openid
-     *
      * @return 活动课程列表页
      */
     @RequestMapping("/info/{activityId}")
     public String list(@PathVariable Integer activityId, @RequestParam String openid, Model model) {
-        WechatUser user = wechatUserService.findByOpenid(openid);
-        model.addAttribute("courses", activityCourseMapper.selectSignList(new WechatParamDTO(activityId, user.getId(), Boolean.TRUE)));
+        if (!StringUtils.isEmpty(openid)) {
+            WechatUser user = wechatUserService.findByOpenid(openid);
+            model.addAttribute("courses", activityCourseMapper.selectSignList(new WechatParamDTO(activityId, user.getId(), Boolean.TRUE)));
+        } else {
+            model.addAttribute("courses", activityCourseMapper.selectList(new ActivityCourse(activityId, Boolean.TRUE)));
+        }
         model.addAttribute("activity", activityService.selectOne(activityId));
         return "wechat/class";
     }

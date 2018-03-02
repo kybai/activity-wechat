@@ -33,12 +33,7 @@ public class SubscribeHandler extends AbstractHandler {
         WxMpUser u = wxMpService.getUserService().userInfo(wxMessage.getFromUser(), null);
         if (u != null) {
             wechatUserService.insertByWxMpUser(u);
-        }
-
-        try {
             return new TextBuilder().build(Constants.USER_SUBSCRIBE, wxMessage, wxMpService);
-        } catch (Exception e) {
-            this.logger.error(e.getMessage(), e);
         }
 
         return null;

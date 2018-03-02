@@ -4,7 +4,6 @@ import com.activity.mapper.ActivityCourseMapper;
 import com.activity.mapper.ActivityEnrollMapper;
 import com.activity.mapper.ActivityMapper;
 import com.activity.mapper.UsersScoreMapper;
-import com.activity.model.Activity;
 import com.activity.model.ActivityCourse;
 import com.activity.model.ActivityEnroll;
 import com.activity.model.UsersScore;
@@ -49,16 +48,18 @@ public class ActivityEnrollServiceImpl implements ActivityEnrollService {
     @Override
     @Transactional
     public int insert(ActivityEnroll record) {
-        Activity activity = activityMapper.selectOne(record.getActivityId());
         List<ActivityCourse> courses = activityCourseMapper.selectList(new ActivityCourse(record.getActivityId()));
         //添加积分
         if (!ObjectUtils.isEmpty(courses)) {
             for (ActivityCourse course : courses) {
                 String reason = "报名课程：" + course.getName();
-                usersScoreMapper.insert(new UsersScore(record.getUserId(), Constants.SCORE_SIGN_COURSE, reason, activity.getId(), course.getId(), DateUtils.getCurrentTimestamp()));
+                usersScoreMapper.insert(new UsersScore(record.getUserId(), Constants.SCORE_SIGN_COURSE, reason, record.getActivityId(),
+                        course.getId(), DateUtils.getCurrentTimestamp()));
             }
         }
         //课程报名
+        record.setActive(Boolean.TRUE);
+        record.setCreateDate(DateUtils.getCurrentTimestamp());
         return activityEnrollMapper.insert(record);
     }
 
