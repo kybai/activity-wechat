@@ -17,6 +17,9 @@ public interface ActivityCourseMapper {
     //获取某活动下用户的签到记录
     List<ActivityCourse> selectSignList(WechatParamDTO record);
 
+    //获取活动下的签到码数据(报名总数和签到数)
+    List<ActivityCourse> selectCodeList(ActivityCourse record);
+
     int insert(ActivityCourse record);
 
     int updateByPrimaryKey(ActivityCourse record);

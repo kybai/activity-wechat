@@ -22,7 +22,7 @@ function loadPage(content) {
         html += '<tr>';
         html += '<td>' + getVal(entity.id) + '</td>';
         html += '<td>' + getVal(entity.name) + '</td>';
-        html += '<td><a href="#" onclick=catImg("' + getVal(entity.headImgUrl) + '");>查看头像</a></td>';
+        html += '<td><a href="javascript:void(0);" onclick=catImg("' + getVal(entity.headImgUrl) + '");>查看头像</a></td>';
         html += '<td>' + getNum0(entity.score) + '</td>';
         html += '<td>' + getDate(entity.createDate) + '</td>';
         html += '<td><button type="button" class="btn-link" onclick=disabledUser("' + getVal(entity.id) + '");>' + (getBoolean(entity.active) ? "禁用" : "激活") + '</button></td>';

@@ -24,14 +24,14 @@ function loadPage(content) {
         html += '<td><a href="' + base + '/activity/info/' + entity.id + '">' + getVal(entity.title) + '</a></td>';
         html += '<td>' + getDate(entity.beginTime) + '</td>';
         html += '<td>' + getDate(entity.endTime) + '</td>';
-        html += '<td><a href="#">签到码</a></td>';
+        html += '<td><a href="' + base + '/course/list?activityId=' + getVal(entity.id) + '">签到码</a></td>';
         html += '<td><a href="' + base + '/enroll/list?activityId=' + getVal(entity.id) + '">' + getVal(entity.enrollTotal) + '</a></td>';
         html += '<td>' + getVal(entity.thumbupTotal) + '/' + getVal(entity.watchedTotal) + '</td>';
         html += '<td>' + getDateD(entity.createDate) + '</td>';
         html += '<td>'
-                + '<button type="button" class="btn-link" onclick=edit("' + entity.id + '");>编辑</button>'
-                + '<button type="button" class="btn-link" onclick=disabledActivity("' + getVal(entity.id) + '");>' + (getBoolean(entity.active) ? "失效" : "生效") + '</button>'
-                + '</td>';
+            + '<button type="button" class="btn-link" onclick=edit("' + entity.id + '");>编辑</button>'
+            + '<button type="button" class="btn-link" onclick=disabledActivity("' + getVal(entity.id) + '");>' + (getBoolean(entity.active) ? "失效" : "生效") + '</button>'
+            + '</td>';
         html += '</tr>';
     }
     $("#bodyList").empty().html(html);

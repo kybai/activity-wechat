@@ -9,6 +9,8 @@
         <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
         <result column="active" property="active" jdbcType="BIT"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="signTotal" property="signTotal" jdbcType="INTEGER"/>
+        <result column="enrollTotal" property="enrollTotal" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -51,6 +53,19 @@
         inner join activity a on a.id = c.activity_id
         left join activity_course_signin s on c.id = s.course_id and s.user_id = #{userId,jdbcType=INTEGER}
         where a.id = #{activityId,jdbcType=INTEGER} and c.active = #{active,jdbcType=BIT}
+    </select>
+    
+    <select id="selectCodeList" resultMap="BaseResultMap" parameterType="com.activity.model.ActivityCourse">
+        select c.id, c.name, c.activity_id, COUNT(s.user_id) signTotal, COUNT(e.user_id) enrollTotal
+        from activity_course c
+        inner join activity a on a.id = c.activity_id
+        left join activity_enroll e on e.activity_id = a.id
+        left join activity_course_signin s on s.course_id = c.id
+        where 1 = 1
+        <if test="activityId!=null">
+            and a.id = #{activityId,jdbcType=INTEGER}
+        </if>
+        group by c.id
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

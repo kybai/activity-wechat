@@ -1,12 +1,6 @@
 package com.activity.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -36,6 +30,10 @@ public class ActivityCourse implements Serializable {
 
     //用户签到时间 -- 非数据库字段
     private Timestamp signInTime;
+    //用户签到数据
+    private int signTotal;
+    //课程报名数量
+    private int enrollTotal;
 
     public ActivityCourse() {
     }
@@ -97,6 +95,16 @@ public class ActivityCourse implements Serializable {
         return signInTime;
     }
 
+    @Transient
+    public int getSignTotal() {
+        return signTotal;
+    }
+
+    @Transient
+    public int getEnrollTotal() {
+        return enrollTotal;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -127,5 +135,13 @@ public class ActivityCourse implements Serializable {
 
     public void setSignInTime(Timestamp signInTime) {
         this.signInTime = signInTime;
+    }
+
+    public void setSignTotal(int signTotal) {
+        this.signTotal = signTotal;
+    }
+
+    public void setEnrollTotal(int enrollTotal) {
+        this.enrollTotal = enrollTotal;
     }
 }
