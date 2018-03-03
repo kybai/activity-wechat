@@ -33,6 +33,10 @@ function catCode(courseId) {
 
 }
 
+function goHistory() {
+    window.location.href = base + '/activity/list';
+}
+
 function BasePage(currentPage) {
     this.currentPage = currentPage;
     this.otherId = $("#activityId").val();
