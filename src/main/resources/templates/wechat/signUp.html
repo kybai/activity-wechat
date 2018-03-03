@@ -17,11 +17,11 @@
     <h2 class="title" th:utext="${activity.title}"></h2>
     <div class="course">
         <div class="course-time">
-            <i class="circle"></i>
+            <i class="fl circle"></i>
             <span th:utext="${#dates.format(activity.beginTime,'yyyy-MM-dd')}+'至'+${#dates.format(activity.endTime,'yyyy-MM-dd')}"></span>
         </div>
         <div class="course-list">
-            <i class="circle"></i>
+            <i class="fl circle"></i>
             <ul class="fl">
                 <li th:each="c:${courses}" th:utext="${c.name}"></li>
             </ul>

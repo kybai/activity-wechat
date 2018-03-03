@@ -21,11 +21,11 @@
         <h2 class="title" th:utext="${activity.title}"></h2>
         <div class="course">
             <div class="course-time">
-                <i class="circle"></i>
+                <i class="fl circle"></i>
                 <span th:utext="${#dates.format(activity.beginTime,'yyyy-MM-dd')}+'至'+${#dates.format(activity.endTime,'yyyy-MM-dd')}"></span>
             </div>
             <div class="course-address">
-                <i class="circle"></i>
+                <i class="fl circle"></i>
                 <span th:utext="${activity.address}"></span>
             </div>
             <input type="hidden" id="activityId" th:value="${activity.id}" readonly="readonly"/>

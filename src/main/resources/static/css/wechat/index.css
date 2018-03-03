@@ -108,8 +108,8 @@ i.circle{
 }
 .list .top .title{
     width: 90%;
-    padding: 0 5% 0 0;
-    margin-left: 5%;
+    padding: 0 20px 0 0;
+    margin-left: 20px;
     height: 40px;
     line-height: 40px;
     border-bottom:  1px solid #e5e5e5;
@@ -129,17 +129,32 @@ i.circle{
     appearance:none;
     -moz-appearance:none;
     -webkit-appearance:none;
+    font-size: 14px;
+    padding-right: 20px;
+}
+.list .top .title .add i.icon-down{
+    position: absolute;
+    top: 17px;
+    right: 20px;
+    content: '';
+    width: 14px;
+    height: 7px;
     background: url("../../img/wechat/down.png") no-repeat scroll right center transparent;
-    background-size: 14px 7px;
-    padding-right: 10px;
+    background-size: contain;
 }
 
-.list .top .slider{
-    border-bottom:  1px solid #e5e5e5;
-    margin-left: 5%;
-    padding: 20px 5% 20px 0;
+.list .slider{
+    border-bottom: 1px solid #e5e5e5;
+    margin-left: 20px;
+    padding: 20px 20px 20px 0;
+    margin-top: 41px;
 }
-.list .top .slider img{
+
+.swipslider{
+    border-radius: 10px;
+    overflow: hidden;
+}
+.list .slider img{
     width: 100%;
     height: 100%;
     border-radius: 10px;
@@ -157,7 +172,7 @@ i.circle{
 }
 .list .tab .tab-li ul{
     width: 90%;
-    padding: 0 5%;
+    padding: 0 20px;
     border-bottom: 1px solid #e5e5e5;
     overflow: hidden;
 }
@@ -178,7 +193,7 @@ i.circle{
 }
 .list .tab .tab-con .act-list,.list .tab .tab-con .act-review{
     width: 90%;
-    padding: 0 5% 20px 5%;
+    padding: 0 20px 20px 20px;
 }
 .list .tab .tab-con .act-info{
     width: 100%;
@@ -234,7 +249,7 @@ i.circle{
 }
 .list .tab .tab-con .my .my-top{
     width: 90%;
-    padding: 20px 5%;
+    padding: 20px;
 }
 .list .tab .tab-con .my .my-top .fl{
     width: 60%;
@@ -282,14 +297,14 @@ i.circle{
     display: block;
 }
 .list .tab .tab-con .my .my-class span.title{
-    margin-left: 5%;
+    margin-left: 20px;
     font-size: 18px;
     background: url('../../img/wechat/line.png') repeat-x;
     background-position-y: 17px;
 }
 .list .tab .tab-con .my .my-class .my-list li{
     width: 90%;
-    margin-left: 5%;
+    margin-left: 20px;
     padding-bottom: 20px;
 }
 .list .tab .tab-con .my .my-class .act-info{
@@ -299,7 +314,7 @@ i.circle{
 /*我的积分*/
 .score .myscore{
     width: 90%;
-    padding: 0 5% 30px 5%;
+    padding: 0 20px 30px 20px;
     text-align: center;
 }
 .score .myscore b{
@@ -337,14 +352,14 @@ i.circle{
     height: 44px;
     line-height: 44px;
     border-bottom: 1px solid #e5e5e5;
-    margin-left: 5%;
+    margin-left: 20px;
 }
 .score .score-info .noscore{
-    margin-left: 5%;
+    margin-left: 20px;
     line-height: 40px;
 }
 .score .score-info .score-list{
-    margin-left: 5%;
+    margin-left: 20px;
 }
 .score .score-info .score-list li{
     height: 50px;
@@ -365,7 +380,7 @@ i.circle{
     font-size: 11px;
 }
 .score .score-info .score-list li .fr{
-    margin-right: 5%;
+    margin-right: 20px;
     color: #ca0718;
     font-weight: bold;
     line-height: 50px;
@@ -375,13 +390,13 @@ i.circle{
 .sign .course{
     width: 95%;
     padding: 5px 0;
-    margin-left: 5%;
+    margin-left: 20px;
     border-top: 1px solid #e5e5e5;
     border-bottom: 1px solid #e5e5e5;
 }
 .sign .contact{
     width: 95%;
-    margin-left: 5%;
+    margin-left: 20px;
     margin-top: 10px;
     padding-bottom: 80px;
 }
@@ -400,20 +415,22 @@ i.circle{
     border-bottom: 1px solid #e5e5e5;
 }
 .sign .contact .form-li.intro{
-    height: 82px;
+    height: 60px;
+    line-height: 60px;
 }
 .sign .contact .form-li label{
     float: left;
     width: 20%;
 }
 .sign .contact .form-li input{
-    width: auto;
     border: none;
     float: right;
-    margin-right: 5%;
+    margin-right: 20px;
+    font-size: 14px;
+    padding: 0 3px;
 }
 .sign .contact .form-li input[type=text]{
-    width: 75%;
+    width: 70%;
     height: 40px;
     line-height: 40px;
 }
@@ -424,12 +441,15 @@ i.circle{
     line-height: 40px;
 } 
 .choice{  
-    position: relative;  
+    position: relative;
+    width: 70%;
+    float: right;
+    margin-right: 20px;
 }  
 .choice .radio{  
     position: relative;  
     display: inline-block;  
-    padding-left: 20px;  
+    padding-left: 20px;
     cursor: pointer;  
 }  
 .choice .radio i{  
@@ -464,16 +484,16 @@ i.circle{
     opacity: 1;  
 }  
 .sign .contact .form-li input[type=textarea]{
-    width: 75%;
-    height: 82px;
-    line-height: 27px;
+    width: 70%;
+    height: 60px;
+    line-height: 30px;
 }
 .sign .contact .submit{
     position: fixed;
     left: 0;
     bottom: 0;
     width: 90%;
-    padding: 10px 5%;
+    padding: 10px 20px;
     text-align: center;
     background: #fff;
 }
@@ -490,7 +510,7 @@ i.circle{
 #header{
     width: 90%;
     height: 44px;
-    padding: 0 5%;
+    padding: 0 20px;
     overflow: hidden;
     background: #fff;
 }
@@ -508,17 +528,17 @@ i.circle{
     font-weight: normal;
     font-size: 24px;
     line-height: 38px;
-    padding: 10px 5%;
+    padding: 10px 20px;
 }
 .main p.acinfo{
     width: 90%;
-    padding: 20px 5%;
+    padding: 20px 20px;
     border-top: 1px solid #e5e5e5;
     border-bottom: 1px solid #e5e5e5;
 }
 .main .link{
     width: 90%;
-    padding: 20px 5%;
+    padding: 20px;
     overflow: hidden;
 }
 .main .link a{
@@ -529,7 +549,7 @@ i.circle{
 /*课程安排*/
 .class .title{
     font-size: 18px;
-    padding: 10px 5%;
+    padding: 10px 20px;
 }
 .class .action{
     width: 100%;
@@ -544,7 +564,7 @@ i.circle{
 }
 .class li{
     width: 90%;
-    margin-left: 5%;
+    margin-left: 20px;
     border-bottom: 1px solid #e5e5e5;
     height: 50px;
     line-height: 50px;
@@ -580,7 +600,7 @@ i.circle{
 }
 .class .sign-aciton{
     width: 90%;
-    margin: 20px 0 0 5%;
+    margin: 20px 0 0 20px;
 }
 
 .overbg{
@@ -602,7 +622,7 @@ i.circle{
 .sign-aciton-info{
     background: #fff;
     border-radius: 10px;
-    padding: 20px 5%;
+    padding: 20px;
 }
 .sign-aciton-info .title{
     font-size: 20px;
@@ -628,7 +648,7 @@ i.circle{
 }
 .act-address{
     margin-top: 35px;
-    padding: 10px 5% 20px 5%;
+    padding: 10px 20px 20px 20px;
     background: #fff;
 }
 .act-address span{
@@ -650,7 +670,7 @@ i.circle{
 }
 .course{
     width: 90%;
-    padding: 0 5% 10px 5%;
+    padding: 0 20px 10px 20px;
     line-height: 30px;
 }
 .course div{
@@ -666,7 +686,7 @@ i.circle{
     width: 95%;
     height: 43px;
     line-height: 43px;
-    margin-left: 5%;
+    margin-left: 20px;
     border-bottom: 1px solid #e5e5e5;
 }
 .detail .act .act-name .views{
@@ -700,7 +720,7 @@ i.icon-collect.active{
 }
 .detail .act .act-info{
     width: 90%;
-    padding: 20px 5%;
+    padding: 20px;
     color: #999;
 }
 .detail .enter{
@@ -708,7 +728,7 @@ i.icon-collect.active{
     bottom: 0;
     left: 0;
     width: 90%;
-    padding: 10px 5%;
+    padding: 10px 20px;
     background: #fff;
     height: 55px;
     line-height: 55px;

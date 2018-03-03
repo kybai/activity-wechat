@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="main list">
-    <div class="top box">
+    <div class="top box fixed">
         <div class="title">
             <img th:src="@{/img/wechat/logo.png}" class="logo"/>
             <div class="add">
@@ -20,9 +20,13 @@
                     <option value="">全部</option>
                     <option th:each="d:${districts}" th:value="${d.id}" th:utext="${d.name}"></option>
                 </select>
+                <i class="icon-down"></i>
             </div>
             <input type="hidden" id="openid" th:value="${openid}" readonly="readonly"/>
         </div>
+    </div>
+
+    <div class="box">
         <div id="slider" class="slider">
             <div id="full_feature" class="swipslider">
                 <ul class="sw-slides" id="cover">
@@ -45,12 +49,8 @@
             </ul>
         </div>
         <div id="tab-ul" class="tab-con">
-            <div class="act-list box">
-                <div class="act-info" id="actListInfo"></div>
-            </div>
-            <div class="act-review box none">
-                <div class="act-info" id="actReviewListInfo"></div>
-            </div>
+            <div class="act-list box" id="actListInfo"></div>
+            <div class="act-review box none" id="actReviewListInfo"></div>
             <div class="my none" th:if="${openid!=null} and ${openid!=''}">
                 <div class="my-top box">
                     <div class="fl">
