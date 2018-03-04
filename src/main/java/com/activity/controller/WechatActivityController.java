@@ -59,7 +59,7 @@ public class WechatActivityController {
      * @param code 微信VIEW按钮对应code, 微信oauth2回调时生成并传递(须配置微信授权页面)
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String list(@RequestParam String openid, Model model) {
+    public String list(@RequestParam(required = false) String openid, Model model) {
         model.addAttribute("openid", openid);
         model.addAttribute("districts", activityDistrictService.selectList(new ActivityDistrict(Boolean.TRUE)));
         //轮播图

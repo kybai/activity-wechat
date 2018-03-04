@@ -1,7 +1,6 @@
 package com.activity.controller;
 
 import com.activity.model.WechatUser;
-import com.activity.service.UsersService;
 import com.activity.service.WechatUserService;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
@@ -14,12 +13,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Created by ky.bai on 2018-02-04
  */
-@RestController
+@Controller
 @RequestMapping("/wechat/portal")
 public class WechatController {
 
@@ -34,10 +34,8 @@ public class WechatController {
     @Autowired
     private WechatUserService wechatUserService;
 
-    @Autowired
-    private UsersService usersService;
-
-    @GetMapping(produces = "text/plain;charset=utf-8")
+    @RequestMapping(produces = "text/plain;charset=utf-8", method = RequestMethod.GET)
+    @ResponseBody
     public String authGet(@RequestParam(name = "signature", required = false) String signature,
                           @RequestParam(name = "timestamp", required = false) String timestamp,
                           @RequestParam(name = "nonce", required = false) String nonce,
@@ -57,7 +55,8 @@ public class WechatController {
         return "非法请求";
     }
 
-    @PostMapping(produces = "application/xml; charset=UTF-8")
+    @RequestMapping(produces = "application/xml; charset=UTF-8", method = RequestMethod.POST)
+    @ResponseBody
     public String authPost(@RequestBody String body, @RequestParam(name = "signature") String signature,
                            @RequestParam(name = "timestamp") String timestamp,
                            @RequestParam(name = "nonce") String nonce,
