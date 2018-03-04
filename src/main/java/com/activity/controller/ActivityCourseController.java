@@ -3,12 +3,12 @@ package com.activity.controller;
 import com.activity.mapper.ActivityCourseMapper;
 import com.activity.model.ActivityCourse;
 import com.activity.pojo.BasePageList;
+import com.activity.service.WechatConfigService;
 import com.activity.utils.Constants;
 import com.activity.utils.RestEntity;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,8 +24,8 @@ public class ActivityCourseController {
     @Autowired
     private ActivityCourseMapper activityCourseMapper;
 
-    @Value("${wechat.mp.appId}")
-    private String appId;
+    @Autowired
+    private WechatConfigService wechatConfigService;
 
     /**
      * Created by ky.bai on 2018/3/3 13:28
@@ -36,7 +36,7 @@ public class ActivityCourseController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listGet(@RequestParam Integer activityId, Model model) {
         model.addAttribute("activityId", activityId);
-        model.addAttribute("appId", appId);
+        model.addAttribute("appId", wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_APPID));
         return "activity/course/list";
     }
 

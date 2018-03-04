@@ -1,5 +1,7 @@
 package com.activity.controller;
 
+import com.activity.service.WechatConfigService;
+import com.activity.utils.Constants;
 import me.chanjar.weixin.common.api.WxConsts.MenuButtonType;
 import me.chanjar.weixin.common.bean.menu.WxMenu;
 import me.chanjar.weixin.common.bean.menu.WxMenuButton;
@@ -9,7 +11,6 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.menu.WxMpGetSelfMenuInfoResult;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,11 +26,8 @@ public class WxMenuController implements WxMpMenuService {
     @Autowired
     private WxMpService wxService;
 
-    @Value("${wechat.mp.appId}")
-    private String appId;
-
-    @Value("${wechat.uri}")
-    private String href;
+    @Autowired
+    private WechatConfigService wechatConfigService;
 
     @GetMapping("/create")
     public String menuCreate(WxMenu wxMenu) throws WxErrorException {
@@ -66,8 +64,8 @@ public class WxMenuController implements WxMpMenuService {
         WxMenuButton button34 = new WxMenuButton();
         button34.setType(MenuButtonType.VIEW);
         button34.setName("团建");
-        button34.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + appId
-                + "&redirect_uri=" + href + "/activity/wechat/portal/index"
+        button34.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_APPID)
+                + "&redirect_uri=" + wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_URI) + "/activity/wechat/portal/index"
                 + "&response_type=code&scope=snsapi_base&state=1#wechat_redirect");
         button3.getSubButtons().add(button34);
 

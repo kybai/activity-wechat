@@ -45,4 +45,12 @@ public class Constants {
     //图片类型
     public static final String IMAGE_TYPE_ADSENSE = "广告图";
     public static final String IMAGE_TYPE_ROLLING = "轮播图";
+
+    //微信配置关键字
+    public static final String WECHAT_CONFIG_APPID = "APPID";
+    public static final String WECHAT_CONFIG_SECRET = "SECRET";
+    public static final String WECHAT_CONFIG_TOKEN = "TOKEN";
+    public static final String WECHAT_CONFIG_AESKEY = "AESKEY";
+    public static final String WECHAT_CONFIG_URI = "URI";
+
 }

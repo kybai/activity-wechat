@@ -75,10 +75,11 @@ public class WechatCourseController {
         ActivityCourse course = activityCourseMapper.selectByPrimaryKey(courseId);
         WechatUser wechatUser = wechatUserService.findByOpenid(openid);
         Integer userId = wechatUser.getUserId();
-        //是否报名, 未报名跳转至活动首页
-        List<ActivityEnroll> enrolls = activityEnrollService.selectList(new ActivityEnroll(course.getActivityId(), userId, Boolean.TRUE));
+        Integer activityId = course.getActivityId();
+        //是否报名, 未报名跳转至活动详情页面
+        List<ActivityEnroll> enrolls = activityEnrollService.selectList(new ActivityEnroll(activityId, userId, Boolean.TRUE));
         if (ObjectUtils.isEmpty(enrolls)) {
-            return "redirect:/wechat/activity?openid=" + openid;
+            return "redirect:/wechat/activity/info/" + activityId + "?openid=" + openid;
         }
 
         //是否已签到

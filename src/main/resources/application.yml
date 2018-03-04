@@ -28,11 +28,3 @@ logging:
   level:
     org.springframework.web: warn
     com.activity: debug
-
-wechat:
-  uri: http://tt.51meiy.com
-  mp:
-    appId: wx84a8649ef7a1171d
-    secret: 7082b585c84f6b346fe9478ebfe7f382
-    token: weixin
-    aesKey: rKoI4DFAJZgYNv5ol2eHF6rvEY5uJbq8WHD7eVcPjHy
