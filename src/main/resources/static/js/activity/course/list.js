@@ -23,14 +23,16 @@ function loadPage(content) {
         html += '<td>' + getVal(entity.id) + '</td>';
         html += '<td>' + getVal(entity.name) + '</td>';
         html += '<td>' + getVal(entity.signTotal) + '/' + getVal(entity.enrollTotal) + '</td>';
-        html += '<td><a href="javascript:void(0);" onclick=catCode("' + getVal(entity.id) + '")>查看签到码</a></td>';
+        html += '<td><a href="javascript:void(0);" onclick="catCode(this);">' + base + '/wechat/portal/sign/' + entity.id + '</a></td>';
         html += '</tr>';
     }
     $("#bodyList").empty().html(html);
 }
 
-function catCode(courseId) {
-
+function catCode(obj) {
+    var $this = $(obj);
+    $("#imgCode").qrcode($this.html());
+    $("#imgModal").modal("show");
 }
 
 function goHistory() {

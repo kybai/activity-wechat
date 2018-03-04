@@ -115,8 +115,9 @@ public class WechatController {
      *
      * @param code   weixin oauth2回调返回的code
      * @param openid weixin用户openid
-     * @return 请求转发至活动页
+     * @return 微信授权后请求转发至活动页
      */
+    @RequestMapping("/grant")
     public String grantAuth(@RequestParam(required = false) String code, @RequestParam(required = false) String openid) throws WxErrorException {
         if (StringUtils.isEmpty(openid) && !StringUtils.isEmpty(code)) {
             WxMpOAuth2AccessToken auth = wxMpService.oauth2getAccessToken(code);
@@ -134,6 +135,20 @@ public class WechatController {
         }
 
         return "redirect:/wechat/activity?openid=" + openid;
+    }
+
+    /**
+     * Created by ky.bai on 2018/3/4 12:04
+     *
+     * @param courseId 课程编号
+     * @param code     weixin oauth2回调返回的code
+     * @return 扫码后请求转发至课程签到接口
+     */
+    @RequestMapping(value = "/sign/{courseId}", method = RequestMethod.GET)
+    public String signCourse(@PathVariable Integer courseId, @RequestParam String code) throws WxErrorException {
+        WxMpOAuth2AccessToken auth = wxMpService.oauth2getAccessToken(code);
+
+        return "redirect:/wechat/course/sign/" + courseId + "?openid=" + auth.getOpenId();
     }
 
     private WxMpXmlOutMessage route(WxMpXmlMessage message) {

@@ -37,7 +37,7 @@
                                                     <th>序号</th>
                                                     <th>课程名称</th>
                                                     <th>统计数据</th>
-                                                    <th>签到码</th>
+                                                    <th>签到链接</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody id="bodyList"></tbody>
@@ -57,9 +57,36 @@
     </div>
 </div>
 
+<!--查看二维码-->
+<div class="modal fade" tabindex="-1" role="dialog" id="imgModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">二维码</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-6 col-md-3">
+                        <a href="javascript:void(0);" class="thumbnail">
+                            <div id="imgCode"></div>
+                            <!--<img id="imgCode" src="" alt="..."/>-->
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div th:replace="fragments/commonJs"></div>
 <script th:src="@{/js/pagination/jquery.bs_pagination.min.js}" type="text/javascript"></script>
 <script th:src="@{/js/pagination/bs_pagination_en.js}" type="text/javascript"></script>
+<script th:src="@{/js/jQuery/jquery.qrcode.min.js}" type="text/javascript"></script>
 <script th:src="@{/js/activity/course/list.js}" type="text/javascript"></script>
 </body>
 </html>

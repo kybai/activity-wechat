@@ -2,18 +2,17 @@ package com.activity.controller;
 
 import com.activity.mapper.ActivityCourseMapper;
 import com.activity.model.ActivityCourse;
+import com.activity.model.ActivityCourseSignIn;
 import com.activity.model.WechatUser;
 import com.activity.pojo.WechatParamDTO;
+import com.activity.service.ActivityCourseSignInService;
 import com.activity.service.ActivityService;
 import com.activity.service.WechatUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Create by ky.bai on 2018-03-01 16:52
@@ -30,6 +29,9 @@ public class WechatCourseController {
 
     @Autowired
     private ActivityService activityService;
+
+    @Autowired
+    private ActivityCourseSignInService signInService;
 
     /**
      * Created by ky.bai on 2018-03-02 15:34
@@ -51,13 +53,20 @@ public class WechatCourseController {
     }
 
     /**
-     * Created by ky.bai on 2018-03-02 15:32
+     * Created by ky.bai on 2018/3/4 11:59
      *
+     * @param courseId 课程编号
+     * @param openid   微信用户openid
      * @return 课程签到成功页面
      */
-    @RequestMapping(value = "/sign/{activityId}", method = RequestMethod.GET)
-    public String courseSign(@PathVariable Integer activityId, @RequestParam(required = false) String openid, Model model) {
-        model.addAttribute("activityId", activityId);
+    @RequestMapping(value = "/sign/{courseId}", method = RequestMethod.GET)
+    @ResponseBody
+    public String courseSign(@PathVariable Integer courseId, @RequestParam String openid, Model model) {
+        ActivityCourse course = activityCourseMapper.selectByPrimaryKey(courseId);
+        WechatUser wechatUser = wechatUserService.findByOpenid(openid);
+        signInService.insert(new ActivityCourseSignIn(wechatUser.getUserId(), course.getActivityId()));
+
+        model.addAttribute("activityId", course.getActivityId());
         model.addAttribute("openid", openid);
         return "wechat/signUpSuccess";
     }

@@ -1,4 +1,8 @@
 (function () {
+    var openid = $("#openid").val();
+    if (getVal(openid) === "") {
+        $("#openid").val(getStorage('ACTIVITY_WECHAT_OPENID'));
+    }
     var Index = {
         init: function () {
             this.clickEvent();
@@ -32,7 +36,7 @@
     };
     Index.init();
     loadData();
-    setStorage('WECHAT_OPENID', $("#openid").val());
+    setStorage('ACTIVITY_WECHAT_OPENID', $("#openid").val());
 })();
 
 function loadData() {
