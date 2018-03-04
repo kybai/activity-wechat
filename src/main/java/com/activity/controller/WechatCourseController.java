@@ -3,9 +3,11 @@ package com.activity.controller;
 import com.activity.mapper.ActivityCourseMapper;
 import com.activity.model.ActivityCourse;
 import com.activity.model.ActivityCourseSignIn;
+import com.activity.model.ActivityEnroll;
 import com.activity.model.WechatUser;
 import com.activity.pojo.WechatParamDTO;
 import com.activity.service.ActivityCourseSignInService;
+import com.activity.service.ActivityEnrollService;
 import com.activity.service.ActivityService;
 import com.activity.service.WechatUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,9 @@ public class WechatCourseController {
     @Autowired
     private ActivityCourseSignInService signInService;
 
+    @Autowired
+    private ActivityEnrollService activityEnrollService;
+
     /**
      * Created by ky.bai on 2018-03-02 15:34
      *
@@ -50,7 +55,7 @@ public class WechatCourseController {
     public String list(@PathVariable Integer activityId, @RequestParam String openid, Model model) {
         if (!StringUtils.isEmpty(openid)) {
             WechatUser user = wechatUserService.findByOpenid(openid);
-            model.addAttribute("courses", activityCourseMapper.selectSignList(new WechatParamDTO(activityId, user.getId(), Boolean.TRUE)));
+            model.addAttribute("courses", activityCourseMapper.selectSignList(new WechatParamDTO(user.getId(), activityId, Boolean.TRUE)));
         } else {
             model.addAttribute("courses", activityCourseMapper.selectList(new ActivityCourse(activityId, Boolean.TRUE)));
         }
@@ -63,15 +68,23 @@ public class WechatCourseController {
      *
      * @param courseId 课程编号
      * @param openid   微信用户openid
-     * @return 课程签到，冰跳转至签到成功页面
+     * @return 课程签到，并跳转至签到成功页面
      */
     @RequestMapping(value = "/sign/{courseId}", method = RequestMethod.GET)
     public String courseSign(@PathVariable Integer courseId, @RequestParam String openid, Model model) {
         ActivityCourse course = activityCourseMapper.selectByPrimaryKey(courseId);
         WechatUser wechatUser = wechatUserService.findByOpenid(openid);
-        List<ActivityCourseSignIn> signs = signInService.selectList(new ActivityCourseSignIn(wechatUser.getUserId(), courseId));
+        Integer userId = wechatUser.getUserId();
+        //是否报名, 未报名跳转至活动首页
+        List<ActivityEnroll> enrolls = activityEnrollService.selectList(new ActivityEnroll(course.getActivityId(), userId, Boolean.TRUE));
+        if (ObjectUtils.isEmpty(enrolls)) {
+            return "redirect:/wechat/activity?openid=" + openid;
+        }
+
+        //是否已签到
+        List<ActivityCourseSignIn> signs = signInService.selectList(new ActivityCourseSignIn(userId, courseId));
         if (ObjectUtils.isEmpty(signs)) {
-            signInService.insert(new ActivityCourseSignIn(wechatUser.getUserId(), courseId));
+            signInService.insert(new ActivityCourseSignIn(userId, courseId));
         }
 
         model.addAttribute("activityId", course.getActivityId());
