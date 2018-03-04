@@ -49,10 +49,33 @@ function checkForm() {
     return check;
 }
 
-$("#cardBack, #cardFront").on("change", function () {
+$('.uploadCardFront').on('click',function () {
+    $('#cardFront').click();
+});
+$('.uploadCardBack').on('click',function () {
+    $('#cardBack').click();
+});
+$('.imgdel').on('click',function () {
+    $(this).parents('.file-box').addClass('none');
+    $(this).parents('.file-box').siblings('.J_upload').removeClass('none');
+});
+
+$("#cardBack, #cardFront").on("change", function (e) {
     var $this = $(this);
+    var files = $(this)[0].files[0];
+    var name = files.name;
+    var imgUrl = '';
+    var reader = new FileReader();
+    reader.onload = function (el) {
+        //当reader加载时，把图片的内容赋值给
+        imgUrl = el.target.result;
+    };
+
+    //读取选中的图片，并转换成dataURL格式
+    reader.readAsDataURL(files);
+
     var formData = new FormData();
-    formData.append("uploadFile", $(this)[0].files[0]);
+    formData.append("uploadFile", files);
     $.ajax({
         url: base + '/wechat/activity/upload',
         type: 'POST',
@@ -63,6 +86,10 @@ $("#cardBack, #cardFront").on("change", function () {
         contentType: false,  // 告诉jQuery不要去设置Content-Type请求头
         success: function (results) {
             $this.attr("fileid", results.data);
+            $this.siblings('.J_upload').addClass('none');
+            $this.siblings('.file-box').children('.imgurl').attr('src',imgUrl);
+            $this.siblings('.file-box').children('.imgname').text(name);
+            $this.siblings('.file-box').removeClass('none');
         }
     });
 });

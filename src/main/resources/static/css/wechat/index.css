@@ -17,6 +17,18 @@ a{
 ul,li{
     list-style: none;
 }
+input::-webkit-input-placeholder{
+    color: #aaa;
+}
+input::-moz-placeholder{
+    color: #aaa;
+}
+input:-moz-placeholder{
+    color: #aaa;
+}
+input:-ms-input-placeholder{
+    color: #aaa;
+}
 .pb10{
     padding-bottom: 10px;
 }
@@ -156,7 +168,7 @@ i.circle{
 }
 .list .slider img{
     width: 100%;
-    height: 100%;
+    height: 230px;
     border-radius: 10px;
     overflow: hidden;
 }
@@ -428,6 +440,59 @@ i.circle{
     margin-right: 20px;
     font-size: 14px;
     padding: 0 3px;
+}
+.sign .contact .form-li input[type=file]{
+    opacity: 0;
+}
+.sign .contact .form-li .upload{
+    width: 70%;
+    height: 40px;
+    float: right;
+    margin-right: 20px;
+    position: relative;
+}
+.sign .contact .form-li .upload .J_upload{
+    position: absolute;
+    left: -3px;
+    color: #aaa;
+}
+.sign .contact .form-li .upload .file-box{
+    width: 100%;
+    height: 32px;
+    position: absolute;
+    top: 5px;
+    left: 0;
+}
+.sign .contact .form-li .upload .file-box img{
+    float: left;
+    width: 50px;
+    height: 32px;
+}
+.sign .contact .form-li .upload .file-box .imgname{
+    float: left;
+    color: #999;
+    margin-left: 10px;
+    line-height: 32px;
+}
+.sign .contact .form-li .upload .file-box .imgdel{
+    display: block;
+    width: 14px;
+    height: 14px;
+    background: #feec00;
+    border: 1px solid #000;
+    border-radius: 50%;
+    float: right;
+    line-height: 12px;
+    text-align: center;
+    margin-top: 7px;
+}
+
+
+.sign .contact .form-li input.J_upload[type=text]{
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 .sign .contact .form-li input[type=text]{
     width: 70%;

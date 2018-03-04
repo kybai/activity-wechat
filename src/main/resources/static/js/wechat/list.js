@@ -16,7 +16,9 @@
                 var newtitle = _this.find('span').text();
                 var tabclass = 'act-list';
                 if (newtitle === "活动回顾") tabclass = 'act-review';
-                if (newtitle === "我的") tabclass = 'my';
+                if (newtitle === "我的") {
+                    tabclass = 'my';
+                }
                 $("#tab-ul").find("." + tabclass).removeClass("none").siblings("div").addClass("none");
             });
         },

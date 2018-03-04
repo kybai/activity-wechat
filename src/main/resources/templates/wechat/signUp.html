@@ -45,11 +45,28 @@
                 </div>
                 <div th:if="${tag.useCard}" class="form-li">
                     <label>证件</label>
-                    <input type="file" name="card" id="cardFront" placeholder="请选择上传身份证人像面照片" accept="image/jpg, image/jpeg, image/png"/>
+                    <div class="upload">
+                        <input type="file" name="card" id="cardFront" placeholder="请选择上传身份证人像面照片" accept="image/jpg, image/jpeg, image/png"/>
+                        <div class="J_upload uploadCardFront">请选择上传身份证人像面照片</div>
+                        <div class="file-box none">
+                            <img class="imgurl" src="" />
+                            <span class="imgname">fjaskdfjasdjfals</span>
+                            <i class="imgdel">&times;</i>
+                        </div>
+                    </div>
+
                 </div>
                 <div th:if="${tag.useCard}" class="form-li">
                     <label></label>
-                    <input type="file" name="card" id="cardBack" placeholder="请选择上传身份证国徽面照片" accept="image/jpg, image/jpeg, image/png"/>
+                    <div class="upload">
+                        <input type="file" name="card" id="cardBack" placeholder="请选择上传身份证国徽面照片" accept="image/jpg, image/jpeg, image/png"/>
+                        <div class="J_upload uploadCardBack">请选择上传身份证国徽面照片</div>
+                        <div class="file-box none">
+                            <img class="imgurl" src="" />
+                            <span class="imgname">fjaskdfjasdjfals</span>
+                            <i class="imgdel">&times;</i>
+                        </div>
+                    </div>
                 </div>
                 <div th:if="${tag.usePolitical}" class="form-li">
                     <label>政治面貌</label>
