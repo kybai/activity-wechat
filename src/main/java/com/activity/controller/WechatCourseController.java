@@ -11,8 +11,14 @@ import com.activity.service.WechatUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 /**
  * @author Create by ky.bai on 2018-03-01 16:52
@@ -57,14 +63,16 @@ public class WechatCourseController {
      *
      * @param courseId 课程编号
      * @param openid   微信用户openid
-     * @return 课程签到成功页面
+     * @return 课程签到，冰跳转至签到成功页面
      */
     @RequestMapping(value = "/sign/{courseId}", method = RequestMethod.GET)
-    @ResponseBody
     public String courseSign(@PathVariable Integer courseId, @RequestParam String openid, Model model) {
         ActivityCourse course = activityCourseMapper.selectByPrimaryKey(courseId);
         WechatUser wechatUser = wechatUserService.findByOpenid(openid);
-        signInService.insert(new ActivityCourseSignIn(wechatUser.getUserId(), course.getId()));
+        List<ActivityCourseSignIn> signs = signInService.selectList(new ActivityCourseSignIn(wechatUser.getUserId(), courseId));
+        if (ObjectUtils.isEmpty(signs)) {
+            signInService.insert(new ActivityCourseSignIn(wechatUser.getUserId(), courseId));
+        }
 
         model.addAttribute("activityId", course.getActivityId());
         model.addAttribute("openid", openid);
