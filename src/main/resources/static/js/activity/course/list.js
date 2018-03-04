@@ -23,7 +23,7 @@ function loadPage(content) {
         html += '<td>' + getVal(entity.id) + '</td>';
         html += '<td>' + getVal(entity.name) + '</td>';
         html += '<td>' + getVal(entity.signTotal) + '/' + getVal(entity.enrollTotal) + '</td>';
-        html += '<td><a href="javascript:void(0);" onclick="catCode(this);">' + base + '/wechat/portal/sign/' + entity.id + '</a></td>';
+        html += '<td><a href="javascript:void(0);" code="' + getCodeStr(entity.id) + '" onclick="catCode(this);">' + getCodeStr(entity.id) + '</a></td>';
         html += '</tr>';
     }
     $("#bodyList").empty().html(html);
@@ -31,8 +31,14 @@ function loadPage(content) {
 
 function catCode(obj) {
     var $this = $(obj);
-    $("#imgCode").qrcode($this.html());
+    $("#imgCode").empty().qrcode($this.attr("code"));
     $("#imgModal").modal("show");
+}
+
+function getCodeStr(courseId) {
+    var appId = $("#appId").val();
+    return 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appId + '&redirect_uri=http://tt.51meiy.com/activity/wechat/portal/sign/'
+        + courseId + '&response_type=code&scope=snsapi_base&state=1#wechat_redirect';
 }
 
 function goHistory() {

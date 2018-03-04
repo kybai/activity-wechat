@@ -56,7 +56,7 @@ public class WechatActivityController {
     /**
      * Created by ky.bai on 2018-03-01 14:49
      *
-     * @param code 微信VIEW按钮对应code, 微信oauth2回调时生成并传递(须配置微信授权页面)
+     * @param openid 用户微信openid
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String list(@RequestParam(required = false) String openid, Model model) {

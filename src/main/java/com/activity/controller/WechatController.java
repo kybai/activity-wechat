@@ -98,44 +98,47 @@ public class WechatController {
      *
      * @param code   weixin oauth2回调返回的code
      * @param openid weixin用户openid
-     * @return 请求转发至活动页
+     * @return 请求转发至活动页(微信入口或授权)
      */
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(@RequestParam(required = false) String code, @RequestParam(required = false) String openid) throws WxErrorException {
         if (StringUtils.isEmpty(openid) && !StringUtils.isEmpty(code)) {
             WxMpOAuth2AccessToken auth = wxMpService.oauth2getAccessToken(code);
             openid = auth.getOpenId();
-        }
-
-        return "redirect:/wechat/activity?openid=" + openid;
-    }
-
-    /**
-     * Created by ky.bai on 2018/3/4 09:40
-     *
-     * @param code   weixin oauth2回调返回的code
-     * @param openid weixin用户openid
-     * @return 微信授权后请求转发至活动页
-     */
-    @RequestMapping("/grant")
-    public String grantAuth(@RequestParam(required = false) String code, @RequestParam(required = false) String openid) throws WxErrorException {
-        if (StringUtils.isEmpty(openid) && !StringUtils.isEmpty(code)) {
-            WxMpOAuth2AccessToken auth = wxMpService.oauth2getAccessToken(code);
-            openid = auth.getOpenId();
-        }
-        //保存用户授权数据
-        this.logger.info("新用户授权 OPENID: " + openid);
-        if (!StringUtils.isEmpty(openid)) {
+            //获取微信用户的基本信息, 若微信用户还未存在，则保存
             WechatUser wechatUser = wechatUserService.findByOpenid(openid);
-            WxMpUser wxMpUser = wxMpService.getUserService().userInfo(openid, null);
-            if (wechatUser == null && wxMpUser != null) {
-                wechatUserService.insertByWxMpUser(wxMpUser);
+            WxMpUser u = wxMpService.getUserService().userInfo(auth.getOpenId(), null);
+            if (wechatUser == null && u != null) {
+                wechatUserService.insertByWxMpUser(u);
             }
-
         }
 
         return "redirect:/wechat/activity?openid=" + openid;
     }
+
+//    /**
+//     * Created by ky.bai on 2018/3/4 09:40
+//     *
+//     * @param code   weixin oauth2回调返回的code
+//     * @param openid weixin用户openid
+//     * @return 微信授权后请求转发至活动页
+//     */
+//    @RequestMapping(value = "/grant", method = RequestMethod.GET)
+//    public String grantAuth(@RequestParam(required = false) String code, @RequestParam(required = false) String openid) throws WxErrorException {
+//        if (StringUtils.isEmpty(openid) && !StringUtils.isEmpty(code)) {
+//            WxMpOAuth2AccessToken auth = wxMpService.oauth2getAccessToken(code);
+//            openid = auth.getOpenId();
+//
+//            this.logger.info("新用户授权 OPENID: " + openid);
+//            //获取微信用户的基本信息, 若微信用户还未存在，则保存
+//            WechatUser wechatUser = wechatUserService.findByOpenid(openid);
+//            WxMpUser wxMpUser = wxMpService.getUserService().userInfo(openid, null);
+//            if (wechatUser == null && wxMpUser != null) {
+//                wechatUserService.insertByWxMpUser(wxMpUser);
+//            }
+//        }
+//        return "redirect:/wechat/activity?openid=" + openid;
+//    }
 
     /**
      * Created by ky.bai on 2018/3/4 12:04
@@ -147,6 +150,13 @@ public class WechatController {
     @RequestMapping(value = "/sign/{courseId}", method = RequestMethod.GET)
     public String signCourse(@PathVariable Integer courseId, @RequestParam String code) throws WxErrorException {
         WxMpOAuth2AccessToken auth = wxMpService.oauth2getAccessToken(code);
+        WechatUser wechatUser = wechatUserService.findByOpenid(auth.getOpenId());
+        //获取微信用户的基本信息, 若微信用户还未存在，则保存
+        WxMpUser u = wxMpService.getUserService().userInfo(auth.getOpenId(), null);
+        if (wechatUser == null && u != null) {
+            wechatUserService.insertByWxMpUser(u);
+            return "redirect:/wechat/activity?openid=" + auth.getOpenId();
+        }
 
         return "redirect:/wechat/course/sign/" + courseId + "?openid=" + auth.getOpenId();
     }

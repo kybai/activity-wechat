@@ -16,7 +16,8 @@
 </div>
 <div class="main score">
     <div class="myscore box"><b th:utext="${user.score}"></b><span>个积分</span></div>
-    <img class="banner" th:src="@{/img/wechat/banner.jpg}"/>
+    <img class="banner" th:if="${adsense.filePath == null}" th:src="@{/img/wechat/banner.jpg}"/>
+    <img class="banner" th:unless="${adsense.filePath == null}" th:src="${adsense.filePath}"/>
     <div class="score-info box">
         <span class="title">积分明细</span>
         <p class="noscore" th:if="${#lists.isEmpty(scores)}">暂无积分</p>

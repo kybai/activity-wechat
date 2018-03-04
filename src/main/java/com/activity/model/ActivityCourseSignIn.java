@@ -22,9 +22,6 @@ public class ActivityCourseSignIn implements Serializable {
     //签到时间
     private Timestamp signInTime;
 
-    //活动编号 -- 非数据库字段
-    private Integer activityId;
-
     public ActivityCourseSignIn() {
     }
 
@@ -32,10 +29,11 @@ public class ActivityCourseSignIn implements Serializable {
         this.courseId = courseId;
     }
 
-    public ActivityCourseSignIn(Integer userId, Integer activityId) {
+    public ActivityCourseSignIn(Integer userId, Integer courseId) {
         this.userId = userId;
-        this.activityId = activityId;
+        this.courseId = courseId;
     }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,11 +57,6 @@ public class ActivityCourseSignIn implements Serializable {
         return signInTime;
     }
 
-    @Transient
-    public Integer getActivityId() {
-        return activityId;
-    }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -80,7 +73,4 @@ public class ActivityCourseSignIn implements Serializable {
         this.signInTime = signInTime;
     }
 
-    public void setActivityId(Integer activityId) {
-        this.activityId = activityId;
-    }
 }

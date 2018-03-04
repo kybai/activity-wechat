@@ -8,6 +8,7 @@ import com.activity.utils.RestEntity;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,9 @@ public class ActivityCourseController {
     @Autowired
     private ActivityCourseMapper activityCourseMapper;
 
+    @Value("${wechat.mp.appId}")
+    private String appId;
+
     /**
      * Created by ky.bai on 2018/3/3 13:28
      *
@@ -32,6 +36,7 @@ public class ActivityCourseController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listGet(@RequestParam Integer activityId, Model model) {
         model.addAttribute("activityId", activityId);
+        model.addAttribute("appId", appId);
         return "activity/course/list";
     }
 

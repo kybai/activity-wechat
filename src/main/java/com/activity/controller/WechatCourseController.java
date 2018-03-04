@@ -64,7 +64,7 @@ public class WechatCourseController {
     public String courseSign(@PathVariable Integer courseId, @RequestParam String openid, Model model) {
         ActivityCourse course = activityCourseMapper.selectByPrimaryKey(courseId);
         WechatUser wechatUser = wechatUserService.findByOpenid(openid);
-        signInService.insert(new ActivityCourseSignIn(wechatUser.getUserId(), course.getActivityId()));
+        signInService.insert(new ActivityCourseSignIn(wechatUser.getUserId(), course.getId()));
 
         model.addAttribute("activityId", course.getActivityId());
         model.addAttribute("openid", openid);
