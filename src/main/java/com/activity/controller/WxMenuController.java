@@ -66,8 +66,9 @@ public class WxMenuController implements WxMpMenuService {
         WxMenuButton button34 = new WxMenuButton();
         button34.setType(MenuButtonType.VIEW);
         button34.setName("团建");
-        button34.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + appId + "&redirect_uri=" + href + "&response_type=code&scope=snsapi_base&state=1#wechat_redirect");
-        //button34.setUrl("http://kybai.s1.natapp.cc/activity/wechat/index");
+        button34.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + appId
+                + "&redirect_uri=" + href + "/activity/wechat/portal/index"
+                + "&response_type=code&scope=snsapi_base&state=1#wechat_redirect");
         button3.getSubButtons().add(button34);
 
         menu.getButtons().add(button1);
