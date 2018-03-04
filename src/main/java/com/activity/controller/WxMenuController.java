@@ -1,6 +1,6 @@
 package com.activity.controller;
 
-import me.chanjar.weixin.common.api.WxConsts.*;
+import me.chanjar.weixin.common.api.WxConsts.MenuButtonType;
 import me.chanjar.weixin.common.bean.menu.WxMenu;
 import me.chanjar.weixin.common.bean.menu.WxMenuButton;
 import me.chanjar.weixin.common.exception.WxErrorException;
@@ -29,7 +29,7 @@ public class WxMenuController implements WxMpMenuService {
     private String appId;
 
     @Value("${wechat.uri}")
-    private String uri;
+    private String href;
 
     @GetMapping("/create")
     public String menuCreate(WxMenu wxMenu) throws WxErrorException {
@@ -62,8 +62,7 @@ public class WxMenuController implements WxMpMenuService {
         button3.getSubButtons().add(button32);
         button3.getSubButtons().add(button33);
 
-        //todo 自己用的路径
-        String href = "http://tt.51meiy.com/activity/wechat/activity/";
+        //自己用的路径
         WxMenuButton button34 = new WxMenuButton();
         button34.setType(MenuButtonType.VIEW);
         button34.setName("团建");

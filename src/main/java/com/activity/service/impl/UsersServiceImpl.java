@@ -1,15 +1,18 @@
 package com.activity.service.impl;
 
 import com.activity.mapper.UsersMapper;
+import com.activity.mapper.UsersScoreMapper;
 import com.activity.model.Users;
+import com.activity.model.UsersScore;
 import com.activity.pojo.BasePageList;
 import com.activity.service.UsersService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author Created by ky.bai on 2018-02-12
@@ -17,8 +20,11 @@ import javax.annotation.Resource;
 @Service
 public class UsersServiceImpl implements UsersService {
 
-    @Resource
+    @Autowired
     private UsersMapper usersMapper;
+
+    @Autowired
+    private UsersScoreMapper usersScoreMapper;
 
     @Override
     public Users selectOne(Integer id) {
@@ -34,6 +40,11 @@ public class UsersServiceImpl implements UsersService {
     public PageInfo<Users> findList(BasePageList page) {
         PageHelper.startPage(page.getCurrentPage(), page.getPageSize());
         return new PageInfo<>(usersMapper.selectList(new Users(page.getName())));
+    }
+
+    @Override
+    public List<UsersScore> selectUserScoreList(UsersScore record) {
+        return usersScoreMapper.selectList(record);
     }
 
     @Override

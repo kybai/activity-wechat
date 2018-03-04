@@ -36,6 +36,7 @@ public class Constants {
     public static final String ENROLL_WECHAT = "微信报名";
 
     //活动报名提示结果
+    public static final String ENROLL_RESULT_WAS_DISABLED = "您的账号已被禁用，请联系管理员。";
     public static final String ENROLL_RESULT_NOT_FOUND = "未发现该活动，报名失败。";
     public static final String ENROLL_RESULT_WAS_END = "该活动已经结束，报名失败。";
     public static final String ENROLL_RESULT_WAS_FULL = "该活动名额已满，报名失败。";

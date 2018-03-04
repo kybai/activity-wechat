@@ -30,7 +30,7 @@ public class UploadFileController {
     public ResponseEntity upload(@RequestParam(value = "uploadFile") MultipartFile file,
                                  @RequestParam(value = "fileType") String fileType) {
         UploadFile info = uploadFileService.insert(file, fileType);
-        return ResponseEntity.ok(new RestEntity(200, Constants.OPERATOR_SUCCESS, info.getId()));
+        return ResponseEntity.ok(new RestEntity(200, Constants.OPERATOR_SUCCESS, info));
     }
 
     /**

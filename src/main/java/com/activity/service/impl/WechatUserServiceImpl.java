@@ -40,14 +40,15 @@ public class WechatUserServiceImpl implements WechatUserService {
         WechatUser model = wechatUserMapper.selectByOpenid(mp.getOpenId());
         if (model != null) {
             model.setSubscribe(mp.getSubscribe());
+            return wechatUserMapper.update(model);
         } else {
             Users u = new Users(mp.getNickname(), mp.getSex(), mp.getCity(), mp.getProvince(), mp.getCountry(), mp.getHeadImgUrl(),
                     Boolean.TRUE, DateUtils.getCurrentTimestamp());
             usersService.insert(u);
             model = new WechatUser(mp.getOpenId(), u.getId(), mp.getNickname(), mp.getSubscribe(), mp.getUnionId(), mp.getRemark(),
                     mp.getGroupId(), DateUtils.getCurrentTimestamp());
+            return wechatUserMapper.insert(model);
         }
-        return wechatUserMapper.insert(model);
     }
 
     @Override

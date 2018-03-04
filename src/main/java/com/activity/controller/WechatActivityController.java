@@ -6,9 +6,6 @@ import com.activity.service.*;
 import com.activity.utils.Constants;
 import com.activity.utils.DateUtils;
 import com.activity.utils.RestEntity;
-import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -56,20 +53,13 @@ public class WechatActivityController {
     @Autowired
     private UploadFileService uploadFileService;
 
-    @Autowired
-    private WxMpService wxMpService;
-
     /**
      * Created by ky.bai on 2018-03-01 14:49
      *
      * @param code 微信VIEW按钮对应code, 微信oauth2回调时生成并传递(须配置微信授权页面)
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String list(@RequestParam(required = false) String code, @RequestParam(required = false) String openid, Model model) throws WxErrorException {
-        if (StringUtils.isEmpty(openid) && !StringUtils.isEmpty(code)) {
-            WxMpOAuth2AccessToken auth = wxMpService.oauth2getAccessToken(code);
-            openid = auth.getOpenId();
-        }
+    public String list(@RequestParam String openid, Model model) {
         model.addAttribute("openid", openid);
         model.addAttribute("districts", activityDistrictService.selectList(new ActivityDistrict(Boolean.TRUE)));
         //轮播图
@@ -198,23 +188,26 @@ public class WechatActivityController {
     @ResponseBody
     public ResponseEntity saveEnroll(@RequestBody ActivityEnroll record) {
         Activity activity = activityService.selectOne(record.getActivityId());
-        if (activity == null) {
+        if (activity == null)
             return ResponseEntity.ok(new RestEntity(100, Constants.ENROLL_RESULT_NOT_FOUND, Boolean.FALSE));
-        }
+
+        Users user = usersService.selectOne(record.getUserId());
+        if (user != null && !user.getActive())
+            return ResponseEntity.ok(new RestEntity(100, Constants.ENROLL_RESULT_WAS_DISABLED, Boolean.FALSE));
+
         //判断当前活动是否在开始与结束时间范围内
-        if (activity.getEndTime().getTime() < DateUtils.getCurrentTimestamp().getTime()) {
+        if (activity.getEndTime().getTime() < DateUtils.getCurrentTimestamp().getTime())
             return ResponseEntity.ok(new RestEntity(100, Constants.ENROLL_RESULT_WAS_END, Boolean.FALSE));
-        }
+
         //判断是否已经报名
         List<ActivityEnroll> enrolls = activityEnrollService.selectList(new ActivityEnroll(activity.getId(), record.getUserId(), Boolean.TRUE));
-        if (!ObjectUtils.isEmpty(enrolls)) {
+        if (!ObjectUtils.isEmpty(enrolls))
             return ResponseEntity.ok(new RestEntity(100, Constants.ENROLL_RESULT_WAS_SIGN, Boolean.FALSE));
-        }
+
         //判断已报名人数是否已满
         List<ActivityEnroll> enrollList = activityEnrollService.selectList(new ActivityEnroll(activity.getId(), Boolean.TRUE));
-        if (activity.getMaxLimit() != null && activity.getMaxLimit() != 0 && activity.getMaxLimit() <= enrollList.size()) {
+        if (activity.getMaxLimit() != null && activity.getMaxLimit() != 0 && activity.getMaxLimit() <= enrollList.size())
             return ResponseEntity.ok(new RestEntity(100, Constants.ENROLL_RESULT_WAS_FULL, Boolean.FALSE));
-        }
 
         activityEnrollService.insert(record);
         return ResponseEntity.ok(new RestEntity(200, Constants.OPERATOR_SUCCESS, Boolean.TRUE));
@@ -250,6 +243,7 @@ public class WechatActivityController {
      */
     private String getActivityStatus(Activity activity, Integer userId, int enrollTotal) {
         if (userId == null) return Constants.ENROLL_WECHAT;
+        Users user = usersService.selectOne(userId);
 
         List<ActivityEnroll> enrolls = activityEnrollService.selectList(new ActivityEnroll(activity.getId(), userId, Boolean.TRUE));
         long currentTime = DateUtils.getCurrentTimestamp().getTime();

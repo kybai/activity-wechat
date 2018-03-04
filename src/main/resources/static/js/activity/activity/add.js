@@ -33,7 +33,8 @@ $("#uploadFileID").on("change", function () {
         processData: false,  // 告诉jQuery不要去处理发送的数据
         contentType: false,  // 告诉jQuery不要去设置Content-Type请求头
         success: function (results) {
-            $("#uploadFileID").attr("fileid", results.data);
+            var file = results.data;
+            $("#uploadFileID").attr("fileid", file.id);
         }
     });
 });

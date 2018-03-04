@@ -31,11 +31,9 @@ public class SubscribeHandler extends AbstractHandler {
 
         //获取微信用户的基本信息
         WxMpUser u = wxMpService.getUserService().userInfo(wxMessage.getFromUser(), null);
-        if (u != null) {
+        if (u != null)
             wechatUserService.insertByWxMpUser(u);
-            return new TextBuilder().build(Constants.USER_SUBSCRIBE, wxMessage, wxMpService);
-        }
 
-        return null;
+        return new TextBuilder().build(Constants.USER_SUBSCRIBE, wxMessage, wxMpService);
     }
 }

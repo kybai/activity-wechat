@@ -1,5 +1,7 @@
 package com.activity.config;
 
+import com.activity.model.Users;
+import com.activity.service.UsersService;
 import com.activity.wechat.handler.*;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;

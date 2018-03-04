@@ -1,9 +1,15 @@
 package com.activity.controller;
 
+import com.activity.model.WechatUser;
+import com.activity.service.UsersService;
+import com.activity.service.WechatUserService;
+import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
+import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
+import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +30,12 @@ public class WechatController {
 
     @Autowired
     private WxMpMessageRouter router;
+
+    @Autowired
+    private WechatUserService wechatUserService;
+
+    @Autowired
+    private UsersService usersService;
 
     @GetMapping(produces = "text/plain;charset=utf-8")
     public String authGet(@RequestParam(name = "signature", required = false) String signature,
@@ -80,6 +92,49 @@ public class WechatController {
         this.logger.debug("\n组装回复信息：{}", out);
 
         return out;
+    }
+
+    /**
+     * Created by ky.bai on 2018/3/4 09:37
+     *
+     * @param code   weixin oauth2回调返回的code
+     * @param openid weixin用户openid
+     * @return 请求转发至活动页
+     */
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String index(@RequestParam(required = false) String code, @RequestParam(required = false) String openid) throws WxErrorException {
+        if (StringUtils.isEmpty(openid) && !StringUtils.isEmpty(code)) {
+            WxMpOAuth2AccessToken auth = wxMpService.oauth2getAccessToken(code);
+            openid = auth.getOpenId();
+        }
+
+        return "redirect:/wechat/activity?openid=" + openid;
+    }
+
+    /**
+     * Created by ky.bai on 2018/3/4 09:40
+     *
+     * @param code   weixin oauth2回调返回的code
+     * @param openid weixin用户openid
+     * @return 请求转发至活动页
+     */
+    public String grantAuth(@RequestParam(required = false) String code, @RequestParam(required = false) String openid) throws WxErrorException {
+        if (StringUtils.isEmpty(openid) && !StringUtils.isEmpty(code)) {
+            WxMpOAuth2AccessToken auth = wxMpService.oauth2getAccessToken(code);
+            openid = auth.getOpenId();
+        }
+        //保存用户授权数据
+        this.logger.info("新用户授权 OPENID: " + openid);
+        if (!StringUtils.isEmpty(openid)) {
+            WechatUser wechatUser = wechatUserService.findByOpenid(openid);
+            WxMpUser wxMpUser = wxMpService.getUserService().userInfo(openid, null);
+            if (wechatUser == null && wxMpUser != null) {
+                wechatUserService.insertByWxMpUser(wxMpUser);
+            }
+
+        }
+
+        return "redirect:/wechat/activity?openid=" + openid;
     }
 
     private WxMpXmlOutMessage route(WxMpXmlMessage message) {

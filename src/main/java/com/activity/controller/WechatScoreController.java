@@ -1,6 +1,5 @@
 package com.activity.controller;
 
-import com.activity.mapper.UsersScoreMapper;
 import com.activity.model.UsersScore;
 import com.activity.model.WechatUser;
 import com.activity.service.UsersService;
@@ -25,9 +24,6 @@ public class WechatScoreController {
     @Autowired
     private UsersService usersService;
 
-    @Autowired
-    private UsersScoreMapper usersScoreMapper;
-
     /**
      * Created by ky.bai on 2018-03-02 15:19
      *
@@ -37,7 +33,7 @@ public class WechatScoreController {
     public String getScore(@RequestParam String openid, Model model) {
         WechatUser wechatUser = wechatUserService.findByOpenid(openid);
         model.addAttribute("user", usersService.selectUserScore(wechatUser.getUserId()));
-        model.addAttribute("scores", usersScoreMapper.selectList(new UsersScore(wechatUser.getUserId())));
+        model.addAttribute("scores", usersService.selectUserScoreList(new UsersScore(wechatUser.getUserId())));
         return "wechat/my";
     }
 }

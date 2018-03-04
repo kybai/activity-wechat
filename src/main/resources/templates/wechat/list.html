@@ -6,7 +6,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
     <meta name="format-detection" content="telephone=no"/>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-    <title>活动列表</title>
+    <title th:utext="#{title}"></title>
+    <!--<title>活动列表</title>-->
     <link th:href="@{/js/wechat/slider/swipeslider.css}" rel="stylesheet"/>
     <link th:href="@{/css/wechat/index.css}" rel="stylesheet"/>
 </head>
@@ -51,6 +52,9 @@
         <div id="tab-ul" class="tab-con">
             <div class="act-list box" id="actListInfo"></div>
             <div class="act-review box none" id="actReviewListInfo"></div>
+            <div class="my none" th:unless="${openid!=null} and ${openid!=''}">
+                <span>请在微信中打开该链接</span>
+            </div>
             <div class="my none" th:if="${openid!=null} and ${openid!=''}">
                 <div class="my-top box">
                     <div class="fl">
