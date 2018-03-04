@@ -75,10 +75,6 @@ public class WechatMpConfiguration {
                 .event(EventType.UNSUBSCRIBE)
                 .handler(this.getUnsubscribeHandler()).end();
 
-        // 扫码事件
-//        newRouter.rule().async(false).msgType(XmlMsgType.EVENT)
-//                .event(EventType.SCAN).handler(this.getScanHandler()).end();
-
         // 默认
         newRouter.rule().async(false).handler(this.getMsgHandler()).end();
 
@@ -101,7 +97,4 @@ public class WechatMpConfiguration {
         return this.msgHandler;
     }
 
-//    protected AbstractHandler getScanHandler() {
-//        return null;
-//    }
 }
