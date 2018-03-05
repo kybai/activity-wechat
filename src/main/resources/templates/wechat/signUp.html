@@ -22,6 +22,7 @@
         <div class="course-time">
             <i class="fl circle"></i>
             <span th:utext="${#dates.format(activity.beginTime,'yyyy-MM-dd')}+'至'+${#dates.format(activity.endTime,'yyyy-MM-dd')}"></span>
+            <input type="hidden" id="appId" th:value="${appId}" readonly="readonly"/>
         </div>
         <div class="course-list">
             <i class="fl circle"></i>

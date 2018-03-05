@@ -102,7 +102,7 @@ public class WechatActivityController {
             WechatUser wechatUser = wechatUserService.findByOpenid(openid);
             model.addAttribute("user", usersService.selectUserScore(wechatUser.getUserId()));
         }
-        model.addAttribute("uri", wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_URI));
+        model.addAttribute("appId", wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_APPID));
 
         return "wechat/list";
     }
@@ -220,6 +220,7 @@ public class WechatActivityController {
             WechatUser user = wechatUserService.findByOpenid(openid);
             model.addAttribute("userId", user.getUserId());
         }
+        model.addAttribute("appId", wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_APPID));
         return "wechat/signUp";
     }
 
@@ -272,6 +273,7 @@ public class WechatActivityController {
     @RequestMapping(value = "/enroll/{activityId}/success", method = RequestMethod.GET)
     public String enterSuccess(@PathVariable Integer activityId, Model model) {
         model.addAttribute("activityId", activityId);
+        model.addAttribute("appId", wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_APPID));
         return "wechat/enterSuccess";
     }
 

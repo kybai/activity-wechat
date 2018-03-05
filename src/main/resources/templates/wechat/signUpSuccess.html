@@ -23,6 +23,7 @@
     <div class="link">
         <a class="fl btn" th:href="@{'/wechat/course/info/'+${activityId}}">课程安排</a>
         <a class="fr btn" th:href="@{/wechat/user/score}">我的积分</a>
+        <input type="hidden" id="appId" th:value="${appId}" readonly="readonly"/>
     </div>
 </div>
 

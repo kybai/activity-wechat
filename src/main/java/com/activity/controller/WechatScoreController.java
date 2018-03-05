@@ -5,6 +5,7 @@ import com.activity.model.UsersScore;
 import com.activity.model.WechatUser;
 import com.activity.service.AdsenseService;
 import com.activity.service.UsersService;
+import com.activity.service.WechatConfigService;
 import com.activity.service.WechatUserService;
 import com.activity.utils.Constants;
 import com.activity.utils.WechatUtil;
@@ -15,7 +16,6 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -36,12 +36,14 @@ public class WechatScoreController {
     @Autowired
     private AdsenseService adsenseService;
 
+    @Autowired
+    private WechatConfigService wechatConfigService;
+
     /**
      * Created by ky.bai on 2018-03-02 15:19
      *
      * @return 用户积分页面
      */
-    //@RequestParam String openid
     @RequestMapping(value = "/score", method = RequestMethod.GET)
     public String getScore(HttpServletRequest request, Model model) {
         String openid = WechatUtil.getOpenid(request);
@@ -52,6 +54,7 @@ public class WechatScoreController {
         }
         List<Adsense> adsenses = adsenseService.selectList(new Adsense(Constants.IMAGE_TYPE_ADSENSE, Boolean.TRUE));
         model.addAttribute("adsense", ObjectUtils.isEmpty(adsenses) ? new Adsense() : adsenses.get(0));
+        model.addAttribute("appId", wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_APPID));
         return "wechat/my";
     }
 }

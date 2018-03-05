@@ -56,21 +56,15 @@ function setStorage(key, val) {
 
 //判断是否是微信浏览器
 function isWeiXin() {
-    var ua = window.navigator.userAgent.toLowerCase();
-    return ua.match(/MicroMessenger/i) === 'micromessenger';
+    // 对浏览器的UserAgent进行正则匹配，不含有微信独有标识的则为其他浏览器
+    var useragent = navigator.userAgent.toLowerCase();
+    return useragent.match(/MicroMessenger/i) == 'micromessenger';
 }
 
-//若是微信浏览器，并且openid不为空，无须用户点击确认
-// function grantAuth() {
-//     if (isWeiXin() && getWechatStorage() !== "") {
-//         window.href.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + "&redirect_uri=" + base + "/activity/wechat/portal/index" + "&response_type=code&scope=snsapi_base&state=INDEX#wechat_redirect";
-//     }
-// }
-
-//若是微信浏览器，并且openid不为空，需要用户点击确认
+//若是微信浏览器，并且openid为空，需要用户点击确认
 function grantAuthInfo() {
-    if (isWeiXin() && getWechatStorage() !== "") {
-        window.href.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + "&redirect_uri=" + base + "/activity/wechat/portal/index" + "&response_type=code&scope=snsapi_userinfo&state=INDEX#wechat_redirect";
+    if (isWeiXin() && getWechatStorage() === "") {
+        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+ $("#appId").val() + "&redirect_uri=" + base + "/activity/wechat/portal/index" + "&response_type=code&scope=snsapi_userinfo&state=INDEX#wechat_redirect";
     }
 }
 

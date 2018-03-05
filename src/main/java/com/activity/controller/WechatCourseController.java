@@ -9,7 +9,9 @@ import com.activity.pojo.WechatParamDTO;
 import com.activity.service.ActivityCourseSignInService;
 import com.activity.service.ActivityEnrollService;
 import com.activity.service.ActivityService;
+import com.activity.service.WechatConfigService;
 import com.activity.service.WechatUserService;
+import com.activity.utils.Constants;
 import com.activity.utils.WechatUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,11 +48,13 @@ public class WechatCourseController {
     @Autowired
     private ActivityEnrollService activityEnrollService;
 
+    @Autowired
+    private WechatConfigService wechatConfigService;
+
     /**
      * Created by ky.bai on 2018-03-02 15:34
      *
      * @param activityId 活动编号
-     * @param openid     微信用户openid
      * @return 活动课程列表页
      */
     @RequestMapping("/info/{activityId}")
@@ -70,7 +74,6 @@ public class WechatCourseController {
      * Created by ky.bai on 2018/3/4 11:59
      *
      * @param courseId 课程编号
-     * @param openid   微信用户openid
      * @return 课程签到，并跳转至签到成功页面
      */
     @RequestMapping(value = "/sign/{courseId}", method = RequestMethod.GET)
@@ -84,7 +87,7 @@ public class WechatCourseController {
             //是否报名, 未报名跳转至活动详情页面
             List<ActivityEnroll> enrolls = activityEnrollService.selectList(new ActivityEnroll(activityId, userId, Boolean.TRUE));
             if (ObjectUtils.isEmpty(enrolls)) {
-                return "redirect:/wechat/activity/info/" + activityId + "?openid=" + openid;
+                return "forward:/wechat/activity/info/" + activityId;
             }
 
             //是否已签到
@@ -95,6 +98,7 @@ public class WechatCourseController {
         }
 
         model.addAttribute("activityId", course.getActivityId());
+        model.addAttribute("appId", wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_APPID));
         return "wechat/signUpSuccess";
     }
 
