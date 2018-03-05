@@ -6,10 +6,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
     <meta name="format-detection" content="telephone=no"/>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-    <title th:utext="#{title}"></title>
-    <!--<title>签到成功</title>-->
+    <title th:utext="#{title}">签到成功</title>
     <link th:href="@{/css/wechat/media.css}" rel="stylesheet"/>
     <link th:href="@{/css/wechat/index.css}" rel="stylesheet"/>
+    <script type="text/javascript">
+        grantAuthInfo();
+    </script>
 </head>
 <body>
 <div id="header">
@@ -19,8 +21,8 @@
     <h2>签到成功</h2>
     <p class="acinfo">积分+1<br/>积分详情可在我的积分中查看</p>
     <div class="link">
-        <a class="fl btn" th:href="@{'/wechat/course/info/'+${activityId}(openid=${openid})}">课程安排</a>
-        <a class="fr btn" th:href="@{/wechat/user/score(openid=${openid})}">我的积分</a>
+        <a class="fl btn" th:href="@{'/wechat/course/info/'+${activityId}}">课程安排</a>
+        <a class="fr btn" th:href="@{/wechat/user/score}">我的积分</a>
     </div>
 </div>
 

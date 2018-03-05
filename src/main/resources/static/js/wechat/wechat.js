@@ -42,9 +42,8 @@ function toTimestamp(str) {
 }
 
 //获取微信OPENID，正常和授权俩种
-function getWechatStorage(key) {
-    var value = getStorage(key);
-    return (value === "") ? getStorage(key + '_AUTH') : value;
+function getWechatStorage() {
+    return getStorage('ACTIVITY_WECHAT_OPENID');
 }
 
 function getStorage(key) {
@@ -61,9 +60,18 @@ function isWeiXin() {
     return ua.match(/MicroMessenger/i) === 'micromessenger';
 }
 
-//若是微信浏览器，并且openid不为空，则点击我的进行授权
-function grantAuth() {
-    window.href.location = '';
+//若是微信浏览器，并且openid不为空，无须用户点击确认
+// function grantAuth() {
+//     if (isWeiXin() && getWechatStorage() !== "") {
+//         window.href.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + "&redirect_uri=" + base + "/activity/wechat/portal/index" + "&response_type=code&scope=snsapi_base&state=INDEX#wechat_redirect";
+//     }
+// }
+
+//若是微信浏览器，并且openid不为空，需要用户点击确认
+function grantAuthInfo() {
+    if (isWeiXin() && getWechatStorage() !== "") {
+        window.href.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + "&redirect_uri=" + base + "/activity/wechat/portal/index" + "&response_type=code&scope=snsapi_userinfo&state=INDEX#wechat_redirect";
+    }
 }
 
 // 对Date的扩展，将 Date 转化为指定格式的String

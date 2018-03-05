@@ -49,7 +49,7 @@
     <select id="selectWechatList" resultType="com.activity.pojo.WechatActivityDTO" parameterType="com.activity.model.Activity">
         select a.id, a.title, a.address, a.begin_time beginTime, a.end_time endTime, f.file_path coverPath
         from activity a
-        inner join upload_file f on f.id = a.upload_file_id
+        left join upload_file f on f.id = a.upload_file_id
         where 1 = 1 and a.end_time &gt; now()
         <if test="districtId!=null">
             and a.district_id = #{districtId,jdbcType=INTEGER}

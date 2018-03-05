@@ -2,6 +2,7 @@ package com.activity.controller;
 
 import com.activity.model.WechatUser;
 import com.activity.service.WechatUserService;
+import com.activity.utils.WechatUtil;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -102,7 +103,6 @@ public class WechatController {
      *
      * @return 请求转发至活动页(微信入口或授权)
      */
-    //@RequestParam(required = false) String code, @RequestParam(required = false) String openid
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(HttpServletRequest request) throws WxErrorException {
         String code = request.getParameter("code");
@@ -117,33 +117,31 @@ public class WechatController {
                 wechatUserService.insertByWxMpUser(u);
             }
             request.setAttribute("openid", openid);
+            WechatUtil.setOpenid(request, openid);
         }
 
         return "forward:/wechat/activity";
-        //return "redirect:/wechat/activity?openid=" + openid;
     }
 
     /**
      * Created by ky.bai on 2018/3/4 12:04
      *
      * @param courseId 课程编号
-     * @param code     weixin oauth2回调返回的code
-     *
      * @return 扫码后请求转发至课程签到接口
      */
-    //@RequestParam String code
     @RequestMapping(value = "/sign/{courseId}", method = RequestMethod.GET)
     public String signCourse(@PathVariable Integer courseId, HttpServletRequest request) throws WxErrorException {
-        String code = request.getParameter("code");
+        String code = request.getParameter("code");//weixin oauth2回调返回的code
         WxMpOAuth2AccessToken auth = wxMpService.oauth2getAccessToken(code);
         WechatUser wechatUser = wechatUserService.findByOpenid(auth.getOpenId());
+        request.setAttribute("openid", auth.getOpenId());
+        WechatUtil.setOpenid(request, auth.getOpenId());
         //获取微信用户的基本信息, 若微信用户还未存在，则保存
         WxMpUser u = wxMpService.getUserService().userInfo(auth.getOpenId(), null);
         if (wechatUser == null && u != null) {
             wechatUserService.insertByWxMpUser(u);
-            return "redirect:/wechat/activity?openid=" + auth.getOpenId();
+            return "forward:/wechat/activity";
         }
-        request.setAttribute("openid", auth.getOpenId());
 
         return "redirect:/wechat/course/sign/" + courseId;
     }

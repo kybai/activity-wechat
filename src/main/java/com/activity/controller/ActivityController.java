@@ -84,7 +84,9 @@ public class ActivityController {
         Activity activity = activityService.selectOne(id);
         UploadFile file = uploadFileService.selectOne(activity.getUploadFileId());
         model.addAttribute("activity", activity);
-        model.addAttribute("filePath", file.getFilePath());
+        if (file != null) {
+            model.addAttribute("filePath", file.getFilePath());
+        }
         model.addAttribute("district", activityDistrictService.selectOne(activity.getDistrictId()));
         model.addAttribute("description", activityService.selectDesc(new ActivityDescription(activity.getId())));
         model.addAttribute("courses", activityService.selectCourseList(new ActivityCourse(activity.getId(), Boolean.TRUE)));

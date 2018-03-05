@@ -22,7 +22,8 @@
                 </select>
                 <i class="icon-down"></i>
             </div>
-            <input type="hidden" th:if="${hasAuth}" id="openid" th:value="${openid}" readonly="readonly"/>
+            <input type="hidden" th:if="${openid!=null}" id="openid" th:value="${openid}" readonly="readonly"/>
+            <input type="hidden" id="uri" th:value="${uri}" readonly="readonly"/>
         </div>
     </div>
 
@@ -51,15 +52,15 @@
         <div id="tab-ul" class="tab-con">
             <div class="act-list box" id="actListInfo"></div>
             <div class="act-review box none" id="actReviewListInfo"></div>
-            <div class="my none" th:unless="${hasAuth} and ${openid!=null} and ${openid!=''}">
+            <div class="my none" th:unless="${openid!=null} and ${openid!=''}">
                 <span>请在微信中打开该链接</span>
             </div>
-            <div class="my none" th:if="${hasAuth} and ${openid!=null} and ${openid!=''}">
+            <div class="my none" th:if="${openid!=null} and ${openid!=''}">
                 <div class="my-top box">
                     <div class="fl">
                         <span>Bobby</span>
                         <p>我的积分：<b th:utext="${user.score}"></b>
-                            <a th:href="@{/wechat/user/score(openid=${openid})}" class="icon-left"></a>
+                            <a th:href="@{/wechat/user/score}" class="icon-left"></a>
                         </p>
                     </div>
                     <div class="fr">

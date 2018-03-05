@@ -15,6 +15,7 @@
                 if (newtitle === "活动回顾") tabclass = 'act-review';
                 if (newtitle === "我的") {
                     tabclass = 'my';
+                    grantAuthInfo();
                 }
                 $("#tab-ul").find("." + tabclass).removeClass("none").siblings("div").addClass("none");
             });
@@ -49,18 +50,17 @@ function loadData() {
             loadHtml("actListInfo", results.data.wechatList);
             loadHtml("actReviewListInfo", results.data.reviewList);
             if (getVal(entity.openid) !== "") {
-                loadMyHtml(results.data.myList);
+                loadMyListHtml(results.data.myList);
             }
         }
     });
 }
 
 function loadHtml(id, list) {
-    var openid = getWechatStorage('ACTIVITY_WECHAT_OPENID');
     var html = '';
     for (key in list) {
         var e = list[key];
-        html += '<div class="act-info"><a href="' + base + '/wechat/activity/info/' + getVal(e.id) + '?openid=' + openid + '">';
+        html += '<div class="act-info"><a href="' + base + '/wechat/activity/info/' + getVal(e.id) + '">';
         html += '<img class="img-box" src="' + getVal(e.coverPath) + '"/>';
         html += '<div class="title">' + getVal(e.title) + '</div>';
         html += '<div class="info">';
@@ -72,8 +72,12 @@ function loadHtml(id, list) {
     $("#" + id).empty().html(html);
 }
 
-function loadMyHtml(list) {
-    var openid = getWechatStorage('ACTIVITY_WECHAT_OPENID');
+function loadMyListHtml(list) {
+    var openid = getWechatStorage();
+    if (list && list.size() === 0) {
+        $("#mylist").removeClass("my-list").addClass("no-class").html('<img th:src="@{/img/wechat/nojoin.png}"/><span>尚未参加任何活动</span>');
+        return false;
+    }
     var html = '';
     for (key in list) {
         var e = list[key];
@@ -88,10 +92,10 @@ function loadMyHtml(list) {
         html += '</div>';
         html += '</li>';
     }
-    $("#mylist").html(html);
+    $("#mylist").removeClass("no-class").addClass("my-list").html('<ul class="scroll-tab">' + html + '</ul>');
 }
 
 function WechatPojo() {
     this.districtId = $("#district").val();
-    this.openid = getWechatStorage('ACTIVITY_WECHAT_OPENID');
+    this.openid = getWechatStorage();
 }

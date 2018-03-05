@@ -9,6 +9,9 @@
     <title th:utext="#{title}">报名成功</title>
     <link th:href="@{/css/wechat/media.css}" rel="stylesheet"/>
     <link th:href="@{/css/wechat/index.css}" rel="stylesheet"/>
+    <script type="text/javascript">
+        grantAuthInfo();
+    </script>
 </head>
 <body>
 <div id="header">
@@ -27,10 +30,10 @@
 <script type="text/javascript">
     $(function () {
         $("#courseList").on('click', function () {
-            window.href.location = base + '/wechat/course/info/' + $("#courseList").attr("activityId") + "?openid=" + getWechatStorage('ACTIVITY_WECHAT_OPENID');
+            window.href.location = base + '/wechat/course/info/' + $("#courseList").attr("activityId");
         });
         $("#activityList").on('click', function () {
-            window.href.location = base + '/wechat/portal/index?state=INDEX&openid=' + getWechatStorage('ACTIVITY_WECHAT_OPENID');
+            window.href.location = base + '/wechat/portal/index?state=INDEX';
         });
     });
 </script>
