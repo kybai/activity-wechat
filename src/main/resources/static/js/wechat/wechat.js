@@ -41,6 +41,12 @@ function toTimestamp(str) {
     return new Date(str.replace("-", "/")).valueOf();
 }
 
+//获取微信OPENID，正常和授权俩种
+function getWechatStorage(key) {
+    var value = getStorage(key);
+    return (value === "") ? getStorage(key + '_AUTH') : value;
+}
+
 function getStorage(key) {
     return getVal(localStorage[key]);
 }
@@ -53,6 +59,11 @@ function setStorage(key, val) {
 function isWeiXin() {
     var ua = window.navigator.userAgent.toLowerCase();
     return ua.match(/MicroMessenger/i) === 'micromessenger';
+}
+
+//若是微信浏览器，并且openid不为空，则点击我的进行授权
+function grantAuth() {
+    window.href.location = '';
 }
 
 // 对Date的扩展，将 Date 转化为指定格式的String

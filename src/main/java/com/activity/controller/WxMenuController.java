@@ -66,7 +66,7 @@ public class WxMenuController implements WxMpMenuService {
         button34.setName("团建");
         button34.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_APPID)
                 + "&redirect_uri=" + wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_URI) + "/activity/wechat/portal/index"
-                + "&response_type=code&scope=snsapi_base&state=1#wechat_redirect");
+                + "&response_type=code&scope=snsapi_base&state="+Constants.WECHAT_STATE_INDEX+"#wechat_redirect");
         button3.getSubButtons().add(button34);
 
         menu.getButtons().add(button1);

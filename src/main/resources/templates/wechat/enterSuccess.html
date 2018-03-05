@@ -6,8 +6,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
     <meta name="format-detection" content="telephone=no"/>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-    <title th:utext="#{title}"></title>
-    <!--<title>报名成功</title>-->
+    <title th:utext="#{title}">报名成功</title>
     <link th:href="@{/css/wechat/media.css}" rel="stylesheet"/>
     <link th:href="@{/css/wechat/index.css}" rel="stylesheet"/>
 </head>
@@ -19,11 +18,21 @@
     <h2>报名成功</h2>
     <p class="acinfo">参加活动时<br/>扫描主办方二维码即可</p>
     <div class="link">
-        <a class="fl btn" th:href="@{'/wechat/course/info/'+${activityId}(openid=${openid})}">课程安排</a>
-        <a class="fr btn" th:href="@{/wechat/activity(openid=${openid})}">看看别的</a>
+        <a class="fl btn" id="courseList" th:attr="activityId=${activityId}">课程安排</a>
+        <a class="fr btn" id="activityList">看看别的</a>
     </div>
 </div>
 
 <div th:replace="fragments/wechatJs"></div>
+<script type="text/javascript">
+    $(function () {
+        $("#courseList").on('click', function () {
+            window.href.location = base + '/wechat/course/info/' + $("#courseList").attr("activityId") + "?openid=" + getWechatStorage('ACTIVITY_WECHAT_OPENID');
+        });
+        $("#activityList").on('click', function () {
+            window.href.location = base + '/wechat/portal/index?state=INDEX&openid=' + getWechatStorage('ACTIVITY_WECHAT_OPENID');
+        });
+    });
+</script>
 </body>
 </html>

@@ -6,8 +6,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
     <meta name="format-detection" content="telephone=no"/>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-    <title th:utext="#{title}"></title>
-    <!--<title>活动报名</title>-->
+    <title th:utext="#{title}">活动报名</title>
     <link th:href="@{/css/wechat/index.css}" rel="stylesheet"/>
 </head>
 <body>
@@ -49,7 +48,7 @@
                         <input type="file" name="card" id="cardFront" placeholder="请选择上传身份证人像面照片" accept="image/jpg, image/jpeg, image/png"/>
                         <div class="J_upload uploadCardFront">请选择上传身份证人像面照片</div>
                         <div class="file-box none">
-                            <img class="imgurl" src="" />
+                            <img class="imgurl" src=""/>
                             <span class="imgname">fjaskdfjasdjfals</span>
                             <i class="imgdel">&times;</i>
                         </div>
@@ -62,7 +61,7 @@
                         <input type="file" name="card" id="cardBack" placeholder="请选择上传身份证国徽面照片" accept="image/jpg, image/jpeg, image/png"/>
                         <div class="J_upload uploadCardBack">请选择上传身份证国徽面照片</div>
                         <div class="file-box none">
-                            <img class="imgurl" src="" />
+                            <img class="imgurl" src=""/>
                             <span class="imgname">fjaskdfjasdjfals</span>
                             <i class="imgdel">&times;</i>
                         </div>
@@ -90,11 +89,10 @@
                 </div>
                 <input type="hidden" id="userId" th:value="${userId}" readonly="readonly"/>
                 <input type="hidden" id="activityId" th:value="${activity.id}" readonly="readonly"/>
-                <input type="hidden" id="openid" th:value="${openid}" readonly="readonly"/>
             </form>
             <div class="error-tip none"></div>
         </div>
-        <div class="submit J_submit" onclick="saveEnroll();"><span>确定</span></div>
+        <div class="submit J_submit" th:if="${userId!=null}" onclick="saveEnroll();"><span>确定</span></div>
     </div>
 </div>
 

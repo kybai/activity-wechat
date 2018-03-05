@@ -17,7 +17,7 @@ function saveEnroll() {
                     $('.error-tip').addClass('none');
                 }, 3000);
             } else if (results.status === 200) {
-                window.location.href = base + '/wechat/activity/enroll/' + entity.activityId + '/success?openid=' + getVal($("#openid").val());
+                window.location.href = base + '/wechat/activity/enroll/' + entity.activityId + '/success?openid=' + getWechatStorage('ACTIVITY_WECHAT_OPENID');
             }
         }
     });
@@ -49,13 +49,13 @@ function checkForm() {
     return check;
 }
 
-$('.uploadCardFront').on('click',function () {
+$('.uploadCardFront').on('click', function () {
     $('#cardFront').click();
 });
-$('.uploadCardBack').on('click',function () {
+$('.uploadCardBack').on('click', function () {
     $('#cardBack').click();
 });
-$('.imgdel').on('click',function () {
+$('.imgdel').on('click', function () {
     $(this).parents('.file-box').addClass('none');
     $(this).parents('.file-box').siblings('.J_upload').removeClass('none');
 });
@@ -87,7 +87,7 @@ $("#cardBack, #cardFront").on("change", function (e) {
         success: function (results) {
             $this.attr("fileid", results.data);
             $this.siblings('.J_upload').addClass('none');
-            $this.siblings('.file-box').children('.imgurl').attr('src',imgUrl);
+            $this.siblings('.file-box').children('.imgurl').attr('src', imgUrl);
             $this.siblings('.file-box').children('.imgname').text(name);
             $this.siblings('.file-box').removeClass('none');
         }

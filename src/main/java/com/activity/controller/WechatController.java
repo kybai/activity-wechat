@@ -14,7 +14,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Created by ky.bai on 2018-02-04
@@ -36,13 +43,10 @@ public class WechatController {
 
     @RequestMapping(produces = "text/plain;charset=utf-8", method = RequestMethod.GET)
     @ResponseBody
-    public String authGet(@RequestParam(name = "signature", required = false) String signature,
-                          @RequestParam(name = "timestamp", required = false) String timestamp,
-                          @RequestParam(name = "nonce", required = false) String nonce,
-                          @RequestParam(name = "echostr", required = false) String echostr) throws IllegalAccessException {
+    public String authGet(@RequestParam(name = "signature", required = false) String signature, @RequestParam(name = "timestamp", required = false) String timestamp, @RequestParam(name = "nonce",
+            required = false) String nonce, @RequestParam(name = "echostr", required = false) String echostr) throws IllegalAccessException {
 
-        this.logger.info("\n接收到来自微信服务器的认证消息：[{}, {}, {}, {}]", signature,
-                timestamp, nonce, echostr);
+        this.logger.info("\n接收到来自微信服务器的认证消息：[{}, {}, {}, {}]", signature, timestamp, nonce, echostr);
 
         if (StringUtils.isAnyBlank(signature, timestamp, nonce, echostr)) {
             throw new IllegalAccessException("请求参数非法，请核实！");
@@ -57,14 +61,12 @@ public class WechatController {
 
     @RequestMapping(produces = "application/xml; charset=UTF-8", method = RequestMethod.POST)
     @ResponseBody
-    public String authPost(@RequestBody String body, @RequestParam(name = "signature") String signature,
-                           @RequestParam(name = "timestamp") String timestamp,
-                           @RequestParam(name = "nonce") String nonce,
-                           @RequestParam(name = "encrypt_type", required = false) String encryptType,
-                           @RequestParam(name = "msg_signature", required = false) String msgSignature) throws IllegalAccessException {
+    public String authPost(@RequestBody String body, @RequestParam(name = "signature") String signature, @RequestParam(name = "timestamp") String timestamp, @RequestParam(name = "nonce") String
+            nonce, @RequestParam(name = "encrypt_type", required = false) String encryptType, @RequestParam(name = "msg_signature", required = false) String msgSignature) throws
+            IllegalAccessException {
 
-        this.logger.info("\n接收微信请求：[signature=[{}], encType=[{}], msgSignature=[{}],"
-                + " timestamp=[{}], nonce=[{}], requestBody=[\n{}\n] ", signature, encryptType, msgSignature, timestamp, nonce, body);
+        this.logger.info("\n接收微信请求：[signature=[{}], encType=[{}], msgSignature=[{}]," + " timestamp=[{}], nonce=[{}], requestBody=[\n{}\n] ", signature, encryptType, msgSignature, timestamp,
+                nonce, body);
 
         if (!this.wxMpService.checkSignature(timestamp, nonce, signature)) {
             throw new IllegalAccessException("非法请求，可能属于伪造请求！");
@@ -96,12 +98,15 @@ public class WechatController {
     /**
      * Created by ky.bai on 2018/3/4 09:37
      *
-     * @param code   weixin oauth2回调返回的code
-     * @param openid weixin用户openid
+     * @param request weixin oauth2回调返回的code, weixin用户openid
+     *
      * @return 请求转发至活动页(微信入口或授权)
      */
+    //@RequestParam(required = false) String code, @RequestParam(required = false) String openid
     @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String index(@RequestParam(required = false) String code, @RequestParam(required = false) String openid) throws WxErrorException {
+    public String index(HttpServletRequest request) throws WxErrorException {
+        String code = request.getParameter("code");
+        String openid = request.getParameter("openid");
         if (StringUtils.isEmpty(openid) && !StringUtils.isEmpty(code)) {
             WxMpOAuth2AccessToken auth = wxMpService.oauth2getAccessToken(code);
             openid = auth.getOpenId();
@@ -111,9 +116,11 @@ public class WechatController {
             if (wechatUser == null && u != null) {
                 wechatUserService.insertByWxMpUser(u);
             }
+            request.setAttribute("openid", openid);
         }
 
-        return "redirect:/wechat/activity?openid=" + openid;
+        return "forward:/wechat/activity";
+        //return "redirect:/wechat/activity?openid=" + openid;
     }
 
     /**
@@ -121,10 +128,13 @@ public class WechatController {
      *
      * @param courseId 课程编号
      * @param code     weixin oauth2回调返回的code
+     *
      * @return 扫码后请求转发至课程签到接口
      */
+    //@RequestParam String code
     @RequestMapping(value = "/sign/{courseId}", method = RequestMethod.GET)
-    public String signCourse(@PathVariable Integer courseId, @RequestParam String code) throws WxErrorException {
+    public String signCourse(@PathVariable Integer courseId, HttpServletRequest request) throws WxErrorException {
+        String code = request.getParameter("code");
         WxMpOAuth2AccessToken auth = wxMpService.oauth2getAccessToken(code);
         WechatUser wechatUser = wechatUserService.findByOpenid(auth.getOpenId());
         //获取微信用户的基本信息, 若微信用户还未存在，则保存
@@ -133,8 +143,9 @@ public class WechatController {
             wechatUserService.insertByWxMpUser(u);
             return "redirect:/wechat/activity?openid=" + auth.getOpenId();
         }
+        request.setAttribute("openid", auth.getOpenId());
 
-        return "redirect:/wechat/course/sign/" + courseId + "?openid=" + auth.getOpenId();
+        return "redirect:/wechat/course/sign/" + courseId;
     }
 
     private WxMpXmlOutMessage route(WxMpXmlMessage message) {

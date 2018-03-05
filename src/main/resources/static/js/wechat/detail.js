@@ -7,14 +7,16 @@ function thumbup() {
         contentType: 'application/json',
         data: JSON.stringify(new WechatPojo()),
         success: function (results) {
-            var $thumbup = $("#thumbup");
-            var total = $("#thumbupTotal").html();
-            if ($thumbup.hasClass("active")) {
-                $thumbup.removeClass("active");
-                $("#thumbupTotal").html(Number(total) - 1);
-            } else {
-                $thumbup.addClass("active");
-                $("#thumbupTotal").html(Number(total) + 1);
+            if (results.status === 200) {
+                var $thumbup = $("#thumbup");
+                var total = $("#thumbupTotal").html();
+                if ($thumbup.hasClass("active")) {
+                    $thumbup.removeClass("active");
+                    $("#thumbupTotal").html(Number(total) - 1);
+                } else {
+                    $thumbup.addClass("active");
+                    $("#thumbupTotal").html(Number(total) + 1);
+                }
             }
         }
     });
@@ -23,11 +25,11 @@ function thumbup() {
 //我要报名
 function enrollActivity() {
     var activityId = $("#activityId").val();
-    var openid = $("#openid").val();
+    var openid = getWechatStorage('ACTIVITY_WECHAT_OPENID');
     window.location.href = base + '/wechat/activity/enroll/' + activityId + '?openid=' + openid;
 }
 
 function WechatPojo() {
     this.activityId = $("#activityId").val();
-    this.openid = $("#openid").val();
+    this.openid = getWechatStorage('ACTIVITY_WECHAT_OPENID');
 }

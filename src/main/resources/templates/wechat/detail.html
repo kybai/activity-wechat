@@ -6,8 +6,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
     <meta name="format-detection" content="telephone=no"/>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-    <title th:utext="#{title}"></title>
-    <!--<title>活动详情</title>-->
+    <title th:utext="#{title}">活动详情</title>
     <link th:href="@{/css/wechat/index.css}" rel="stylesheet"/>
 </head>
 <body>
@@ -30,7 +29,6 @@
                 <span th:utext="${activity.address}"></span>
             </div>
             <input type="hidden" id="activityId" th:value="${activity.id}" readonly="readonly"/>
-            <input type="hidden" id="openid" th:value="${openid}" readonly="readonly"/>
         </div>
     </div>
 

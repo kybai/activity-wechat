@@ -1,8 +1,5 @@
 (function () {
-    var openid = $("#openid").val();
-    if (getVal(openid) === "") {
-        $("#openid").val(getStorage('ACTIVITY_WECHAT_OPENID'));
-    }
+    setStorage('ACTIVITY_WECHAT_OPENID', $("#openid").val());
     var Index = {
         init: function () {
             this.clickEvent();
@@ -38,7 +35,6 @@
     };
     Index.init();
     loadData();
-    setStorage('ACTIVITY_WECHAT_OPENID', $("#openid").val());
 })();
 
 function loadData() {
@@ -60,7 +56,7 @@ function loadData() {
 }
 
 function loadHtml(id, list) {
-    var openid = getVal($("#openid").val());
+    var openid = getWechatStorage('ACTIVITY_WECHAT_OPENID');
     var html = '';
     for (key in list) {
         var e = list[key];
@@ -77,7 +73,7 @@ function loadHtml(id, list) {
 }
 
 function loadMyHtml(list) {
-    var openid = getVal($("#openid").val());
+    var openid = getWechatStorage('ACTIVITY_WECHAT_OPENID');
     var html = '';
     for (key in list) {
         var e = list[key];
@@ -97,5 +93,5 @@ function loadMyHtml(list) {
 
 function WechatPojo() {
     this.districtId = $("#district").val();
-    this.openid = $("#openid").val();
+    this.openid = getWechatStorage('ACTIVITY_WECHAT_OPENID');
 }
