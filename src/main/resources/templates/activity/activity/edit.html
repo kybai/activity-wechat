@@ -26,12 +26,12 @@
                         </div>
                         <div class="box-body">
                             <div class="row">
-                                <form id="addForm" class="form-horizontal">
+                                <form id="editForm" class="form-horizontal">
                                     <input id="activityId" type="hidden" th:value="${activity.id}" readonly="readonly"/>
                                     <div class="form-group">
                                         <label for="title" class="col-sm-2 control-label label-required">活动标题</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="title" th:value="${activity.title}" placeholder="请输入标题"/>
+                                            <input type="text" class="form-control validate[required]" id="title" th:value="${activity.title}" placeholder="请输入标题"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -45,17 +45,17 @@
                                     <div class="form-group">
                                         <label for="address" class="col-sm-2 control-label label-required">活动地址</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="address" th:value="${activity.address}" placeholder="请输入地址"/>
+                                            <input type="text" class="form-control validate[required]" id="address" th:value="${activity.address}" placeholder="请输入地址"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="beginTime" class="col-sm-2 control-label label-required">活动时间</label>
                                         <div class="col-sm-8">
                                             <div class="col-md-6 padding-left-0">
-                                                <input type="text" class="form-control" id="beginTime" th:value="${#dates.format(activity.beginTime,'yyyy-MM-dd HH:mm')}" placeholder="开始时间"/>
+                                                <input type="text" class="form-control validate[required]" id="beginTime" th:value="${#dates.format(activity.beginTime,'yyyy-MM-dd HH:mm')}" placeholder="开始时间"/>
                                             </div>
                                             <div class="col-md-6 padding-right-0">
-                                                <input type="text" class="form-control" id="endTime" th:value="${#dates.format(activity.endTime,'yyyy-MM-dd HH:mm')}" placeholder="结束时间"/>
+                                                <input type="text" class="form-control validate[required]" id="endTime" th:value="${#dates.format(activity.endTime,'yyyy-MM-dd HH:mm')}" placeholder="结束时间"/>
                                             </div>
                                         </div>
                                     </div>
@@ -96,9 +96,9 @@
                                         <div class="col-sm-10" id="courseDiv">
                                             <section class="form-group col-md-12 course-tr" th:each="course,stat : ${courses}" th:attr="courseid=${course.id}">
                                                 <div class="col-sm-9 padding-left-0">
-                                                    <div class="col-md-4 padding-left-0"><input class="form-control course-name" th:value="${course.name}"/></div>
-                                                    <div class="col-md-4"><input class="form-control course-time begin-time" th:value="${#dates.format(course.beginTime,'yyyy-MM-dd HH:mm')}"/></div>
-                                                    <div class="col-md-4"><input class="form-control course-time end-time" th:value="${#dates.format(course.endTime,'yyyy-MM-dd HH:mm')}"/></div>
+                                                    <div class="col-md-4 padding-left-0"><input class="form-control course-name validate[required]" th:value="${course.name}"/></div>
+                                                    <div class="col-md-4"><input class="form-control course-time begin-time validate[required]" th:value="${#dates.format(course.beginTime,'yyyy-MM-dd HH:mm')}"/></div>
+                                                    <div class="col-md-4"><input class="form-control course-time end-time validate[required]" th:value="${#dates.format(course.endTime,'yyyy-MM-dd HH:mm')}"/></div>
                                                 </div>
                                                 <div class="col-sm-3 group-btn">
                                                     <button type="button" class="btn btn-default course-add margin-right-15" th:if="${stat.last}" onclick="copyCourseTr(this);">增加</button>

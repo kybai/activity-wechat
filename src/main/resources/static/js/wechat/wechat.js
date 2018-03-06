@@ -40,24 +40,20 @@ function toTimestamp(str) {
     return new Date(str.replace("-", "/")).valueOf();
 }
 
-//获取微信OPENID，正常和授权俩种
-function getWechatStorage() {
-    return getStorage('ACTIVITY_WECHAT_OPENID');
-}
-
-function getStorage(key) {
-    return getVal(localStorage[key]);
-}
-
-function setStorage(key, val) {
-    localStorage[key] = getVal(val);
-}
-
 //判断是否是微信浏览器
 function isWeiXin() {
     // 对浏览器的UserAgent进行正则匹配，不含有微信独有标识的则为其他浏览器
     var useragent = navigator.userAgent.toLowerCase();
     return useragent.match(/MicroMessenger/i) == 'micromessenger';
+}
+
+//返回上一页
+function goback() {
+    if (window.history.length > 0 && isWeiXin()) {
+        window.history.go(-1);
+    } else {
+        window.location.href = base + '/wechat/activity';
+    }
 }
 
 // 对Date的扩展，将 Date 转化为指定格式的String

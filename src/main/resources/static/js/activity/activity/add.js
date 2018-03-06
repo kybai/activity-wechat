@@ -1,9 +1,13 @@
+$('#addForm').validationEngine({promptPosition: 'centerRight', scroll: false, binded: false});
 $(function () {
     initDate();
     initCourseTime();
 });
 
 function save() {
+    if (!$("#addForm").validationEngine('validate')) {
+        return false;
+    }
     $.ajax({
         url: base + '/activity/save',
         method: 'POST',
@@ -71,13 +75,13 @@ function getCourseHtml() {
     html += '<section class="form-group col-md-12 course-tr">';
     html += '<div class="col-sm-9 padding-left-0">';
     html += '<div class="col-md-4 padding-left-0">';
-    html += '<input type="text" class="form-control course-name" placeholder="课程名称"/>';
+    html += '<input type="text" class="form-control course-name validate[required]" placeholder="课程名称"/>';
     html += '</div>';
     html += '<div class="col-md-4">';
-    html += '<input type="text" class="form-control course-time begin-time" placeholder="开始时间"/>';
+    html += '<input type="text" class="form-control course-time begin-time validate[required]" placeholder="开始时间"/>';
     html += '</div>';
     html += '<div class="col-md-4">';
-    html += '<input type="text" class="form-control course-time end-time" placeholder="结束时间"/>';
+    html += '<input type="text" class="form-control course-time end-time validate[required]" placeholder="结束时间"/>';
     html += '</div>';
     html += '</div>';
     html += '<div class="col-sm-3 group-btn">';

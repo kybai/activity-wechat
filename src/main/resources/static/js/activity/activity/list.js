@@ -21,7 +21,7 @@ function loadPage(content) {
         var entity = content[k];
         html += '<tr>';
         html += '<td>' + getVal(entity.id) + '</td>';
-        html += '<td><a href="' + base + '/activity/info/' + entity.id + '">' + getVal(entity.title) + '</a></td>';
+        html += '<td><a title="'+getVal(entity.title)+'" href="' + base + '/activity/info/' + entity.id + '">' + getValLen(entity.title) + '</a></td>';
         html += '<td>' + getDate(entity.beginTime) + '</td>';
         html += '<td>' + getDate(entity.endTime) + '</td>';
         html += '<td><a href="' + base + '/course/list?activityId=' + getVal(entity.id) + '">签到码</a></td>';
