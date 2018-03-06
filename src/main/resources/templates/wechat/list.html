@@ -9,10 +9,6 @@
     <title th:utext="#{title}">活动列表</title>
     <link th:href="@{/js/wechat/slider/swipeslider.css}" rel="stylesheet"/>
     <link th:href="@{/css/wechat/index.css}" rel="stylesheet"/>
-    <script th:inline="javascript">
-        var appId = [[${appId}]];
-        var redirectUrl = [[${redirectUrl}]];
-    </script>
 </head>
 <body>
 <div class="main list">
@@ -26,9 +22,6 @@
                 </select>
                 <i class="icon-down"></i>
             </div>
-            <input type="hidden" th:if="${openid!=null}" id="openid" th:value="${openid}" readonly="readonly"/>
-            <input type="hidden" id="appId" th:value="${appId}" readonly="readonly"/>
-            <input type="hidden" id="redirectUrl" th:value="${redirectUrl}" readonly="readonly"/>
         </div>
     </div>
 
@@ -57,30 +50,28 @@
         <div id="tab-ul" class="tab-con">
             <div class="act-list box" id="actListInfo"></div>
             <div class="act-review box none" id="actReviewListInfo"></div>
-            <div class="my none" th:unless="${openid!=null} and ${openid!=''}">
-                <span>请在微信中打开该链接</span>
-            </div>
-            <div class="my none" th:if="${openid!=null} and ${openid!=''}">
-                <div class="my-top box">
+            <div class="my none">
+                <div class="my-class" th:unless="${isWeiXin}">
+                    <div class="no-class">
+                        <img th:src="@{/img/wechat/nojoin.png}"/>
+                        <span>请在微信中打开该链接</span>
+                    </div>
+                </div>
+
+                <div th:if="${isWeiXin}" class="my-top box" id="myInfo">
                     <div class="fl">
-                        <span>Bobby</span>
-                        <p>我的积分：<b th:utext="${user.score}"></b>
+                        <span th:id="myName"></span>
+                        <p>我的积分：<b th:id="myScore"></b>
                             <a th:href="@{/wechat/user/score}" class="icon-left"></a>
                         </p>
                     </div>
                     <div class="fr">
-                        <img th:src="${user.headImgUrl}"/>
+                        <img th:id="myImg"/>
                     </div>
                 </div>
-                <div class="my-class">
+                <div th:if="${isWeiXin}" class="my-class">
                     <span class="title">我参加的活动</span>
-                    <div th:if="${#lists.isEmpty(mylist)}" class="no-class">
-                        <img th:src="@{/img/wechat/nojoin.png}"/>
-                        <span>尚未参加任何活动</span>
-                    </div>
-                    <div th:if="${not #lists.isEmpty(mylist)}" class="my-list">
-                        <ul class="scroll-tab" id="mylist"></ul>
-                    </div>
+                    <div id="mylist" class=""></div>
                 </div>
             </div>
         </div>

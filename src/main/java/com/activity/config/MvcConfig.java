@@ -4,10 +4,12 @@ import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import javax.annotation.Resource;
 import javax.servlet.MultipartConfigElement;
 
 /**
@@ -16,6 +18,9 @@ import javax.servlet.MultipartConfigElement;
 @Configuration
 @EnableWebMvc
 public class MvcConfig extends WebMvcConfigurerAdapter {
+
+    @Resource
+    private WechatInterceptor wechatInterceptor;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -29,6 +34,12 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/home").setViewName("activity/index");
         registry.addViewController("/").setViewName("activity/index");
         registry.addViewController("/login").setViewName("login");
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(wechatInterceptor).addPathPatterns("/wechat/**").excludePathPatterns("/wechat/portal/**", "/wechat/activity", "/wechat/activity/info/**", "/wechat/activity/list");
+        super.addInterceptors(registry);
     }
 
     @Bean

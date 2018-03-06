@@ -25,11 +25,9 @@ function thumbup() {
 //我要报名
 function enrollActivity() {
     var activityId = $("#activityId").val();
-    var openid = getWechatStorage();
-    window.location.href = base + '/wechat/activity/enroll/' + activityId + '?openid=' + openid;
+    window.location.href = base + '/wechat/activity/enroll/' + activityId;
 }
 
 function WechatPojo() {
     this.activityId = $("#activityId").val();
-    this.openid = getWechatStorage();
 }

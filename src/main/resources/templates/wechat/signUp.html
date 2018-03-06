@@ -8,9 +8,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
     <title th:utext="#{title}">活动报名</title>
     <link th:href="@{/css/wechat/index.css}" rel="stylesheet"/>
-    <script type="text/javascript">
-        grantAuthInfo();
-    </script>
 </head>
 <body>
 <div id="header">
@@ -22,8 +19,6 @@
         <div class="course-time">
             <i class="fl circle"></i>
             <span th:utext="${#dates.format(activity.beginTime,'yyyy-MM-dd')}+'至'+${#dates.format(activity.endTime,'yyyy-MM-dd')}"></span>
-            <input type="hidden" id="appId" th:value="${appId}" readonly="readonly"/>
-            <input type="hidden" id="redirectUrl" th:value="${redirectUrl}" readonly="readonly"/>
         </div>
         <div class="course-list">
             <i class="fl circle"></i>

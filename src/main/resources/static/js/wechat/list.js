@@ -1,5 +1,4 @@
 (function () {
-    setStorage('ACTIVITY_WECHAT_OPENID', $("#openid").val());
     var Index = {
         init: function () {
             this.clickEvent();
@@ -15,7 +14,7 @@
                 if (newtitle === "活动回顾") tabclass = 'act-review';
                 if (newtitle === "我的") {
                     tabclass = 'my';
-                    grantAuthInfo();
+                    if (isWeiXin()) loadMyData();
                 }
                 $("#tab-ul").find("." + tabclass).removeClass("none").siblings("div").addClass("none");
             });
@@ -49,9 +48,7 @@ function loadData() {
         success: function (results) {
             loadHtml("actListInfo", results.data.wechatList);
             loadHtml("actReviewListInfo", results.data.reviewList);
-            if (getVal(entity.openid) !== "") {
-                loadMyListHtml(results.data.myList);
-            }
+            if (isWeiXin()) loadMylistHtml(results.data.mylist);
         }
     });
 }
@@ -72,8 +69,22 @@ function loadHtml(id, list) {
     $("#" + id).empty().html(html);
 }
 
-function loadMyListHtml(list) {
-    var openid = getWechatStorage();
+function loadMyData() {
+    var entity = new WechatPojo();
+    $.ajax({
+        url: base + '/wechat/activity/mylist',
+        type: 'post',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(entity),
+        success: function (results) {
+            loadMyInfo(results.data.user);
+            loadMylistHtml(results.data.mylist);
+        }
+    });
+}
+
+function loadMylistHtml(list) {
     if (list && list.size() === 0) {
         $("#mylist").removeClass("my-list").addClass("no-class").html('<img th:src="@{/img/wechat/nojoin.png}"/><span>尚未参加任何活动</span>');
         return false;
@@ -83,7 +94,7 @@ function loadMyListHtml(list) {
         var e = list[key];
         html += '<li>';
         html += '<div class="act-info">';
-        html += '<a href="' + base + '/wechat/activity/info/' + getVal(e.id) + '?openid=' + openid + '">';
+        html += '<a href="' + base + '/wechat/activity/info/' + getVal(e.id) + '">';
         html += '<img class="img-box" src="' + getVal(e.coverPath) + '"/>';
         html += '<div class="title">' + getVal(e.title) + '</div>';
         html += '<div class="info">';
@@ -95,7 +106,13 @@ function loadMyListHtml(list) {
     $("#mylist").removeClass("no-class").addClass("my-list").html('<ul class="scroll-tab">' + html + '</ul>');
 }
 
+function loadMyInfo(user) {
+    $("#myName").empty().html(getVal(user.name));
+    $("#myScore").empty().html(getVal(user.score));
+    $("#myImg").empty().attr("src", getVal(user.headImgUrl));
+
+}
+
 function WechatPojo() {
     this.districtId = $("#district").val();
-    this.openid = getWechatStorage();
 }

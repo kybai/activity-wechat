@@ -16,7 +16,6 @@
         }
     };
     Index.init();
-    grantAuthInfo();
 })();
 
 function compareTime() {

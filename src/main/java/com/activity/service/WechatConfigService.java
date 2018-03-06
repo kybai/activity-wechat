@@ -6,4 +6,6 @@ package com.activity.service;
 public interface WechatConfigService {
 
     String selectTextByKey(String configKey);
+
+    String getWechatIndexUrl();
 }

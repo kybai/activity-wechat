@@ -87,7 +87,7 @@ public class WechatCourseController {
             //是否报名, 未报名跳转至活动详情页面
             List<ActivityEnroll> enrolls = activityEnrollService.selectList(new ActivityEnroll(activityId, userId, Boolean.TRUE));
             if (ObjectUtils.isEmpty(enrolls)) {
-                return "forward:/wechat/activity/info/" + activityId;
+                return "redirect:/wechat/activity/info/" + activityId;
             }
 
             //是否已签到
@@ -98,8 +98,6 @@ public class WechatCourseController {
         }
 
         model.addAttribute("activityId", course.getActivityId());
-        model.addAttribute("appId", wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_APPID));
-        model.addAttribute("redirectUrl", wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_URI));
         return "wechat/signUpSuccess";
     }
 

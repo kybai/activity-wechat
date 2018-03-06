@@ -60,14 +60,6 @@ function isWeiXin() {
     return useragent.match(/MicroMessenger/i) == 'micromessenger';
 }
 
-//若是微信浏览器，并且openid为空，需要用户点击确认
-function grantAuthInfo() {
-    if (isWeiXin() && getWechatStorage() === "") {
-        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + $("#appId").val() + "&redirect_uri=" + $("#redirectUrl").val()
-                + "/activity/wechat/portal/index" + "&response_type=code&scope=snsapi_userinfo&state=INDEX#wechat_redirect";
-    }
-}
-
 // 对Date的扩展，将 Date 转化为指定格式的String
 // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
 // 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)

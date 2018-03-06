@@ -21,7 +21,6 @@ import com.activity.service.ActivityWatchedService;
 import com.activity.service.AdsenseService;
 import com.activity.service.UploadFileService;
 import com.activity.service.UsersService;
-import com.activity.service.WechatConfigService;
 import com.activity.service.WechatUserService;
 import com.activity.utils.Constants;
 import com.activity.utils.DateUtils;
@@ -80,32 +79,36 @@ public class WechatActivityController {
     @Autowired
     private UploadFileService uploadFileService;
 
-    @Autowired
-    private WechatConfigService wechatConfigService;
-
     /**
      * Created by ky.bai on 2018-03-01 14:49
      *
      * @param state 用户微信标识(有此字段才会加载我的信息), 分享或复制链接不会有state参数[state=INDEX], 带此参数的的入口：微信按钮和授权和扫码签到
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String list(@RequestParam(required = false) String state, HttpServletRequest request, Model model) {
+    public String list(Model model, HttpServletRequest request) {
         model.addAttribute("districts", activityDistrictService.selectList(new ActivityDistrict(Boolean.TRUE)));
-        //轮播图
-        model.addAttribute("imgList", adsenseService.selectList(new Adsense(Constants.IMAGE_TYPE_ROLLING, Boolean.TRUE)));
-        String openid = WechatUtil.getOpenid(request);
-        if (!StringUtils.isEmpty(openid) && !StringUtils.isEmpty(state) && state.equals(Constants.WECHAT_STATE_INDEX)) {
-            model.addAttribute("openid", openid);
-            //我参与的活动列表
-            model.addAttribute("mylist", activityService.selectUserWechatList(new WechatPojo(openid, Boolean.TRUE)));
-            //我的信息与积分
-            WechatUser wechatUser = wechatUserService.findByOpenid(openid);
-            model.addAttribute("user", usersService.selectUserScore(wechatUser.getUserId()));
-        }
-        model.addAttribute("appId", wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_APPID));
-        model.addAttribute("redirectUrl", wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_URI));
-
+        model.addAttribute("imgList", adsenseService.selectList(new Adsense(Constants.IMAGE_TYPE_ROLLING, Boolean.TRUE)));//轮播图
+        model.addAttribute("isWeiXin", StringUtils.isEmpty(WechatUtil.getOpenid(request)) ? Boolean.FALSE : Boolean.TRUE);
         return "wechat/list";
+    }
+
+    /**
+     * Created by ky.bai on 2018-03-06 11:52
+     *
+     * @return 我参与的活动与信息积分
+     */
+    @RequestMapping(value = "/mylist", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity mylist(HttpServletRequest request) {
+        Map<String, Object> results = new HashMap<>();
+        String openid = WechatUtil.getOpenid(request);
+        if (!StringUtils.isEmpty(openid)) {
+            results.put("mylist", activityService.selectUserWechatList(new WechatPojo(openid, Boolean.TRUE)));//我参与的活动列表
+            WechatUser wechatUser = wechatUserService.findByOpenid(openid);
+            results.put("user", usersService.selectUserScore(wechatUser.getUserId()));//我的信息与积分
+            return ResponseEntity.ok(new RestEntity(200, Constants.LOAD_SUCCESS, results));
+        }
+        return ResponseEntity.ok(new RestEntity(100, Constants.LOAD_SUCCESS, Boolean.FALSE));
     }
 
     /**
@@ -119,36 +122,32 @@ public class WechatActivityController {
         if (activity == null) {
             return "wechat/detail";
         }
-        //活动与活动简介
-        model.addAttribute("activity", activity);
-        model.addAttribute("file", uploadFileService.selectOne(activity.getUploadFileId()));
-        model.addAttribute("desc", activityService.selectDesc(new ActivityDescription(activityId)));
-        //活动查看人数
+
+        model.addAttribute("activity", activity);//活动
+        model.addAttribute("file", uploadFileService.selectOne(activity.getUploadFileId()));//活动封面
+        model.addAttribute("desc", activityService.selectDesc(new ActivityDescription(activityId)));//活动简介
+
         List<ActivityWatched> watchedList = activityWatchedService.selectList(new ActivityWatched(activityId));
-        model.addAttribute("watchedTotal", (watchedList == null) ? 0 : watchedList.size());
-        //活动点赞人数
+        model.addAttribute("watchedTotal", (watchedList == null) ? 0 : watchedList.size());//活动查看人数
+
         List<ActivityThumbup> thumbupList = activityThumbupService.selectList(new ActivityThumbup(activityId));
-        model.addAttribute("thumbupTotal", (thumbupList == null ? 0 : thumbupList.size()));
-        //活动已报名人数
+        model.addAttribute("thumbupTotal", (thumbupList == null ? 0 : thumbupList.size()));//活动点赞人数
+
         List<ActivityEnroll> enrollList = activityEnrollService.selectList(new ActivityEnroll(activityId, Boolean.TRUE));
         int enrollTotal = (enrollList == null) ? 0 : enrollList.size();
-        model.addAttribute("enrollTotal", enrollTotal);
+        model.addAttribute("enrollTotal", enrollTotal);//活动已报名人数
 
         Integer userId = null;
         String openid = WechatUtil.getOpenid(request);
         if (!StringUtils.isEmpty(openid)) {
             WechatUser user = wechatUserService.findByOpenid(openid);
             userId = user.getUserId();
-            //我是否点赞
             List<ActivityThumbup> thumbups = activityThumbupService.selectList(new ActivityThumbup(activityId, userId));
-            model.addAttribute("isThumbup", !ObjectUtils.isEmpty(thumbups));
-            //该活动添加一条查看记录
-            activityWatchedService.insert(new ActivityWatched(activityId, userId));
-        } else {
-            activityWatchedService.insert(new ActivityWatched(activityId, null));
+            model.addAttribute("isThumbup", !ObjectUtils.isEmpty(thumbups));//我是否点赞
         }
-        //活动状态
-        model.addAttribute("activityStatus", getActivityStatus(activity, userId, enrollTotal));
+        model.addAttribute("activityStatus", getActivityStatus(activity, userId, enrollTotal));//活动状态
+        //该活动添加一条查看记录
+        activityWatchedService.insert(new ActivityWatched(activityId, userId));
 
         return "wechat/detail";
     }
@@ -169,7 +168,7 @@ public class WechatActivityController {
 
         pojo.setOpenid(WechatUtil.getOpenid(request));
         if (!StringUtils.isEmpty(pojo.getOpenid())) {
-            results.put("myList", activityService.selectUserWechatList(pojo));
+            results.put("mylist", activityService.selectUserWechatList(pojo));
         }
         return ResponseEntity.ok(new RestEntity(200, Constants.LOAD_SUCCESS, results));
     }
@@ -221,8 +220,6 @@ public class WechatActivityController {
             WechatUser user = wechatUserService.findByOpenid(openid);
             model.addAttribute("userId", user.getUserId());
         }
-        model.addAttribute("appId", wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_APPID));
-        model.addAttribute("redirectUrl", wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_URI));
         return "wechat/signUp";
     }
 
@@ -275,8 +272,6 @@ public class WechatActivityController {
     @RequestMapping(value = "/enroll/{activityId}/success", method = RequestMethod.GET)
     public String enterSuccess(@PathVariable Integer activityId, Model model) {
         model.addAttribute("activityId", activityId);
-        model.addAttribute("appId", wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_APPID));
-        model.addAttribute("redirectUrl", wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_URI));
         return "wechat/enterSuccess";
     }
 
@@ -290,7 +285,7 @@ public class WechatActivityController {
      * @return 活动状态: --我要报名，--已报名，--名额已满，--已结束
      */
     private String getActivityStatus(Activity activity, Integer userId, int enrollTotal) {
-        if (userId == null) return Constants.ENROLL_WECHAT;
+        if (userId == null) return Constants.ENROLL_BEGIN;
 
         List<ActivityEnroll> enrolls = activityEnrollService.selectList(new ActivityEnroll(activity.getId(), userId, Boolean.TRUE));
         long currentTime = DateUtils.getCurrentTimestamp().getTime();
