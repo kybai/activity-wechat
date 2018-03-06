@@ -155,7 +155,6 @@ public class WechatActivityController {
     @RequestMapping(value = "/thumbup", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity thumbup(@RequestBody WechatPojo pojo, HttpServletRequest request) {
-        //String openid = pojo.getOpenid();
         String openid = WechatUtil.getOpenid(request);
         Integer activityId = pojo.getActivityId();
         if (!StringUtils.isEmpty(openid) && activityId != null) {

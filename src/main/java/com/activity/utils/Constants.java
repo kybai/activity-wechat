@@ -33,7 +33,6 @@ public class Constants {
     public static final String ENROLL_FULL = "名额已满";
     public static final String ENROLL_END = "已结束";
     public static final String ENROLL_SIGN = "已报名";
-    public static final String ENROLL_WECHAT = "微信报名";
 
     //活动报名提示结果
     public static final String ENROLL_RESULT_WAS_DISABLED = "您的账号已被禁用，请联系管理员。";
