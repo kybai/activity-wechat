@@ -13,8 +13,7 @@ function getValLen(val) {
     return value;
 }
 
-function getNum0(val) {
-    var number = Number(val);
+function getNum0(number) {
     if (isNaN(number)) {
         return 0;
     }
@@ -64,7 +63,8 @@ function isWeiXin() {
 //若是微信浏览器，并且openid为空，需要用户点击确认
 function grantAuthInfo() {
     if (isWeiXin() && getWechatStorage() === "") {
-        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+ $("#appId").val() + "&redirect_uri=" + base + "/activity/wechat/portal/index" + "&response_type=code&scope=snsapi_userinfo&state=INDEX#wechat_redirect";
+        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + $("#appId").val() + "&redirect_uri=" + $("#redirectUrl").val()
+                + "/activity/wechat/portal/index" + "&response_type=code&scope=snsapi_userinfo&state=INDEX#wechat_redirect";
     }
 }
 

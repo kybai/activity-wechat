@@ -18,7 +18,8 @@
 </div>
 <div class="main score">
     <input type="hidden" id="appId" th:value="${appId}" readonly="readonly"/>
-    <div class="myscore box"><b th:utext="${user.score}"></b><span>个积分</span></div>
+    <input type="hidden" id="redirectUrl" th:value="${redirectUrl}" readonly="readonly"/>
+    <div class="myscore box"><b th:utext="${user?.score}"></b><span>个积分</span></div>
     <img class="banner" th:if="${adsense.filePath == null}" th:src="@{/img/wechat/banner.jpg}"/>
     <img class="banner" th:unless="${adsense.filePath == null}" th:src="${adsense.filePath}"/>
     <div class="score-info box">

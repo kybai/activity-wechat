@@ -99,6 +99,7 @@ public class WechatCourseController {
 
         model.addAttribute("activityId", course.getActivityId());
         model.addAttribute("appId", wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_APPID));
+        model.addAttribute("redirectUrl", wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_URI));
         return "wechat/signUpSuccess";
     }
 

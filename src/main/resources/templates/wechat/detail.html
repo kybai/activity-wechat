@@ -15,7 +15,7 @@
 </div>
 <div class="main detail">
     <div class="img-box">
-        <img th:src="${file.filePath}"/>
+        <img th:src="${file?.filePath}"/>
     </div>
     <div class="box">
         <h2 class="title" th:utext="${activity.title}"></h2>

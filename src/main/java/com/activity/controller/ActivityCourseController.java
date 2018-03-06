@@ -37,6 +37,7 @@ public class ActivityCourseController {
     public String listGet(@RequestParam Integer activityId, Model model) {
         model.addAttribute("activityId", activityId);
         model.addAttribute("appId", wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_APPID));
+        model.addAttribute("redirectUrl", wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_URI));
         return "activity/course/list";
     }
 

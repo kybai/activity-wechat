@@ -2,13 +2,11 @@ package com.activity.service.impl;
 
 import com.activity.mapper.ActivityDistrictMapper;
 import com.activity.model.ActivityDistrict;
-import com.activity.pojo.BasePageList;
 import com.activity.service.ActivityDistrictService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -23,7 +21,8 @@ public class ActivityDistrictServiceImpl implements ActivityDistrictService {
 
     @Override
     public ActivityDistrict selectOne(Integer id) {
-        return activityDistrictMapper.selectOne(id);
+        ActivityDistrict district = activityDistrictMapper.selectOne(id);
+        return ObjectUtils.isEmpty(district) ? new ActivityDistrict() : district;
     }
 
     @Override

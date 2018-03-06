@@ -5,6 +5,7 @@ import com.activity.model.Employee;
 import com.activity.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 /**
  * @author Create by ky.bai on 2018-02-24 13:22
@@ -17,6 +18,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee selectByUsername(String username) {
-        return employeeMapper.selectByUsername(username);
+        Employee employee = employeeMapper.selectByUsername(username);
+        return ObjectUtils.isEmpty(employee) ? new Employee() : employee;
     }
 }

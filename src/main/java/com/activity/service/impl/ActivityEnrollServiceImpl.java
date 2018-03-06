@@ -2,7 +2,6 @@ package com.activity.service.impl;
 
 import com.activity.mapper.ActivityCourseMapper;
 import com.activity.mapper.ActivityEnrollMapper;
-import com.activity.mapper.ActivityMapper;
 import com.activity.mapper.UsersScoreMapper;
 import com.activity.model.ActivityCourse;
 import com.activity.model.ActivityEnroll;
@@ -30,14 +29,12 @@ public class ActivityEnrollServiceImpl implements ActivityEnrollService {
     private ActivityCourseMapper activityCourseMapper;
 
     @Autowired
-    private ActivityMapper activityMapper;
-
-    @Autowired
     private UsersScoreMapper usersScoreMapper;
 
     @Override
     public ActivityEnroll selectById(Integer id) {
-        return activityEnrollMapper.selectByPrimaryKey(id);
+        ActivityEnroll enroll = activityEnrollMapper.selectByPrimaryKey(id);
+        return ObjectUtils.isEmpty(enroll) ? new ActivityEnroll() : enroll;
     }
 
     @Override
@@ -53,8 +50,7 @@ public class ActivityEnrollServiceImpl implements ActivityEnrollService {
         if (!ObjectUtils.isEmpty(courses)) {
             for (ActivityCourse course : courses) {
                 String reason = "报名课程：" + course.getName();
-                usersScoreMapper.insert(new UsersScore(record.getUserId(), Constants.SCORE_SIGN_COURSE, reason, record.getActivityId(),
-                        course.getId(), DateUtils.getCurrentTimestamp()));
+                usersScoreMapper.insert(new UsersScore(record.getUserId(), Constants.SCORE_SIGN_COURSE, reason, record.getActivityId(), course.getId(), DateUtils.getCurrentTimestamp()));
             }
         }
         //课程报名

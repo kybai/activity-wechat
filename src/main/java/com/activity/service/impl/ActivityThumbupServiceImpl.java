@@ -6,6 +6,7 @@ import com.activity.service.ActivityThumbupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -20,7 +21,8 @@ public class ActivityThumbupServiceImpl implements ActivityThumbupService {
 
     @Override
     public ActivityThumbup selectById(Integer id) {
-        return activityThumbupMapper.selectByPrimaryKey(id);
+        ActivityThumbup thumbup = activityThumbupMapper.selectByPrimaryKey(id);
+        return ObjectUtils.isEmpty(thumbup) ? new ActivityThumbup() : thumbup;
     }
 
     @Override

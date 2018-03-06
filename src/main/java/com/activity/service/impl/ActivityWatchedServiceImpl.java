@@ -6,6 +6,7 @@ import com.activity.service.ActivityWatchedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -20,7 +21,8 @@ public class ActivityWatchedServiceImpl implements ActivityWatchedService {
 
     @Override
     public ActivityWatched selectById(Integer id) {
-        return activityWatchedMapper.selectByPrimaryKey(id);
+        ActivityWatched watched = activityWatchedMapper.selectByPrimaryKey(id);
+        return ObjectUtils.isEmpty(watched) ? new ActivityWatched() : watched;
     }
 
     @Override
