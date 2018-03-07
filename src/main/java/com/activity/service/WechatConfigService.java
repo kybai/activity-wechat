@@ -7,5 +7,9 @@ public interface WechatConfigService {
 
     String selectTextByKey(String configKey);
 
+    //不提示用户需要授权，直接跳转到业务页面
     String getWechatRedirectUrl();
+
+    //提示用户需要授权
+    String getWechatRedirectUrlNeedAuth();
 }
