@@ -404,17 +404,19 @@ i.circle{
 
 /*活动报名*/
 .sign .course{
-    width: 95%;
+    width: calc(100% - 40px);
     padding: 5px 0;
     margin-left: 20px;
     border-top: 1px solid #e5e5e5;
     border-bottom: 1px solid #e5e5e5;
+    overflow: hidden;
 }
 .sign .contact{
-    width: 95%;
+    width: calc(100% - 40px);
     margin-left: 20px;
     margin-top: 10px;
     padding-bottom: 80px;
+    overflow: hidden;
 }
 .sign .contact h4{
     font-size: 18px;

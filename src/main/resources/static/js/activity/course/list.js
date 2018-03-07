@@ -37,8 +37,9 @@ function catCode(obj) {
 
 function getCodeStr(courseId) {
     var appId = $("#appId").val();
-    return 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appId + '&redirect_uri=http://tt.51meiy.com/activity/wechat/portal/sign/'
-        + courseId + '&response_type=code&scope=snsapi_base&state=1#wechat_redirect';
+    return 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appId
+        + '&redirect_uri=' + $("#uri").val() + '/activity/wechat/portal/sign/' + courseId
+        + '&response_type=code&scope=snsapi_base&state=1#wechat_redirect';
 }
 
 function goHistory() {

@@ -179,7 +179,7 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public List<WechatActivityDTO> selectUserWechatList(WechatPojo pojo) {
-        WechatUser user = wechatUserMapper.selectByOpenid(pojo.getOpenid());
-        return activityMapper.selectUserWechatList(new Users(user.getId(), Boolean.TRUE, pojo.getDistrictId()));
+        WechatUser wechatUser = wechatUserMapper.selectByOpenid(pojo.getOpenid());
+        return activityMapper.selectUserWechatList(new Users(wechatUser.getUserId(), Boolean.TRUE, pojo.getDistrictId()));
     }
 }

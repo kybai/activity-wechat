@@ -91,8 +91,8 @@ function loadMyData() {
 }
 
 function loadMylistHtml(list) {
-    if (list && list.size() === 0) {
-        $("#mylist").removeClass("my-list").addClass("no-class").html('<img th:src="@{/img/wechat/nojoin.png}"/><span>尚未参加任何活动</span>');
+    if (getVal(list) !== "" && list.length < 1) {
+        $("#mylist").removeClass("my-list").addClass("no-class").empty().html('<img th:src="@{/img/wechat/nojoin.png}"/><span>尚未参加任何活动</span>');
         return false;
     }
     var html = '';
@@ -116,7 +116,6 @@ function loadMyInfo(user) {
     $("#myName").empty().html(getVal(user.name));
     $("#myScore").empty().html(getVal(user.score));
     $("#myImg").empty().attr("src", getVal(user.headImgUrl));
-
 }
 
 function WechatPojo() {

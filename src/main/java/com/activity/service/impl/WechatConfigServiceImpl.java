@@ -23,9 +23,9 @@ public class WechatConfigServiceImpl implements WechatConfigService {
     }
 
     @Override
-    public String getWechatRedirectUrl() {
+    public String getWechatRedirectUrl(String redirectUrl) {
         return "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + selectTextByKey(Constants.WECHAT_CONFIG_APPID)
-                + "&redirect_uri=" + selectTextByKey(Constants.WECHAT_CONFIG_URI) + "/activity/wechat/portal/index"
+                + "&redirect_uri=" + selectTextByKey(Constants.WECHAT_CONFIG_URI) + "/activity" + redirectUrl
                 + "&response_type=code&scope=snsapi_base&state=" + Constants.WECHAT_STATE_INDEX + "#wechat_redirect";
     }
 

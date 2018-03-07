@@ -63,7 +63,7 @@ public class WxMenuController implements WxMpMenuService {
         WxMenuButton button34 = new WxMenuButton();
         button34.setType(MenuButtonType.VIEW);
         button34.setName("团建");
-        button34.setUrl(wechatConfigService.getWechatRedirectUrl());
+        button34.setUrl(wechatConfigService.getWechatRedirectUrl("/wechat/portal/index"));
         button3.getSubButtons().add(button34);
 
         menu.getButtons().add(button1);
