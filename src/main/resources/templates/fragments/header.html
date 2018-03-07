@@ -4,10 +4,15 @@
         margin-left: 1px;
         margin-right: 1px;
     }
+    .logo img{
+        width: 27px;
+        height: 27px;
+    }
 </style>
 <header class="main-header">
-    <a href="/securities" class="logo">
-        <span class="logo-mini"><i class="glyphicon glyphicon-log-out"></i></span>
+    <a href="javascript:void(0);" class="logo">
+        <span><img th:src="@{/img/sign-logo.png}"/></span>
+        <!--<span class="logo-mini"><i class="glyphicon glyphicon-log-out"></i></span>-->
         <span><b th:utext="#{title}"></b></span>
     </a>
     <nav class="navbar navbar-static-top" role="navigation">

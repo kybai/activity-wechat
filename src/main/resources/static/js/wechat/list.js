@@ -14,7 +14,13 @@
                 if (newtitle === "活动回顾") tabclass = 'act-review';
                 if (newtitle === "我的") {
                     tabclass = 'my';
-                    if (isWeiXin()) loadMyData();
+                    var needAuth = $("#needAuth").attr("needauth");
+                    if (getBoolean(needAuth) && isWeiXin()) {
+                        window.location.href = $("#redirectUrl").val();
+                        return false;
+                    } else if (!getBoolean(needAuth) && isWeiXin()) {
+                        loadMyData();
+                    }
                 }
                 $("#tab-ul").find("." + tabclass).removeClass("none").siblings("div").addClass("none");
             });

@@ -76,6 +76,8 @@
             </div>
         </div>
     </div>
+    <input type="hidden" id="needAuth" th:attr="needauth=${needAuth}" readonly="readonly"/>
+    <input type="hidden" id="redirectUrl" th:value="${redirectUrl}" readonly="readonly"/>
 </div>
 
 <div th:replace="fragments/wechatJs"></div>

@@ -30,7 +30,7 @@ public class WechatInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         String openid = WechatUtil.getOpenid(request);
         if (StringUtils.isEmpty(openid)) {
-            response.sendRedirect(wechatConfigService.getWechatIndexUrl());
+            response.sendRedirect(wechatConfigService.getWechatRedirectUrl());
             return false;
         }
         return true;
