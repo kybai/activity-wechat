@@ -245,6 +245,10 @@ i.circle{
 .list .tab .tab-con .act-info .info .info-address{
     display: inline-block;
     margin-left: 20px;
+    width: 40%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .list .tab .tab-con .act-info .info .info-address::before{
     content: '';
@@ -740,9 +744,6 @@ i.circle{
 }
 .course div{
     width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
 }
 .detail .act{
     margin-top: 10px;

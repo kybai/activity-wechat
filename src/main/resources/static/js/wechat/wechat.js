@@ -7,8 +7,8 @@ function getVal(val) {
 
 function getValLen(val) {
     var value = getVal(val);
-    if (value.length > 5) {
-        return value.substring(0, 5) + "...";
+    if (value.length > 9) {
+        return value.substring(0, 9) + "...";
     }
     return value;
 }
