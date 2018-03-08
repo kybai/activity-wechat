@@ -18,8 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * 微信端拦截器
@@ -39,7 +39,7 @@ public class WechatInterceptor implements HandlerInterceptor {
     private WechatUserService wechatUserService;
 
     //授权信息：key为code
-    private Map<String, WechatCode> codeMap = new HashMap<>();
+    private ConcurrentMap<String, WechatCode> codeMap = new ConcurrentHashMap<>();
 
     /**
      * Created by ky.bai on 2018-03-06 11:15
