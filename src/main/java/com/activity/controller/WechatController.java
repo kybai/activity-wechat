@@ -115,6 +115,7 @@ public class WechatController {
             openid = auth.getOpenId();
             //获取微信用户的基本信息, 若微信用户还未存在，则保存
             WechatUser wechatUser = wechatUserService.findByOpenid(openid);
+            //wxMpService.
             WxMpUser u = wxMpService.getUserService().userInfo(auth.getOpenId(), null);
             if (wechatUser == null && u != null) {
                 wechatUserService.insertByWxMpUser(u);
