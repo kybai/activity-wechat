@@ -90,7 +90,7 @@ public class WechatActivityController {
     public String list(Model model, HttpServletRequest request) {
         model.addAttribute("districts", activityDistrictService.selectList(new ActivityDistrict(Boolean.TRUE)));
         model.addAttribute("imgList", adsenseService.selectList(new Adsense(Constants.IMAGE_TYPE_ROLLING, Boolean.TRUE)));//轮播图
-        model.addAttribute("isWeiXin", StringUtils.isEmpty(WechatUtil.getOpenid(request)) ? Boolean.FALSE : Boolean.TRUE);
+        model.addAttribute("isWeiXin", !StringUtils.isEmpty(WechatUtil.getOpenid(request)));
         model.addAttribute("redirectUrl", wechatConfigService.getWechatRedirectUrl("/wechat/portal/index"));
         model.addAttribute("needAuth", StringUtils.isEmpty(WechatUtil.getOpenid(request)));
         return "wechat/list";

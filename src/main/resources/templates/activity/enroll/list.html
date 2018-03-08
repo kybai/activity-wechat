@@ -25,8 +25,8 @@
                                             <span>用户昵称：</span>
                                             <input type="text" id="searchName" placeholder="请输入用户昵称查询"/>
                                             <input type="hidden" id="activityId" th:value="${activity.id}"/>
-                                            <a href="javascript:void(0);" onclick="initPage(1);"><i class="glyphicon glyphicon-search"></i></a>
-                                            <a href="javascript:void(0);" th:if="${activity.id!=null}" onclick="exportExcel();"><i class="glyphicon glyphicon-download"></i></a>
+                                            <a href="#" onclick="initPage(1);"><i class="glyphicon glyphicon-search"></i></a>
+                                            <a href="#" th:if="${activity.id!=null}" onclick="exportExcel();"><i class="glyphicon glyphicon-download"></i></a>
                                         </section>
                                     </div>
                                 </div>

@@ -30,7 +30,7 @@
                                                 <option value="">全部</option>
                                                 <option th:each="d : ${districts}" th:value="${d.id}" th:utext="${d.name}"></option>
                                             </select>
-                                            <a href="javascript:void(0);" onclick="initPage(1);"><i class="glyphicon glyphicon-search"></i></a>
+                                            <a href="#" onclick="initPage(1);"><i class="glyphicon glyphicon-search"></i></a>
                                             <a th:href="@{/activity/add}"><i class="glyphicon glyphicon-plus-sign"></i></a>
                                         </section>
                                     </div>

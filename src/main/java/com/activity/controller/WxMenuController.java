@@ -33,7 +33,7 @@ public class WxMenuController implements WxMpMenuService {
         WxMenu menu = new WxMenu();
 
         WxMenuButton button3 = new WxMenuButton();
-        button3.setName("青年社区学校");
+        button3.setName("青年社区");
 
         WxMenuButton button31 = new WxMenuButton();
         button31.setType(MenuButtonType.VIEW);
