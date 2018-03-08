@@ -217,6 +217,7 @@ public class WechatActivityController {
         model.addAttribute("activity", activity);
         model.addAttribute("courses", activityService.selectCourseList(new ActivityCourse(activityId, Boolean.TRUE)));
         model.addAttribute("tag", activityService.selectTag(new ActivityTag(activityId)));
+        model.addAttribute("toIndex", Constants.WECHAT_STATE_INDEX.equals(request.getParameter("state")));
 
         String openid = WechatUtil.getOpenid(request);
         if (!StringUtils.isEmpty(openid)) {
@@ -273,8 +274,9 @@ public class WechatActivityController {
     }
 
     @RequestMapping(value = "/enroll/{activityId}/success", method = RequestMethod.GET)
-    public String enterSuccess(@PathVariable Integer activityId, Model model) {
+    public String enterSuccess(@PathVariable Integer activityId, HttpServletRequest request, Model model) {
         model.addAttribute("activityId", activityId);
+        model.addAttribute("toIndex", Constants.WECHAT_STATE_INDEX.equals(request.getParameter("state")));
         return "wechat/enterSuccess";
     }
 

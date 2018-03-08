@@ -9,7 +9,6 @@ import com.activity.pojo.WechatParamDTO;
 import com.activity.service.ActivityCourseSignInService;
 import com.activity.service.ActivityEnrollService;
 import com.activity.service.ActivityService;
-import com.activity.service.WechatConfigService;
 import com.activity.service.WechatUserService;
 import com.activity.utils.Constants;
 import com.activity.utils.WechatUtil;
@@ -21,7 +20,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -48,13 +46,11 @@ public class WechatCourseController {
     @Autowired
     private ActivityEnrollService activityEnrollService;
 
-    @Autowired
-    private WechatConfigService wechatConfigService;
-
     /**
      * Created by ky.bai on 2018-03-02 15:34
      *
      * @param activityId 活动编号
+     *
      * @return 活动课程列表页
      */
     @RequestMapping("/info/{activityId}")
@@ -67,6 +63,8 @@ public class WechatCourseController {
             model.addAttribute("courses", activityCourseMapper.selectList(new ActivityCourse(activityId, Boolean.TRUE)));
         }
         model.addAttribute("activity", activityService.selectOne(activityId));
+        String state = request.getParameter("state");
+        model.addAttribute("toIndex", Constants.WECHAT_STATE_INDEX.equals(state));
         return "wechat/class";
     }
 
@@ -74,6 +72,7 @@ public class WechatCourseController {
      * Created by ky.bai on 2018/3/4 11:59
      *
      * @param courseId 课程编号
+     *
      * @return 课程签到，并跳转至签到成功页面
      */
     @RequestMapping(value = "/sign/{courseId}", method = RequestMethod.GET)
@@ -98,6 +97,7 @@ public class WechatCourseController {
         }
 
         model.addAttribute("activityId", course.getActivityId());
+        model.addAttribute("toIndex", Constants.WECHAT_STATE_INDEX.equals(request.getParameter("state")));
         return "wechat/signUpSuccess";
     }
 

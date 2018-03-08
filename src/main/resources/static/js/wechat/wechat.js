@@ -49,11 +49,8 @@ function isWeiXin() {
 
 //返回上一页
 function goback() {
-    if (window.history.length > 0 && isWeiXin()) {
-        window.history.go(-1);
-    } else {
-        window.location.href = base + '/wechat/activity';
-    }
+    window.history.go(-1);
+    return false;
 }
 
 // 对Date的扩展，将 Date 转化为指定格式的String

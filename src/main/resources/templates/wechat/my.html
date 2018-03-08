@@ -11,7 +11,8 @@
 </head>
 <body>
 <div id="header">
-    <a href="javascript:void(0);" onclick="goback();" class="goback"></a>
+    <a th:if="${toIndex}" th:href="@{/wechat/activity}" class="goback"></a>
+    <a th:unless="${toIndex}" href="javascript:void(0);" onclick="goback();" class="goback"></a>
 </div>
 <div class="main score">
     <div class="myscore box"><b th:utext="${user?.score}"></b><span>个积分</span></div>
