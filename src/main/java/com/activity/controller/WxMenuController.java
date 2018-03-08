@@ -31,43 +31,16 @@ public class WxMenuController implements WxMpMenuService {
     @GetMapping("/create")
     public String menuCreate(WxMenu wxMenu) throws WxErrorException {
         WxMenu menu = new WxMenu();
-        WxMenuButton button1 = new WxMenuButton();
-        button1.setType(MenuButtonType.VIEW);
-        button1.setName("我的门店");
-        button1.setUrl("http://test.51meiy.com/shiyu_clients/storeHome/weixinAuthorization_html");
-
-        WxMenuButton button2 = new WxMenuButton();
-        button2.setType(MenuButtonType.VIEW);
-        button2.setName("活动");
-        button2.setUrl("http://wx.51meiy.com/app/index.php?i=2c=entrym=feng_fightgroupsdo=homeac=indexfrom=groupmessageisappinstalled=0");
 
         WxMenuButton button3 = new WxMenuButton();
-        button3.setName("会员服务");
+        button3.setName("青年社区学校");
+
         WxMenuButton button31 = new WxMenuButton();
         button31.setType(MenuButtonType.VIEW);
-        button31.setName("个人中心");
-        button31.setUrl("http://test.51meiy.com/shiyu_clients/storeHome/weixinAuthorization_html?pageType=personalCenter");
-        WxMenuButton button32 = new WxMenuButton();
-        button32.setType(MenuButtonType.CLICK);
-        button32.setName("在线咨询");
-        button32.setKey("HYFW_ZXZX");
-        WxMenuButton button33 = new WxMenuButton();
-        button33.setType(MenuButtonType.CLICK);
-        button33.setName("常见问题");
-        button33.setKey("HYFW_CJWT");
+        button31.setName("青年社区学校");
+        button31.setUrl(wechatConfigService.getWechatRedirectUrl("/wechat/portal/index"));
         button3.getSubButtons().add(button31);
-        button3.getSubButtons().add(button32);
-        button3.getSubButtons().add(button33);
 
-        //自己用的路径
-        WxMenuButton button34 = new WxMenuButton();
-        button34.setType(MenuButtonType.VIEW);
-        button34.setName("团建");
-        button34.setUrl(wechatConfigService.getWechatRedirectUrl("/wechat/portal/index"));
-        button3.getSubButtons().add(button34);
-
-        menu.getButtons().add(button1);
-        menu.getButtons().add(button2);
         menu.getButtons().add(button3);
 
         return this.wxService.getMenuService().menuCreate(menu);

@@ -124,11 +124,12 @@ public class WechatActivityController {
      */
     @RequestMapping(value = "/mylist", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity mylist(HttpServletRequest request) {
+    public ResponseEntity mylist(@RequestBody WechatPojo pojo, HttpServletRequest request) {
         Map<String, Object> results = new HashMap<>();
         String openid = WechatUtil.getOpenid(request);
         if (!StringUtils.isEmpty(openid)) {
-            results.put("mylist", activityService.selectUserWechatList(new WechatPojo(openid, Boolean.TRUE)));//我参与的活动列表
+            pojo.setOpenid(openid);
+            results.put("mylist", activityService.selectUserWechatList(pojo));//我参与的活动列表
             WechatUser wechatUser = wechatUserService.findByOpenid(openid);
             results.put("user", usersService.selectUserScore(wechatUser.getUserId()));//我的信息与积分
             return ResponseEntity.ok(new RestEntity(200, Constants.LOAD_SUCCESS, results));
