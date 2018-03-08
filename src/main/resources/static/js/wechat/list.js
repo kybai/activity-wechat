@@ -61,16 +61,20 @@ function loadData() {
 
 function loadHtml(id, list) {
     var html = '';
-    for (key in list) {
-        var e = list[key];
-        html += '<div class="act-info"><a href="' + base + '/wechat/activity/info/' + getVal(e.id) + '">';
-        html += '<img class="img-box" src="' + getVal(e.coverPath) + '"/>';
-        html += '<div class="title">' + getVal(e.title) + '</div>';
-        html += '<div class="info">';
-        html += '<div class="info-time">' + getDateM(e.beginTime) + '-' + getDateM(e.endTime) + '</div>';
-        html += '<div class="info-address">' + getVal(e.address) + '</div>';
-        html += '</div>';
-        html += '</a></div>';
+    if (getVal(list) !== "" && list.length < 1) {
+        html += '<img src="' + base + '/img/wechat/nojoin.png"/><span>尚未参加任何活动</span>';
+    } else {
+        for (key in list) {
+            var e = list[key];
+            html += '<div class="act-info"><a href="' + base + '/wechat/activity/info/' + getVal(e.id) + '">';
+            html += '<img class="img-box" src="' + getVal(e.coverPath) + '"/>';
+            html += '<div class="title">' + getVal(e.title) + '</div>';
+            html += '<div class="info">';
+            html += '<div class="info-time">' + getDateM(e.beginTime) + '-' + getDateM(e.endTime) + '</div>';
+            html += '<div class="info-address">' + getVal(e.address) + '</div>';
+            html += '</div>';
+            html += '</a></div>';
+        }
     }
     $("#" + id).empty().html(html);
 }
@@ -92,7 +96,7 @@ function loadMyData() {
 
 function loadMylistHtml(list) {
     if (getVal(list) !== "" && list.length < 1) {
-        $("#mylist").removeClass("my-list").addClass("no-class").empty().html('<img th:src="@{/img/wechat/nojoin.png}"/><span>尚未参加任何活动</span>');
+        $("#mylist").removeClass("my-list").addClass("no-class").empty().html('<img src="' + base + '/img/wechat/nojoin.png"/><span>尚未参加任何活动</span>');
         return false;
     }
     var html = '';
