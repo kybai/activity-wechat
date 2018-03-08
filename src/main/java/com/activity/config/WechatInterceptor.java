@@ -11,9 +11,10 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,6 +33,8 @@ import java.util.concurrent.ConcurrentMap;
 @Configuration
 public class WechatInterceptor implements HandlerInterceptor {
 
+    private static Logger logger = LoggerFactory.getLogger(WechatInterceptor.class);
+
     @Autowired
     private WechatConfigService wechatConfigService;
 
@@ -49,9 +52,10 @@ public class WechatInterceptor implements HandlerInterceptor {
      * 对于特殊路径，需要判断session中是否存在openid，若不存在，需要跳转到微信授权的路径
      */
     @Override
-    @Transactional
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws WxErrorException, IOException {
         String openidSession = WechatUtil.getOpenid(request);
+        if (!StringUtils.isEmpty(openidSession)) return true;
+
         String openid = request.getParameter("openid");
         String code = request.getParameter("code");
         if (StringUtils.isEmpty(openidSession) && StringUtils.isEmpty(openid) && StringUtils.isEmpty(code)) {
@@ -60,23 +64,28 @@ public class WechatInterceptor implements HandlerInterceptor {
         }
 
         Timestamp currentTime = DateUtils.getCurrentTimestamp();
+        logger.info("codeMap size is" + codeMap.keySet().size());
         WechatCode wechatCode = codeMap.get(code);
         //Map中含有code并且未过期时不再去请求获取token
-        if (wechatCode != null && !StringUtils.isEmpty(wechatCode.getOpenid()) && wechatCode.getExpireTime().getTime() + 5 * 60 * 1000 < currentTime.getTime()) {
+        if (wechatCode != null && wechatCode.getExpireTime().getTime() + 5 * 60 * 1000 < currentTime.getTime()) {
             openid = wechatCode.getOpenid();
-        } else if (StringUtils.isEmpty(openid) && !StringUtils.isEmpty(code)) {
+        }
+        if (StringUtils.isEmpty(openid) && !StringUtils.isEmpty(code)) {
             WxMpOAuth2AccessToken auth = wxMpService.oauth2getAccessToken(code);
             openid = auth.getOpenId();
             //获取微信用户的基本信息, 若微信用户还未存在，则保存
             WechatUser wechatUser = wechatUserService.findByOpenid(openid);
-            WxMpUser u = wxMpService.getUserService().userInfo(auth.getOpenId(), null);
-            if (wechatUser == null && u != null) {
+            WxMpUser u = wxMpService.oauth2getUserInfo(auth, null);
+            if (wechatUser == null && u != null && !StringUtils.isEmpty(u.getNickname())) {
                 wechatUserService.insertByWxMpUser(u);
             }
+            //放入缓存中
             codeMap.put(code, new WechatCode(openid, code, auth.getAccessToken(), currentTime));
+            if (StringUtils.isEmpty(openid)) openid = openidSession;
         }
-        if (StringUtils.isEmpty(openid)) openid = openidSession;
-        WechatUtil.setOpenid(request, openid);
+
+        //将openid放入缓存中
+        if (!StringUtils.isEmpty(openid)) WechatUtil.setOpenid(request, openid);
 
         return true;
     }

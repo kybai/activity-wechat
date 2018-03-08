@@ -45,10 +45,10 @@ public class WechatUserServiceImpl implements WechatUserService {
             return wechatUserMapper.update(model);
         } else {
             Timestamp currentTime = DateUtils.getCurrentTimestamp();
-            String name = mp.getNickname() == null ? "" : mp.getNickname();
-            Users u = new Users(name, mp.getSex(), mp.getCity(), mp.getProvince(), mp.getCountry(), mp.getHeadImgUrl(), Boolean.TRUE, currentTime);
+            Users u = new Users(mp.getNickname(), mp.getSex(), mp.getCity(), mp.getProvince(), mp.getCountry(), mp.getHeadImgUrl(), Boolean.TRUE, currentTime);
             usersService.insert(u);
-            return wechatUserMapper.insert(new WechatUser(mp.getOpenId(), u.getId(), name, mp.getSubscribe(), mp.getUnionId(), mp.getRemark(), mp.getGroupId(), currentTime));
+            Boolean subscribe = mp.getSubscribe() == null ? Boolean.FALSE : mp.getSubscribe();
+            return wechatUserMapper.insert(new WechatUser(mp.getOpenId(), u.getId(), mp.getNickname(), subscribe, mp.getUnionId(), mp.getRemark(), mp.getGroupId(), currentTime));
         }
     }
 

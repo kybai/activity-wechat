@@ -114,7 +114,7 @@ function loadMylistHtml(list) {
 
 function loadMyInfo(user) {
     $("#myName").empty().html(getVal(user.name));
-    $("#myScore").empty().html(getVal(user.score));
+    $("#myScore").empty().html(getVal(user.score) === "" ? 0 : getVal(user.score));
     $("#myImg").empty().attr("src", getVal(user.headImgUrl));
 }
 
