@@ -39,10 +39,18 @@ public class WechatUserServiceImpl implements WechatUserService {
     @Override
     @Transactional
     public int insertByWxMpUser(WxMpUser mp) {
-        WechatUser model = wechatUserMapper.selectByOpenid(mp.getOpenId());
-        if (model != null) {
-            model.setSubscribe(mp.getSubscribe());
-            return wechatUserMapper.update(model);
+        WechatUser wechatUser = wechatUserMapper.selectByOpenid(mp.getOpenId());
+        if (wechatUser != null) {
+            Users users = usersService.selectOne(wechatUser.getUserId());
+            users.setName(mp.getNickname());
+            users.setCity(mp.getCity());
+            users.setSex(mp.getSex());
+            users.setProvince(mp.getProvince());
+            users.setCountry(mp.getCountry());
+            users.setHeadImgUrl(mp.getHeadImgUrl());
+            wechatUser.setSubscribe(mp.getSubscribe());
+            wechatUser.setNickname(mp.getNickname());
+            return wechatUserMapper.update(wechatUser);
         } else {
             Timestamp currentTime = DateUtils.getCurrentTimestamp();
             Users u = new Users(mp.getNickname(), mp.getSex(), mp.getCity(), mp.getProvince(), mp.getCountry(), mp.getHeadImgUrl(), Boolean.TRUE, currentTime);
