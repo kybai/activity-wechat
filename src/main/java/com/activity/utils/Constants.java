@@ -30,10 +30,16 @@ public class Constants {
 
     //活动报名提示结果
     public static final String ENROLL_RESULT_WAS_DISABLED = "您的账号已被禁用，请联系管理员。";
-    public static final String ENROLL_RESULT_NOT_FOUND = "未发现该活动，报名失败。";
-    public static final String ENROLL_RESULT_WAS_END = "该活动已经结束，报名失败。";
-    public static final String ENROLL_RESULT_WAS_FULL = "该活动名额已满，报名失败。";
-    public static final String ENROLL_RESULT_WAS_SIGN = "该活动您已报名，报名失败。";
+    public static final String ENROLL_RESULT_NOT_FOUND = "报名失败，未发现该活动";
+    public static final String ENROLL_RESULT_WAS_END = "报名失败，该活动已经结束";
+    public static final String ENROLL_RESULT_WAS_FULL = "报名失败，该活动名额已满";
+    public static final String ENROLL_RESULT_WAS_SIGN = "报名失败，该活动您已报名";
+
+    //课程签到提示
+    public static final String COURSE_SIGN_NOT_TIME = "签到失败，不在签到时间阶段";
+    public static final String COURSE_SIGN_NOT_ENROLL = "签到失败，您没有报名该课程";
+    public static final String COURSE_SIGN_WAS_SIGNED = "签到失败，您已签到该课程";
+    public static final String COURSE_SIGN_SUCCESS = "签到成功";
 
     //图片类型
     public static final String IMAGE_TYPE_ADSENSE = "广告图";

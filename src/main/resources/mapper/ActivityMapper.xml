@@ -50,7 +50,7 @@
         select a.id, a.title, a.address, a.begin_time beginTime, a.end_time endTime, f.file_path coverPath
         from activity a
         left join upload_file f on f.id = a.upload_file_id
-        where 1 = 1 and a.end_time &gt; now()
+        where 1 = 1 and a.begin_time &gt; now()
         <if test="districtId!=null">
             and a.district_id = #{districtId,jdbcType=INTEGER}
         </if>
@@ -65,7 +65,7 @@
         select a.id, a.title, a.address, a.begin_time beginTime, a.end_time endTime, f.file_path coverPath
         from activity a
         inner join upload_file f on f.id = a.upload_file_id
-        where 1 = 1 and a.end_time &lt; now()
+        where 1 = 1 and a.begin_time &lt; now()
         <if test="districtId!=null">
             and a.district_id = #{districtId,jdbcType=INTEGER}
         </if>

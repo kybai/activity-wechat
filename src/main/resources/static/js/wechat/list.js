@@ -62,7 +62,7 @@ function loadData() {
 function loadHtml(id, list) {
     var html = '';
     if (getVal(list) !== "" && list.length < 1) {
-        html += '<div class="no-class"><img src="' + base + '/img/wechat/nojoin.png"/><span>尚未参加任何活动</span></div>';
+        html += '<div class="no-class"><img src="' + base + '/img/wechat/nojoin.png"/><span>暂无活动</span></div>';
     } else {
         for (key in list) {
             var e = list[key];
@@ -104,7 +104,7 @@ function loadMylistHtml(list) {
         var e = list[key];
         html += '<li>';
         html += '<div class="act-info">';
-        html += '<a href="' + base + '/wechat/activity/info/' + getVal(e.id) + '">';
+        html += '<a href="' + base + '/wechat/course/info/' + getVal(e.id) + '">';
         html += '<img class="img-box" src="' + getVal(e.coverPath) + '"/>';
         html += '<div class="title">' + getVal(e.title) + '</div>';
         html += '<div class="info">';

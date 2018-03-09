@@ -16,8 +16,9 @@
     <a th:unless="${toIndex}" href="javascript:void(0);" onclick="goback();" class="goback"></a>
 </div>
 <div class="main box">
-    <h2>签到成功</h2>
-    <p class="acinfo">积分+1<br/>积分详情可在我的积分中查看</p>
+    <h2 th:utext="${msg}">签到成功</h2>
+    <p th:if="${msg=='签到成功'}" class="acinfo">积分+1<br/>积分详情可在我的积分中查看</p>
+    <p th:unless="${msg=='签到成功'}" class="acinfo">积分+0<br/>积分详情可在我的积分中查看</p>
     <div class="link">
         <a class="fl btn" th:href="@{'/wechat/course/info/'+${activityId}(state=${state})}">课程安排</a>
         <a class="fr btn" th:href="@{/wechat/user/score(state=${state})}">我的积分</a>
