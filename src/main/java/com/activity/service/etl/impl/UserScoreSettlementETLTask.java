@@ -71,7 +71,7 @@ public class UserScoreSettlementETLTask extends ETLTask {
                         }
                         //缺席活动课程人员扣2分
                         if (!sign)
-                            list.add(new UsersScore(enroll.getUserId(), Constants.SCORE_MISS_COURSE, "缺席课程:" + course.getName(), course.getActivityId(), course.getId(), endTime));
+                            list.add(new UsersScore(enroll.getUserId(), Constants.SCORE_MISS_COURSE, "缺席课程：" + course.getName(), course.getActivityId(), course.getId(), endTime));
                     }
                 }
             }
