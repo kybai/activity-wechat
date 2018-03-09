@@ -23,8 +23,7 @@ function loadPage(content) {
         var entity = content[key];
         html += '<tr fileid="' + getVal(entity.uploadFileId) + '">';
         html += '<td>' + getVal(entity.id) + '</td>';
-        html += '<td><img class="list-img" src="'+getVal(entity.filePath)+'" onclick="catImg(this);"/></td>';
-        // html += '<td><a href="javascript:void(0);" onclick=catImg("' + getVal(entity.uploadFileId) + '");>查看图片</a></td>';
+        html += '<td><img class="list-img" src="' + getVal(entity.filePath) + '" onclick="catImg(this);"/></td>';
         html += '<td>' + getVal(entity.url) + '</td>';
         html += '<td>' + getDateD(entity.createDate) + '</td>';
         html += '<td><button type="button" class="btn-link" onclick="edit(this);">编辑</button>' +
