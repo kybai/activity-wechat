@@ -11,6 +11,7 @@ import com.activity.service.ActivityEnrollService;
 import com.activity.service.ActivityService;
 import com.activity.service.WechatUserService;
 import com.activity.utils.Constants;
+import com.activity.utils.DateUtils;
 import com.activity.utils.WechatUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,21 +51,19 @@ public class WechatCourseController {
      * Created by ky.bai on 2018-03-02 15:34
      *
      * @param activityId 活动编号
-     *
      * @return 活动课程列表页
      */
     @RequestMapping("/info/{activityId}")
     public String list(@PathVariable Integer activityId, HttpServletRequest request, Model model) {
         String openid = WechatUtil.getOpenid(request);
         if (!StringUtils.isEmpty(openid)) {
-            WechatUser user = wechatUserService.findByOpenid(openid);
-            model.addAttribute("courses", activityCourseMapper.selectSignList(new WechatParamDTO(user.getId(), activityId, Boolean.TRUE)));
+            WechatUser wechatUser = wechatUserService.findByOpenid(openid);
+            model.addAttribute("courses", activityCourseMapper.selectSignList(new WechatParamDTO(wechatUser.getUserId(), activityId, Boolean.TRUE)));
         } else {
             model.addAttribute("courses", activityCourseMapper.selectList(new ActivityCourse(activityId, Boolean.TRUE)));
         }
         model.addAttribute("activity", activityService.selectOne(activityId));
-        String state = request.getParameter("state");
-        model.addAttribute("toIndex", Constants.WECHAT_STATE_INDEX.equals(state));
+        model.addAttribute("toIndex", Constants.WECHAT_STATE_INDEX.equals(request.getAttribute("state")));
         return "wechat/class";
     }
 
@@ -72,13 +71,22 @@ public class WechatCourseController {
      * Created by ky.bai on 2018/3/4 11:59
      *
      * @param courseId 课程编号
-     *
      * @return 课程签到，并跳转至签到成功页面
      */
     @RequestMapping(value = "/sign/{courseId}", method = RequestMethod.GET)
     public String courseSign(@PathVariable Integer courseId, HttpServletRequest request, Model model) {
         String openid = WechatUtil.getOpenid(request);
         ActivityCourse course = activityCourseMapper.selectByPrimaryKey(courseId);
+        if (course == null) {
+            return "redirect:/wechat/activity";
+        }
+
+        model.addAttribute("activityId", course.getActivityId());
+        model.addAttribute("toIndex", Constants.WECHAT_STATE_INDEX.equals(request.getAttribute("state")));
+        if (course.getEndTime().getTime() <= DateUtils.getCurrentTimestamp().getTime()) {
+            return "wechat/signUpSuccess";
+        }
+
         if (!StringUtils.isEmpty(openid)) {
             WechatUser wechatUser = wechatUserService.findByOpenid(openid);
             Integer userId = wechatUser.getUserId();
@@ -88,7 +96,6 @@ public class WechatCourseController {
             if (ObjectUtils.isEmpty(enrolls)) {
                 return "redirect:/wechat/activity/info/" + activityId;
             }
-
             //是否已签到
             List<ActivityCourseSignIn> signs = signInService.selectList(new ActivityCourseSignIn(userId, courseId));
             if (ObjectUtils.isEmpty(signs)) {
@@ -96,8 +103,6 @@ public class WechatCourseController {
             }
         }
 
-        model.addAttribute("activityId", course.getActivityId());
-        model.addAttribute("toIndex", Constants.WECHAT_STATE_INDEX.equals(request.getParameter("state")));
         return "wechat/signUpSuccess";
     }
 

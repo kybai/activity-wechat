@@ -221,12 +221,16 @@ i.circle{
 }
 .list .tab .tab-con .act-info .title{
     width: 94%;
-    padding: 0 3%;
+    padding: 5px 3%;
     font-size: 16px;
+    word-break: break-all;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .list .tab .tab-con .act-info .info{
     width: 94%;
-    padding: 5px 3% 15px 3%;
+    padding: 0 3% 15px 3%;
     color: #999;
     font-size: 12px;
 }
@@ -262,6 +266,7 @@ i.circle{
 .list .tab .tab-con .my{
     width: 100%;
     padding-bottom: 30px;
+    overflow: hidden;
 }
 .list .tab .tab-con .my .my-top{
     width: 90%;
@@ -280,6 +285,7 @@ i.circle{
 }
 .list .tab .tab-con .my .my-top .fl p{
     margin-top: 20px;
+    width: 50%;
 }
 .icon-left{
     margin-left: 10px;
@@ -289,6 +295,8 @@ i.circle{
     width: 7px;
     height: 7px;
     transform: rotate(-45deg);
+    position: relative;
+    top: -2px;
 }
 .list .tab .tab-con .my .my-top .fr img{
     border: 1px solid #feec00;
@@ -302,12 +310,12 @@ i.circle{
     width: 100%;
     overflow: hidden;
 }
-.list .tab .tab-con .my .my-class .no-class{
+.list .tab .tab-con .no-class{
     text-align: center;
     color: #999;
     line-height: 40px;
 }
-.list .tab .tab-con .my .my-class .no-class img{
+.list .tab .tab-con .no-class img{
     width: 20%;
     margin: 50px auto 0;
     display: block;
@@ -479,6 +487,10 @@ i.circle{
     color: #999;
     margin-left: 10px;
     line-height: 32px;
+    width: 60%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .sign .contact .form-li .upload .file-box .imgdel{
     display: block;
@@ -600,6 +612,7 @@ i.circle{
     font-size: 24px;
     line-height: 38px;
     padding: 10px 20px;
+    word-break: break-all;
 }
 .main p.acinfo{
     width: 90%;
@@ -687,13 +700,13 @@ i.circle{
     height: auto;
     z-index: 10;
     position: fixed;
-    top: 30%;
+    top: 20%;
     left: 15%;
 }
 .sign-aciton-info{
     background: #fff;
     border-radius: 10px;
-    padding: 20px;
+    padding: 20px 20px 40px 20px;
 }
 .sign-aciton-info .title{
     font-size: 20px;
@@ -708,6 +721,7 @@ i.circle{
 .sign-aciton-info p{
     line-height: 24px;
     margin-top: 50px;
+    color: #999;
 }
 .close{
     width: 45px;

@@ -9,6 +9,7 @@
         <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
         <result column="active" property="active" jdbcType="BIT"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="signInTime" property="signInTime" jdbcType="TIMESTAMP"/>
         <result column="signTotal" property="signTotal" jdbcType="INTEGER"/>
         <result column="enrollTotal" property="enrollTotal" jdbcType="INTEGER"/>
     </resultMap>
@@ -47,8 +48,8 @@
         </if>
     </select>
 
-    <select id="selectSignList" resultType="com.activity.model.ActivityCourse" parameterType="com.activity.pojo.WechatParamDTO">
-        select c.id, c.activity_id activityId, c.name, c.begin_time beginTime, c.end_time endTime, c.active, s.sign_in_time signInTime
+    <select id="selectSignList" resultMap="BaseResultMap" parameterType="com.activity.pojo.WechatParamDTO">
+        select c.id, c.activity_id, c.name, c.begin_time, c.end_time, c.active, s.sign_in_time signInTime
         from activity_course c
         inner join activity a on a.id = c.activity_id
         left join activity_course_signin s on c.id = s.course_id and s.user_id = #{userId,jdbcType=INTEGER}

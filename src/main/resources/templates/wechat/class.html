@@ -23,7 +23,7 @@
             <li th:each="c:${courses}">
                 <p th:utext="${#dates.format(c.beginTime,'yyyy-MM-dd HH:mm')}"></p>
                 <span th:if="${c.signInTime!=null}" class="green">已签到</span>
-                <span class="compare-time" th:if="${c.signInTime==null}" th:attr="time=${#dates.format(c.beginTime,'yyyy-MM-dd HH:mm:ss')}"></span>
+                <span class="compare-time" th:if="${c.signInTime==null}" th:attr="time=${#dates.format(c.beginTime,'yyyy/MM/dd HH:mm:ss')}"></span>
             </li>
         </ul>
         <div class="sign-aciton btn J_sign">签到说明</div>
@@ -39,12 +39,9 @@
     <div class="sign-aciton-info">
         <span class="title">签到说明</span>
         <p>
-            报名成功后，请您按照课程安排，准时参加课程。
-            在课程时间内，扫描主办方提供的二
-            维码即为签到成功。
-            积分规则：报名课程加1分，每参加一
-            课时并签到成功加1分，缺勤一课时或
-            未签到成功扣2分。
+            报名成功后，请您按照课程安排，准时参加课程。<br/>
+            在课程时间内，扫描主办方提供的二维码即为签到成功。<br/>
+            积分规则：报名课程加1分，每参加一课时并签到成功加1分，缺勤一课时或未签到成功扣2分。
         </p>
     </div>
     <div class="close"></div>

@@ -29,7 +29,7 @@
             //置顶
             $(window).on('scroll', function () {
                 var scrollTop = $(window).scrollTop();
-                var bannerHeight = $('.list .slider').height();
+                var bannerHeight = $('.list .slider').height() + 20;
 
                 if (scrollTop > bannerHeight) {
                     $('.list .tab-li').addClass('fixed');
@@ -62,7 +62,7 @@ function loadData() {
 function loadHtml(id, list) {
     var html = '';
     if (getVal(list) !== "" && list.length < 1) {
-        html += '<img src="' + base + '/img/wechat/nojoin.png"/><span>尚未参加任何活动</span>';
+        html += '<div class="no-class"><img src="' + base + '/img/wechat/nojoin.png"/><span>尚未参加任何活动</span></div>';
     } else {
         for (key in list) {
             var e = list[key];
@@ -96,7 +96,7 @@ function loadMyData() {
 
 function loadMylistHtml(list) {
     if (getVal(list) !== "" && list.length < 1) {
-        $("#mylist").removeClass("my-list").addClass("no-class").empty().html('<img src="' + base + '/img/wechat/nojoin.png"/><span>尚未参加任何活动</span>');
+        $("#mylist").empty().html('<div class="no-class"><img src="' + base + '/img/wechat/nojoin.png"/><span>尚未参加任何活动</span></div>');
         return false;
     }
     var html = '';
@@ -113,7 +113,7 @@ function loadMylistHtml(list) {
         html += '</div>';
         html += '</li>';
     }
-    $("#mylist").removeClass("no-class").addClass("my-list").html('<ul class="scroll-tab">' + html + '</ul>');
+    $("#mylist").html('<ul class="scroll-tab">' + html + '</ul>');
 }
 
 function loadMyInfo(user) {

@@ -39,7 +39,7 @@ function getCodeStr(courseId) {
     var appId = $("#appId").val();
     return 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appId
         + '&redirect_uri=' + $("#uri").val() + '/activity/wechat/portal/sign/' + courseId
-        + '&response_type=code&scope=snsapi_base&state=1#wechat_redirect';
+        + '&response_type=code&scope=snsapi_base&state=INDEX#wechat_redirect';
 }
 
 function goHistory() {

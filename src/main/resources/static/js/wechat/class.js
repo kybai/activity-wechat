@@ -19,14 +19,14 @@
 })();
 
 function compareTime() {
-    var currentTime = new Date().valueOf();
-    $(".compare-time").each(function () {
-       var $this = $(this);
-       var time = toTimestamp($this.attr("time"));
+    var currentTime = new Date().getTime();
+    $(".compare-time").each(function (index,el) {
+       var $el = $(el);
+       var time = new Date($el.attr("time")).getTime();
        if (time < currentTime) {
-           $this.addClass("orange").html("缺勤");
+           $el.addClass("orange").html("缺勤");
        } else {
-           $this.html("未开始");
+           $el.html("未开始");
        }
     });
 }

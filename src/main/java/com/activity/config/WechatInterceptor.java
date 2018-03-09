@@ -58,6 +58,7 @@ public class WechatInterceptor implements HandlerInterceptor {
 
         String openid = request.getParameter("openid");
         String code = request.getParameter("code");
+        String state = request.getParameter("state");
         if (StringUtils.isEmpty(openidSession) && StringUtils.isEmpty(openid) && StringUtils.isEmpty(code)) {
             response.sendRedirect(wechatConfigService.getWechatRedirectUrl(request.getServletPath()));
             return false;
@@ -87,6 +88,7 @@ public class WechatInterceptor implements HandlerInterceptor {
         //将openid放入缓存中
         if (!StringUtils.isEmpty(openid)) WechatUtil.setOpenid(request, openid);
 
+        request.setAttribute("state", state);//将请求转发至的参数再次放入参数中
         return true;
     }
 

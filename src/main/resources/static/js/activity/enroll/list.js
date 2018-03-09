@@ -37,8 +37,8 @@ function loadPage(content) {
         if (getVal($("#useProfile").html()) !== "")
             html += '<td title="' + getVal(entity.profile) + '">' + getValLen(entity.profile) + '</td>';
         if (getVal($("#useCard").html()) !== "") {
-            html += '<td><a href="javascript:void(0);" onclick=catImg("' + getVal(entity.cardFace) + '")>查看图片</a></td>';
-            html += '<td><a href="javascript:void(0);" onclick=catImg("' + getVal(entity.cardBack) + '")>查看图片</a></td>';
+            html += '<td><a href="#" onclick=catImg("' + getVal(entity.cardFace) + '")>查看图片</a></td>';
+            html += '<td><a href="#" onclick=catImg("' + getVal(entity.cardBack) + '")>查看图片</a></td>';
         }
         html += '<td><button type="button" class="btn-link" onclick=updateStatus("' + getVal(entity.id) + '");>删除</button></td>';
         html += '</tr>';
@@ -60,6 +60,10 @@ function updateStatus(id) {
 }
 
 function catImg(id) {
+    if (getVal(id) === "") {
+        layer.msg("图片编号不存在");
+        return false;
+    }
     $.ajax({
         url: base + '/file/download/' + id,
         type: 'POST',

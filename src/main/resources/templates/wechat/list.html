@@ -61,9 +61,13 @@
                 <div th:if="${isWeiXin}" class="my-top box" id="myInfo">
                     <div class="fl">
                         <span th:id="myName"></span>
-                        <p>我的积分：<b th:id="myScore"></b>
-                            <a th:href="@{/wechat/user/score}" class="icon-left"></a>
+                        <p>
+                            <a th:href="@{/wechat/user/score}">
+                            我的积分：<b th:id="myScore"></b>
+                            <i class="icon-left"></i>
+                            </a>
                         </p>
+
                     </div>
                     <div class="fr">
                         <img th:id="myImg"/>
@@ -71,7 +75,7 @@
                 </div>
                 <div th:if="${isWeiXin}" class="my-class">
                     <span class="title">我参加的活动</span>
-                    <div id="mylist" class=""></div>
+                    <div id="mylist" class="my-list"></div>
                 </div>
             </div>
         </div>

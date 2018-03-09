@@ -50,7 +50,7 @@ public class WechatScoreController {
         }
         List<Adsense> adsenses = adsenseService.selectList(new Adsense(Constants.IMAGE_TYPE_ADSENSE, Boolean.TRUE));
         model.addAttribute("adsense", ObjectUtils.isEmpty(adsenses) ? new Adsense() : adsenses.get(0));
-        model.addAttribute("toIndex", Constants.WECHAT_STATE_INDEX.equals(request.getParameter("state")));
+        model.addAttribute("toIndex", Constants.WECHAT_STATE_INDEX.equals(request.getAttribute("state")));
         return "wechat/my";
     }
 }
