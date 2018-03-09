@@ -17,4 +17,8 @@ public class WechatUtil {
     public static void setOpenid(HttpServletRequest request, String openid) {
         request.getSession().setAttribute("openid", openid);
     }
+
+    public static String getState(HttpServletRequest request) {
+        return request.getParameter("state");
+    }
 }

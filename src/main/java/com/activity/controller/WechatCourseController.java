@@ -63,7 +63,7 @@ public class WechatCourseController {
             model.addAttribute("courses", activityCourseMapper.selectList(new ActivityCourse(activityId, Boolean.TRUE)));
         }
         model.addAttribute("activity", activityService.selectOne(activityId));
-        model.addAttribute("toIndex", Constants.WECHAT_STATE_INDEX.equals(request.getAttribute("state")));
+        model.addAttribute("toIndex", !Constants.WECHAT_STATE_INDEX.equals(WechatUtil.getState(request)));
         return "wechat/class";
     }
 
@@ -82,7 +82,7 @@ public class WechatCourseController {
         }
 
         model.addAttribute("activityId", course.getActivityId());
-        model.addAttribute("toIndex", Constants.WECHAT_STATE_INDEX.equals(request.getAttribute("state")));
+        model.addAttribute("toIndex", !Constants.WECHAT_STATE_INDEX.equals(WechatUtil.getState(request)));
         if (course.getEndTime().getTime() <= DateUtils.getCurrentTimestamp().getTime()) {
             return "wechat/signUpSuccess";
         }
@@ -102,6 +102,7 @@ public class WechatCourseController {
                 signInService.insert(new ActivityCourseSignIn(userId, courseId));
             }
         }
+        model.addAttribute("state", Constants.WECHAT_STATE_INDEX);
 
         return "wechat/signUpSuccess";
     }

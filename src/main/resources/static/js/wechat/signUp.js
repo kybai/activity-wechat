@@ -17,7 +17,7 @@ function saveEnroll() {
                     $('.error-tip').addClass('none');
                 }, 3000);
             } else if (results.status === 200) {
-                window.location.href = base + '/wechat/activity/enroll/' + entity.activityId + '/success';
+                window.location.href = base + '/wechat/activity/enroll/' + entity.activityId + '/success?state';
             }
         }
     });

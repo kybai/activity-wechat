@@ -28,7 +28,7 @@
 <script type="text/javascript">
     $(function () {
         $("#courseList").on('click', function () {
-            window.location.href = base + '/wechat/course/info/' + $("#courseList").attr("activityId");
+            window.location.href = base + '/wechat/course/info/' + $("#courseList").attr("activityId")+"?state=INDEX";
         });
         $("#activityList").on('click', function () {
             window.location.href = base + '/wechat/portal/index?state=INDEX';

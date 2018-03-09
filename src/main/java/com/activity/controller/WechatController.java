@@ -84,6 +84,7 @@ public class WechatController {
             if (outMessage == null) {
                 return "";
             }
+            out = outMessage.toXml();
         } else if ("aes".equals(encryptType)) {
             // aes加密的消息
             WxMpXmlMessage inMsg = WxMpXmlMessage.fromEncryptedXml(body, this.wxMpService.getWxMpConfigStorage(), timestamp, nonce, msgSignature);

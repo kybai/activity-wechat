@@ -33,7 +33,7 @@ import java.util.concurrent.ConcurrentMap;
 @Configuration
 public class WechatInterceptor implements HandlerInterceptor {
 
-    private static Logger logger = LoggerFactory.getLogger(WechatInterceptor.class);
+    private final Logger logger = LoggerFactory.getLogger(WechatInterceptor.class);
 
     @Autowired
     private WechatConfigService wechatConfigService;
@@ -58,14 +58,13 @@ public class WechatInterceptor implements HandlerInterceptor {
 
         String openid = request.getParameter("openid");
         String code = request.getParameter("code");
-        String state = request.getParameter("state");
         if (StringUtils.isEmpty(openidSession) && StringUtils.isEmpty(openid) && StringUtils.isEmpty(code)) {
             response.sendRedirect(wechatConfigService.getWechatRedirectUrl(request.getServletPath()));
             return false;
         }
 
         Timestamp currentTime = DateUtils.getCurrentTimestamp();
-        logger.info("codeMap size is" + codeMap.keySet().size());
+        this.logger.info("codeMap size is" + codeMap.keySet().size());
         WechatCode wechatCode = codeMap.get(code);
         //Map中含有code并且未过期时不再去请求获取token
         if (wechatCode != null && wechatCode.getExpireTime().getTime() + 5 * 60 * 1000 < currentTime.getTime()) {
@@ -84,11 +83,9 @@ public class WechatInterceptor implements HandlerInterceptor {
             codeMap.put(code, new WechatCode(openid, code, auth.getAccessToken(), currentTime));
             if (StringUtils.isEmpty(openid)) openid = openidSession;
         }
-
         //将openid放入缓存中
         if (!StringUtils.isEmpty(openid)) WechatUtil.setOpenid(request, openid);
 
-        request.setAttribute("state", state);//将请求转发至的参数再次放入参数中
         return true;
     }
 

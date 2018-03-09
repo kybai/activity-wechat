@@ -30,5 +30,5 @@ flyway:
 logging:
   level:
     org.springframework.web: warn
-    com.activity: debug
+    com.activity: info
 

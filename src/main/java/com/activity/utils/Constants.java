@@ -15,12 +15,6 @@ public class Constants {
     public static final String OPERATOR_SUCCESS = "操作成功";
     public static final String LOAD_SUCCESS = "加载成功";
 
-    //微信用户关注提示
-    public static final String USER_SUBSCRIBE = "感谢关注";
-
-    //分页数据列表的每页条数
-    public static final int PAGE_SIZE = 15;
-
     public static final String CHARTSET_NAME_ISO = "ISO-8859-1";
     public static final String CHARTSET_NAME_UTF = "UTF-8";
 
@@ -51,7 +45,7 @@ public class Constants {
     public static final String WECHAT_CONFIG_TOKEN = "TOKEN";
     public static final String WECHAT_CONFIG_AESKEY = "AESKEY";
     public static final String WECHAT_CONFIG_URI = "URI";
-    //public static final String WECHAT_CONFIG_URL_ENCODE = "URLENCODE";
+    public static final String WECHAT_CONFIG_SUBSCRIBE_MSG = "SUBSCRIBE_MSG";
 
     //微信路径state
     public static final String WECHAT_STATE_INDEX = "INDEX";

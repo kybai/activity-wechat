@@ -25,7 +25,12 @@ function save() {
 
 $("#uploadFileID").on("change", function () {
     var formData = new FormData();
-    formData.append("uploadFile", $("#uploadFileID")[0].files[0]);
+    var files = $("#uploadFileID")[0].files;
+    if (getVal(files) === "" || files.length <= 0) {
+        $("#uploadFileID").attr("fileid", null);
+        return false;
+    }
+    formData.append("uploadFile", files[0]);
     formData.append("fileType", "ACTIVITY");
 
     $.ajax({
@@ -128,8 +133,8 @@ function ActivityEntity() {
     this.address = $("#address").val();
     this.beginTime = toTimestamp($("#beginTime").val());
     this.endTime = toTimestamp($("#endTime").val());
-    this.maxLimit = parseInt($("#maxLimit").val());
-    this.uploadFileId = parseInt($("#uploadFileID").attr("fileid"));
+    this.maxLimit = getNum0($("#maxLimit").val());
+    this.uploadFileId = getNum0($("#uploadFileID").attr("fileid"));
 }
 
 function ActivityTag() {
