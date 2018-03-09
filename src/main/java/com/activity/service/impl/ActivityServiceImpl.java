@@ -89,9 +89,6 @@ public class ActivityServiceImpl implements ActivityService {
         Timestamp currentTimestamp = DateUtils.getCurrentTimestamp();
         //1.保存活动，获取活动编号
         Activity activity = pojo.getActivity();
-        if (activity.getUploadFileId()==0) {
-            activity.setUploadFileId(null);
-        }
         activity.setActive(Boolean.TRUE);
         activity.setCreateDate(currentTimestamp);
         activityMapper.insert(activity);

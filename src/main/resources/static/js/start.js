@@ -53,6 +53,14 @@ function getNum0(val) {
     return parseInt(number);
 }
 
+function getNumNull(val) {
+    var number = Number(val);
+    if (isNaN(number)) {
+        return null;
+    }
+    return parseInt(number);
+}
+
 function getBoolean(val) {
     return (val === true || val === "true" || val === "1" || val === "是");
 }

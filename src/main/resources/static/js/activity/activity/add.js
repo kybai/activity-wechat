@@ -133,8 +133,8 @@ function ActivityEntity() {
     this.address = $("#address").val();
     this.beginTime = toTimestamp($("#beginTime").val());
     this.endTime = toTimestamp($("#endTime").val());
-    this.maxLimit = getNum0($("#maxLimit").val());
-    this.uploadFileId = getNum0($("#uploadFileID").attr("fileid"));
+    this.maxLimit = getNumNull($("#maxLimit").val());
+    this.uploadFileId = getNumNull($("#uploadFileID").attr("fileid"));
 }
 
 function ActivityTag() {
