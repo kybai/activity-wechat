@@ -1,12 +1,15 @@
 package com.activity.wechat.handler;
 
+import com.activity.service.WechatConfigService;
+import com.activity.utils.Constants;
 import com.activity.wechat.builder.TextBuilder;
-import com.activity.utils.JsonUtils;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -18,11 +21,17 @@ import java.util.Map;
  */
 @Component
 public class MsgHandler extends AbstractHandler {
+
+    @Autowired
+    private WechatConfigService wechatConfigService;
+
     @Override
-    public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService,
-                                    WxSessionManager sessionManager) throws WxErrorException {
-        //TODO 组装回复消息
-        String content = "收到信息内容：" + JsonUtils.toJson(wxMessage);
-        return new TextBuilder().build(content, wxMessage, wxMpService);
+    public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService, WxSessionManager sessionManager) throws WxErrorException {
+        String msg = wechatConfigService.selectTextByKey(Constants.WECHAT_CONFIG_AUTO_REPLY_MSG);
+        if (!StringUtils.isEmpty(msg)) {
+            return new TextBuilder().build(msg, wxMessage, wxMpService);
+        }
+
+        return null;
     }
 }

@@ -46,6 +46,7 @@ public class Constants {
     public static final String WECHAT_CONFIG_AESKEY = "AESKEY";
     public static final String WECHAT_CONFIG_URI = "URI";
     public static final String WECHAT_CONFIG_SUBSCRIBE_MSG = "SUBSCRIBE_MSG";
+    public static final String WECHAT_CONFIG_AUTO_REPLY_MSG = "AUTO_REPLY_MSG";
 
     //微信路径state
     public static final String WECHAT_STATE_INDEX = "INDEX";
