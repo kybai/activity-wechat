@@ -17,6 +17,7 @@ function initPage(currentPage) {
     });
 }
 
+
 function loadPage(content) {
     var html = '';
     for (key in content) {
@@ -97,6 +98,11 @@ function saveOrUpdate(entity) {
         }
     });
 }
+
+$('.add select').on('change',function(){
+    var selVal = $('.add option:selected').text();
+    $('.select_down span').text(selVal);
+});
 
 $("#uploadFileID").on("change", function () {
     var formData = new FormData();
