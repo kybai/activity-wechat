@@ -133,27 +133,7 @@ i.circle{
 }
 /**/
 .list .top .title .add{
-    position: relative;
     float: right;
-}
-.list .select_down{
-    height: 40px;
-    line-height: 40px;
-}
-
-.list .select_down span{
-    text-align: right;
-    float: left;
-}
-.list .select_down i{
-    display: block;
-    width: 14px;
-    height: 7px;
-    margin-top: 17px;
-    float: right;
-    margin-left: 5px;
-    background: url("../../img/wechat/down.png") no-repeat scroll right center transparent;
-    background-size: 14px 7px;
 }
 /**/
 .list .top .title .add select{

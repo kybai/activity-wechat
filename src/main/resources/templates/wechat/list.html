@@ -16,10 +16,7 @@
         <div class="title">
             <img th:src="@{/img/wechat/logo.png}" class="logo"/>
             <div class="add">
-                <div class="select_down">
-                    <span>全部</span>
-                    <i class="icon_down"></i>
-                </div>
+
                 <select id="district" onchange="loadData();">
                     <option value="">全部</option>
                     <option th:each="d:${districts}" th:value="${d.id}" th:utext="${d.name}"></option>
