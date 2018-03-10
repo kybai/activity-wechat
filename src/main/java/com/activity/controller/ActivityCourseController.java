@@ -51,7 +51,7 @@ public class ActivityCourseController {
     public ResponseEntity listPost(@RequestBody BasePageList page) {
         PageHelper.startPage(page.getCurrentPage(), page.getPageSize());
         return ResponseEntity.ok(new RestEntity(200, Constants.LOAD_SUCCESS,
-                new PageInfo<>(activityCourseMapper.selectCodeList(new ActivityCourse(page.getOtherId())))));
+                new PageInfo<>(activityCourseMapper.selectCodeList(new ActivityCourse(page.getOtherId(), Boolean.TRUE)))));
     }
 
 }

@@ -66,6 +66,9 @@
         <if test="activityId!=null">
             and a.id = #{activityId,jdbcType=INTEGER}
         </if>
+        <if test="active != null">
+            and c.active = #{active,jdbcType=BIT}
+        </if>
         group by c.id
     </select>
 
