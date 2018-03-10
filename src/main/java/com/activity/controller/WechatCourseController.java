@@ -86,7 +86,7 @@ public class WechatCourseController {
         model.addAttribute("toIndex", !Constants.WECHAT_STATE_INDEX.equals(WechatUtil.getState(request)));
         //是否在签到时间
         long currentTime = DateUtils.getCurrentTimestamp().getTime();
-        if (course.getBeginTime().getTime() >= currentTime && course.getEndTime().getTime() <= currentTime) {
+        if ( course.getEndTime().getTime() < currentTime || course.getBeginTime().getTime() > currentTime) {
             msg = Constants.COURSE_SIGN_NOT_TIME;
         } else if (!StringUtils.isEmpty(openid)) {
             WechatUser wechatUser = wechatUserService.findByOpenid(openid);
