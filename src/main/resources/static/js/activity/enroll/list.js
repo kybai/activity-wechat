@@ -2,6 +2,7 @@ $(function () {
     initPage(1);
 });
 
+
 function initPage(currentPage) {
     $.ajax({
         url: base + '/enroll/list',

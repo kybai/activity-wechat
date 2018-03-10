@@ -5,6 +5,7 @@
             this.scrollEvent();
         },
         clickEvent: function () {
+
             $('#title-ul').find('li').on('click', function () {
                 var _this = $(this);
                 _this.addClass('active').siblings('li').removeClass('active');
@@ -44,6 +45,8 @@
 })();
 
 function loadData() {
+    var selVal = $('.add option:selected').text();
+    $('.select_down span').text(selVal);
     var entity = new WechatPojo();
     $.ajax({
         url: base + '/wechat/activity/list',

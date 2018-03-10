@@ -131,29 +131,35 @@ i.circle{
     width: 40%;
     margin-top: 10px;
 }
-/**/
+
 .list .top .title .add{
+    position: relative;
     float: right;
 }
-/**/
-.list .top .title .add select{
-    background: transparent;
-    border: none;
-    appearance:none;
-    -moz-appearance:none;
-    -webkit-appearance:none;
-    font-size: 14px;
-    padding-right: 20px;
+.list .select_down{
+    height: 40px;
+    line-height: 40px;
 }
-.list .top .title .add i.icon-down{
-    position: absolute;
-    top: 17px;
-    right: 20px;
-    content: '';
+.list .select_down span{
+    text-align: right;
+    float: left;
+}
+.list .select_down i{
+    display: block;
     width: 14px;
     height: 7px;
+    float: right;
+    margin: 17px 0 0 5px;
     background: url("../../img/wechat/down.png") no-repeat scroll right center transparent;
     background-size: contain;
+}
+
+.list .top .title .add select{
+    width: 100%;
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 10px;
 }
 
 .list .slider{
