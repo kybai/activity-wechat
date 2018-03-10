@@ -31,6 +31,11 @@ public class ActivityThumbupServiceImpl implements ActivityThumbupService {
     }
 
     @Override
+    public int countThumbupTotal(Integer activityId) {
+        return activityThumbupMapper.countThumbupTotal(activityId);
+    }
+
+    @Override
     @Transactional
     public int insert(ActivityThumbup record) {
         return activityThumbupMapper.insert(record);

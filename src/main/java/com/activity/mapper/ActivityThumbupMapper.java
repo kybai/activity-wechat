@@ -9,11 +9,13 @@ import java.util.List;
  */
 public interface ActivityThumbupMapper {
 
-    public ActivityThumbup selectByPrimaryKey(Integer id);
+    ActivityThumbup selectByPrimaryKey(Integer id);
 
-    public List<ActivityThumbup> selectList(ActivityThumbup record);
+    List<ActivityThumbup> selectList(ActivityThumbup record);
 
-    public int insert(ActivityThumbup record);
+    int countThumbupTotal(Integer activityId);
 
-    public int delete(ActivityThumbup record);
+    int insert(ActivityThumbup record);
+
+    int delete(ActivityThumbup record);
 }

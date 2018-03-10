@@ -20,7 +20,7 @@ function loadPage(content) {
     for (var k in content) {
         var entity = content[k];
         html += '<tr>';
-        html += '<td>' + getVal(entity.id) + '</td>';
+        html += '<td>' + getVal(entity.ranking) + '</td>';
         html += '<td>' + getDate(entity.createDate) + '</td>';
         if (getVal($("#useName").html()) !== "")
             html += '<td>' + getVal(entity.name) + '</td>';

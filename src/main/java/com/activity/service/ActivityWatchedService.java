@@ -15,4 +15,5 @@ public interface ActivityWatchedService {
 
     int insert(ActivityWatched record);
 
+    int countWatchedTotal(Integer activityId);
 }

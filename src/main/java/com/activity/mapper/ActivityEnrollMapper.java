@@ -9,11 +9,13 @@ import java.util.List;
  */
 public interface ActivityEnrollMapper {
 
-    public ActivityEnroll selectByPrimaryKey(Integer id);
+    ActivityEnroll selectByPrimaryKey(Integer id);
 
-    public List<ActivityEnroll> selectList(ActivityEnroll record);
+    List<ActivityEnroll> selectList(ActivityEnroll record);
 
-    public int insert(ActivityEnroll record);
+    int insert(ActivityEnroll record);
 
-    public int update(ActivityEnroll record);
+    int update(ActivityEnroll record);
+
+    int countEnrollRanking(Integer activityId);
 }

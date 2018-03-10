@@ -36,4 +36,9 @@ public class ActivityWatchedServiceImpl implements ActivityWatchedService {
         return activityWatchedMapper.insert(record);
     }
 
+    @Override
+    public int countWatchedTotal(Integer activityId) {
+        return activityWatchedMapper.countWatchedTotal(activityId);
+    }
+
 }

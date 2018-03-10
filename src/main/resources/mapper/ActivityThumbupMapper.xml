@@ -32,6 +32,11 @@
         </if>
     </select>
 
+    <select id="countThumbupTotal" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select count(id) total from activity_thumbup
+        where activity_id = #{activityId,jdbcType=INTEGER}
+    </select>
+
     <insert id="insert" parameterType="com.activity.model.ActivityThumbup">
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
             select LAST_INSERT_ID()

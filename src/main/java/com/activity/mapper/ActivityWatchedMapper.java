@@ -9,10 +9,11 @@ import java.util.List;
  */
 public interface ActivityWatchedMapper {
 
-    public ActivityWatched selectByPrimaryKey(Integer id);
+    ActivityWatched selectByPrimaryKey(Integer id);
 
-    public List<ActivityWatched> selectList(ActivityWatched record);
+    List<ActivityWatched> selectList(ActivityWatched record);
 
-    public int insert(ActivityWatched record);
+    int insert(ActivityWatched record);
 
+    int countWatchedTotal(Integer activityId);
 }

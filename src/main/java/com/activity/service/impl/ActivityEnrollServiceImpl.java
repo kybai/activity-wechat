@@ -53,7 +53,9 @@ public class ActivityEnrollServiceImpl implements ActivityEnrollService {
                 usersScoreMapper.insert(new UsersScore(record.getUserId(), Constants.SCORE_SIGN_COURSE, reason, record.getActivityId(), course.getId(), DateUtils.getCurrentTimestamp()));
             }
         }
+        int ranking = activityEnrollMapper.countEnrollRanking(record.getActivityId());
         //课程报名
+        record.setRanking(ranking + 1);
         record.setActive(Boolean.TRUE);
         record.setCreateDate(DateUtils.getCurrentTimestamp());
         return activityEnrollMapper.insert(record);

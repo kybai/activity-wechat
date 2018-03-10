@@ -1,8 +1,28 @@
 package com.activity.controller;
 
-import com.activity.model.*;
+import com.activity.model.Activity;
+import com.activity.model.ActivityCourse;
+import com.activity.model.ActivityDescription;
+import com.activity.model.ActivityDistrict;
+import com.activity.model.ActivityEnroll;
+import com.activity.model.ActivityTag;
+import com.activity.model.ActivityThumbup;
+import com.activity.model.ActivityWatched;
+import com.activity.model.Adsense;
+import com.activity.model.UploadFile;
+import com.activity.model.Users;
+import com.activity.model.WechatUser;
 import com.activity.pojo.WechatPojo;
-import com.activity.service.*;
+import com.activity.service.ActivityDistrictService;
+import com.activity.service.ActivityEnrollService;
+import com.activity.service.ActivityService;
+import com.activity.service.ActivityThumbupService;
+import com.activity.service.ActivityWatchedService;
+import com.activity.service.AdsenseService;
+import com.activity.service.UploadFileService;
+import com.activity.service.UsersService;
+import com.activity.service.WechatConfigService;
+import com.activity.service.WechatUserService;
 import com.activity.utils.Constants;
 import com.activity.utils.DateUtils;
 import com.activity.utils.RestEntity;
@@ -13,7 +33,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -75,6 +100,7 @@ public class WechatActivityController {
      * Created by ky.bai on 2018-03-01 11:30
      *
      * @param pojo 微信端请求参数
+     *
      * @return 微信端活动列表
      */
     @RequestMapping(value = "/list", method = RequestMethod.POST)
@@ -127,14 +153,11 @@ public class WechatActivityController {
         model.addAttribute("file", uploadFileService.selectOne(activity.getUploadFileId()));//活动封面
         model.addAttribute("desc", activityService.selectDesc(new ActivityDescription(activityId)));//活动简介
 
-        List<ActivityWatched> watchedList = activityWatchedService.selectList(new ActivityWatched(activityId));
-        model.addAttribute("watchedTotal", (watchedList == null) ? 0 : watchedList.size());//活动查看人数
-
-        List<ActivityThumbup> thumbupList = activityThumbupService.selectList(new ActivityThumbup(activityId));
-        model.addAttribute("thumbupTotal", (thumbupList == null ? 0 : thumbupList.size()));//活动点赞人数
+        model.addAttribute("watchedTotal", activityWatchedService.countWatchedTotal(activityId));//活动查看人数
+        model.addAttribute("thumbupTotal", activityThumbupService.countThumbupTotal(activityId));//活动点赞人数
 
         List<ActivityEnroll> enrollList = activityEnrollService.selectList(new ActivityEnroll(activityId, Boolean.TRUE));
-        int enrollTotal = (enrollList == null) ? 0 : enrollList.size();
+        int enrollTotal = (ObjectUtils.isEmpty(enrollList) ? 0 : enrollList.size());
         model.addAttribute("enrollTotal", enrollTotal);//活动已报名人数
 
         Integer userId = null;
@@ -156,6 +179,7 @@ public class WechatActivityController {
      * Created by ky.bai on 2018-03-02 09:26
      *
      * @param pojo 活动编号, 用户微信openid
+     *
      * @return 活动点赞记录
      */
     @RequestMapping(value = "/thumbup", method = RequestMethod.POST)
@@ -182,6 +206,7 @@ public class WechatActivityController {
      * Created by ky.bai on 2018-03-02 13:08
      *
      * @param activityId 活动编号
+     *
      * @return 活动报名页
      */
     @RequestMapping(value = "/enroll/{activityId}", method = RequestMethod.GET)
@@ -204,6 +229,7 @@ public class WechatActivityController {
      * Created by ky.bai on 2018-03-02 13:56
      *
      * @param record 报名信息
+     *
      * @return 活动报名结果
      */
     @RequestMapping(value = "/enroll", method = RequestMethod.POST)
@@ -216,8 +242,7 @@ public class WechatActivityController {
         if (user != null && !user.getActive()) return ResponseEntity.ok(new RestEntity(100, Constants.ENROLL_RESULT_WAS_DISABLED, Boolean.FALSE));
 
         //判断当前活动是否在开始与结束时间范围内
-        if (activity.getEndTime().getTime() < DateUtils.getCurrentTimestamp().getTime())
-            return ResponseEntity.ok(new RestEntity(100, Constants.ENROLL_RESULT_WAS_END, Boolean.FALSE));
+        if (activity.getEndTime().getTime() < DateUtils.getCurrentTimestamp().getTime()) return ResponseEntity.ok(new RestEntity(100, Constants.ENROLL_RESULT_WAS_END, Boolean.FALSE));
 
         //判断是否已经报名
         List<ActivityEnroll> enrolls = activityEnrollService.selectList(new ActivityEnroll(activity.getId(), record.getUserId(), Boolean.TRUE));
@@ -236,6 +261,7 @@ public class WechatActivityController {
      * Created by ky.bai on 2018-03-02 13:55
      *
      * @param file 上传文件
+     *
      * @return 上传文件编号
      */
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
@@ -249,6 +275,7 @@ public class WechatActivityController {
      * Created by ky.bai on 2018-03-09 15:11
      *
      * @param activityId 活动编号
+     *
      * @return 活动报名成功页面
      */
     @RequestMapping(value = "/enroll/{activityId}/success", method = RequestMethod.GET)
@@ -264,6 +291,7 @@ public class WechatActivityController {
      * @param activity    活动
      * @param userId      用户编号
      * @param enrollTotal 活动已报名人数
+     *
      * @return 活动状态: --我要报名，--已报名，--名额已满，--已结束
      */
     private String getActivityStatus(Activity activity, Integer userId, int enrollTotal) {

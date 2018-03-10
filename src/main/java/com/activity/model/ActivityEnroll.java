@@ -19,6 +19,8 @@ public class ActivityEnroll implements Serializable {
     private Integer activityId;
     //用户编号
     private Integer userId;
+    //报名排名
+    private Integer ranking;
     //姓名
     private String name;
     //性别
@@ -81,6 +83,11 @@ public class ActivityEnroll implements Serializable {
     @Column(name = "user_id")
     public Integer getUserId() {
         return userId;
+    }
+
+    @Column(name = "ranking")
+    public Integer getRanking() {
+        return ranking;
     }
 
     @Column(name = "name")
@@ -148,6 +155,10 @@ public class ActivityEnroll implements Serializable {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public void setRanking(Integer ranking) {
+        this.ranking = ranking;
     }
 
     public void setName(String name) {

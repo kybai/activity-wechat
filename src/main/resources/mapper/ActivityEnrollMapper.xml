@@ -5,6 +5,7 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="activity_id" property="activityId" jdbcType="INTEGER"/>
         <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="ranking" property="ranking" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="sex" property="sex" jdbcType="VARCHAR"/>
         <result column="phone" property="phone" jdbcType="VARCHAR"/>
@@ -19,7 +20,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, activity_id, user_id, name, sex, phone, political, company, job, card_face, card_back, profile, active, create_date
+        id, activity_id, user_id, ranking, name, sex, phone, political, company, job, card_face, card_back, profile, active, create_date
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -49,13 +50,18 @@
         order by id desc
     </select>
 
+    <select id="countEnrollRanking" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select count(id) ranking from activity_enroll
+        where activity_id = #{activityId,jdbcType=INTEGER}
+    </select>
+
     <insert id="insert" parameterType="com.activity.model.ActivityEnroll">
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
             select LAST_INSERT_ID()
         </selectKey>
-        insert into activity_enroll (activity_id, user_id, name, sex, phone, political, company, job, card_face, card_back, profile, active, create_date)
-        values (#{activityId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{political,jdbcType=VARCHAR},
-        #{company,jdbcType=VARCHAR}, #{job,jdbcType=VARCHAR}, #{cardFace,jdbcType=INTEGER}, #{cardBack,jdbcType=INTEGER}, #{profile, jdbcType=VARCHAR},
+        insert into activity_enroll (activity_id, user_id, ranking, name, sex, phone, political, company, job, card_face, card_back, profile, active, create_date)
+        values (#{activityId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{ranking,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+        #{political,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, #{job,jdbcType=VARCHAR}, #{cardFace,jdbcType=INTEGER}, #{cardBack,jdbcType=INTEGER}, #{profile, jdbcType=VARCHAR},
         #{active,jdbcType=BIT}, #{createDate,jdbcType=TIMESTAMP})
     </insert>
 

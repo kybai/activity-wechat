@@ -7,6 +7,7 @@ import com.activity.pojo.BasePageList;
 import com.activity.service.ActivityEnrollService;
 import com.activity.service.ActivityService;
 import com.activity.utils.Constants;
+import com.activity.utils.DateUtils;
 import com.activity.utils.ExcelUtil;
 import com.activity.utils.RestEntity;
 import com.github.pagehelper.PageHelper;
@@ -96,6 +97,7 @@ public class ActivityEnrollController {
         Map<String, String> titleMap = new LinkedHashMap<>();
         List<Map<String, Object>> dataMapList = new ArrayList<>();
         //构造标题
+        titleMap.put("ranking_2000", "序号");
         if (tag.getUseName()) titleMap.put("name_4000", "姓名");
         if (tag.getUseSex()) titleMap.put("sex_2000", "性别");
         if (tag.getUsePhone()) titleMap.put("phone_4000", "联系方式");
@@ -103,11 +105,13 @@ public class ActivityEnrollController {
         if (tag.getUseCompany()) titleMap.put("company_8000", "工作单位");
         if (tag.getUseJob()) titleMap.put("job_6000", "职务");
         if (tag.getUseProfile()) titleMap.put("profile_12000", "个人简介");
+        titleMap.put("created_8000", "报名时间");
 
         //构造数据
         if (!ObjectUtils.isEmpty(list)) {
             for (ActivityEnroll enroll : list) {
                 Map<String, Object> map = new LinkedHashMap<>();
+                map.put("ranking", enroll.getRanking());
                 if (tag.getUseName()) map.put("name", enroll.getName());
                 if (tag.getUseSex()) map.put("sex", enroll.getSex());
                 if (tag.getUsePhone()) map.put("phone", enroll.getPhone());
@@ -115,6 +119,7 @@ public class ActivityEnrollController {
                 if (tag.getUseCompany()) map.put("company", enroll.getCompany());
                 if (tag.getUseJob()) map.put("job", enroll.getJob());
                 if (tag.getUseProfile()) map.put("profile", enroll.getProfile());
+                map.put("created", DateUtils.getByTimestamp(enroll.getCreateDate(), DateUtils.formatMin));
                 dataMapList.add(map);
             }
         }
