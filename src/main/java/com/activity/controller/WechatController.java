@@ -136,6 +136,7 @@ public class WechatController {
     @RequestMapping(value = "/sign/{courseId}", method = RequestMethod.GET)
     public String signCourse(@PathVariable Integer courseId, HttpServletRequest request) throws WxErrorException {
         String code = request.getParameter("code");//weixin oauth2回调返回的code
+        this.logger.info("签到code："+ code);
         WxMpOAuth2AccessToken auth = wxMpService.oauth2getAccessToken(code);
         WechatUser wechatUser = wechatUserService.findByOpenid(auth.getOpenId());
         if (wechatUser != null) {
