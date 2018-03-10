@@ -38,7 +38,7 @@ public class ActivityController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listGet(Model model) {
         model.addAttribute("districts", activityDistrictService.selectList(new ActivityDistrict(Boolean.TRUE)));
-        return "activity/activity/list";
+        return "activity/centers/list";
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.POST)
@@ -50,7 +50,7 @@ public class ActivityController {
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addGet(Model model) {
         model.addAttribute("districts", activityDistrictService.selectList(new ActivityDistrict(Boolean.TRUE)));
-        return "activity/activity/add";
+        return "activity/centers/add";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
@@ -62,7 +62,7 @@ public class ActivityController {
         model.addAttribute("description", activityService.selectDesc(new ActivityDescription(activity.getId())));
         model.addAttribute("courses", activityService.selectCourseList(new ActivityCourse(activity.getId())));
         model.addAttribute("tag", activityService.selectTag(new ActivityTag(activity.getId())));
-        return "activity/activity/edit";
+        return "activity/centers/edit";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -91,7 +91,7 @@ public class ActivityController {
         model.addAttribute("description", activityService.selectDesc(new ActivityDescription(activity.getId())));
         model.addAttribute("courses", activityService.selectCourseList(new ActivityCourse(activity.getId(), Boolean.TRUE)));
         model.addAttribute("tag", activityService.selectTag(new ActivityTag(activity.getId())));
-        return "activity/activity/info";
+        return "activity/centers/info";
     }
 
     @RequestMapping(value = "/info/status", method = RequestMethod.POST)
