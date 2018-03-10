@@ -64,7 +64,7 @@ public class WechatInterceptor implements HandlerInterceptor {
         }
 
         Timestamp currentTime = DateUtils.getCurrentTimestamp();
-        this.logger.info("codeMap size is" + codeMap.keySet().size());
+        this.logger.info("codeMap size is：" + codeMap.keySet().size());
         WechatCode wechatCode = codeMap.get(code);
         //Map中含有code并且未过期时不再去请求获取token
         if (wechatCode != null && wechatCode.getExpireTime().getTime() + 5 * 60 * 1000 < currentTime.getTime()) {
