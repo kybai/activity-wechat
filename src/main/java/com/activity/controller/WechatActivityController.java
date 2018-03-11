@@ -265,7 +265,7 @@ public class WechatActivityController {
      */
     private String getActivityStatus(Activity activity, Integer userId, int enrollTotal) {
         long currentTime = DateUtils.getCurrentTimestamp().getTime();
-        if (activity.getEndTime().getTime() <= currentTime) return Constants.ENROLL_END;
+        if (activity.getBeginTime().getTime() <= currentTime) return Constants.ENROLL_END;
 
         if (activity.getMaxLimit() != null && activity.getMaxLimit() != 0 && activity.getMaxLimit() <= enrollTotal) return Constants.ENROLL_FULL;
 
