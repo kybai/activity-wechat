@@ -75,10 +75,11 @@ public class WechatInterceptor implements HandlerInterceptor {
             if (StringUtils.isEmpty(openid)) openid = openidSession;
         }
         //将openid放入缓存中
+        this.logger.info("WechatInterceptor得到openid：" + openid);
         if (!StringUtils.isEmpty(openid)) {
             WechatUtil.setOpenid(request, openid);
         } else {
-            response.sendRedirect(wechatConfigService.getWechatRedirectUrl(request.getServletPath()));
+            response.sendRedirect(wechatConfigService.getWechatRedirectIndexUrl());
             return false;
         }
 

@@ -29,4 +29,9 @@ public class WechatConfigServiceImpl implements WechatConfigService {
                 + "&response_type=code&scope=snsapi_userinfo&state=" + Constants.WECHAT_STATE_INDEX + "#wechat_redirect";
     }
 
+    @Override
+    public String getWechatRedirectIndexUrl() {
+        return getWechatRedirectUrl("/wechat/portal/index");
+    }
+
 }

@@ -10,4 +10,5 @@ public interface WechatConfigService {
     //提示用户需要授权，跳转到业务页面
     String getWechatRedirectUrl(String redirectUrl);
 
+    String getWechatRedirectIndexUrl();
 }

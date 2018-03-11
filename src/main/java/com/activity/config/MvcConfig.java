@@ -35,7 +35,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(wechatInterceptor).addPathPatterns("/wechat/**")
-                .excludePathPatterns("/wechat/portal","/wechat/portal/index", "/wechat/menu/**",
+                .excludePathPatterns("/wechat/portal", "/wechat/portal/index", "/wechat/menu/**",
                         "/wechat/activity", "/wechat/activity/list", "/wechat/activity/info/**", "/wechat/activity/thumbup");
         super.addInterceptors(registry);
     }
