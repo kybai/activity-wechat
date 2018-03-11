@@ -22,8 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * 微信端拦截器
@@ -44,8 +42,6 @@ public class WechatInterceptor implements HandlerInterceptor {
     @Autowired
     private WechatUserService wechatUserService;
 
-    //授权信息：key为code
-    private static ConcurrentMap<String, WechatCode> codeMap = new ConcurrentHashMap<>();
 
     /**
      * Created by ky.bai on 2018-03-06 11:15
@@ -64,12 +60,7 @@ public class WechatInterceptor implements HandlerInterceptor {
         }
 
         Timestamp currentTime = DateUtils.getCurrentTimestamp();
-        this.logger.info("codeMap size is：" + codeMap.keySet().size());
-        WechatCode wechatCode = codeMap.get(code);
-        //Map中含有code并且未过期时不再去请求获取token
-        if (wechatCode != null && wechatCode.getExpireTime().getTime() + 5 * 60 * 1000 < currentTime.getTime()) {
-            openid = wechatCode.getOpenid();
-        }
+        openid = WechatUtil.getOpenidByCode(code);
         if (StringUtils.isEmpty(openid) && !StringUtils.isEmpty(code)) {
             WxMpOAuth2AccessToken auth = wxMpService.oauth2getAccessToken(code);
             openid = auth.getOpenId();
@@ -80,11 +71,16 @@ public class WechatInterceptor implements HandlerInterceptor {
                 wechatUserService.insertByWxMpUser(u);
             }
             //放入缓存中
-            codeMap.put(code, new WechatCode(openid, code, auth.getAccessToken(), currentTime));
+            WechatUtil.setWechatCode(new WechatCode(openid, code, auth.getAccessToken(), currentTime));
             if (StringUtils.isEmpty(openid)) openid = openidSession;
         }
         //将openid放入缓存中
-        if (!StringUtils.isEmpty(openid)) WechatUtil.setOpenid(request, openid);
+        if (!StringUtils.isEmpty(openid)) {
+            WechatUtil.setOpenid(request, openid);
+        } else {
+            response.sendRedirect(wechatConfigService.getWechatRedirectUrl(request.getServletPath()));
+            return false;
+        }
 
         return true;
     }

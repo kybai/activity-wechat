@@ -15,12 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -104,7 +99,6 @@ public class WechatController {
      * Created by ky.bai on 2018/3/4 09:37
      *
      * @param request weixin oauth2回调返回的code, weixin用户openid
-     *
      * @return 请求转发至活动页(微信入口或授权)
      */
     @RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -130,7 +124,6 @@ public class WechatController {
      * Created by ky.bai on 2018/3/4 12:04
      *
      * @param courseId 课程编号
-     *
      * @return 扫码后请求转发至课程签到接口
      */
     @RequestMapping(value = "/sign/{courseId}", method = RequestMethod.GET)
@@ -139,11 +132,11 @@ public class WechatController {
         if (StringUtils.isEmpty(code)) {
             return "redirect:/wechat/activity";//用户不存在转发至活动首页
         }
-        this.logger.info("签到code："+ code);
-        WxMpOAuth2AccessToken auth = wxMpService.oauth2getAccessToken(code);
-        WechatUser wechatUser = wechatUserService.findByOpenid(auth.getOpenId());
+        this.logger.info("用户签到code：" + code);
+        String openid = WechatUtil.getOpenidByCode(code);
+        WechatUser wechatUser = wechatUserService.findByOpenid(openid);
         if (wechatUser != null) {
-            WechatUtil.setOpenid(request, auth.getOpenId());
+            WechatUtil.setOpenid(request, openid);
             return "redirect:/wechat/course/sign/" + courseId;//用户存在转发至签到接口
         }
 

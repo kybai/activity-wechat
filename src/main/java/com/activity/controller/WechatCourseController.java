@@ -82,29 +82,27 @@ public class WechatCourseController {
             return "redirect:/wechat/activity";
         }
 
-        model.addAttribute("activityId", course.getActivityId());
-        model.addAttribute("toIndex", !Constants.WECHAT_STATE_INDEX.equals(WechatUtil.getState(request)));
         //是否在签到时间
         long currentTime = DateUtils.getCurrentTimestamp().getTime();
-        if ( course.getEndTime().getTime() < currentTime || course.getBeginTime().getTime() > currentTime) {
-            msg = Constants.COURSE_SIGN_NOT_TIME;
-        } else if (!StringUtils.isEmpty(openid)) {
+        if (!StringUtils.isEmpty(openid)) {
             WechatUser wechatUser = wechatUserService.findByOpenid(openid);
             Integer userId = wechatUser.getUserId();
             Integer activityId = course.getActivityId();
-            //是否报名
-            List<ActivityEnroll> enrolls = activityEnrollService.selectList(new ActivityEnroll(activityId, userId, Boolean.TRUE));
-            if (ObjectUtils.isEmpty(enrolls)) {
-                msg = Constants.COURSE_SIGN_NOT_ENROLL;
-            }
-            //是否已签到
             List<ActivityCourseSignIn> signs = signInService.selectList(new ActivityCourseSignIn(userId, courseId));
-            if (ObjectUtils.isEmpty(signs)) {
+
+            List<ActivityEnroll> enrolls = activityEnrollService.selectList(new ActivityEnroll(activityId, userId, Boolean.TRUE));
+            if (ObjectUtils.isEmpty(enrolls)) {         //是否报名
+                msg = Constants.COURSE_SIGN_NOT_ENROLL;
+            } else if (ObjectUtils.isEmpty(signs)) {    //是否已签到
                 signInService.insert(new ActivityCourseSignIn(userId, courseId));
-            } else {
+            } else if (!ObjectUtils.isEmpty(signs)) {    //已签到
                 msg = Constants.COURSE_SIGN_WAS_SIGNED;
             }
+        } else if (course.getEndTime().getTime() < currentTime || course.getBeginTime().getTime() > currentTime) {
+            msg = Constants.COURSE_SIGN_NOT_TIME;
         }
+        model.addAttribute("activityId", course.getActivityId());
+        model.addAttribute("toIndex", !Constants.WECHAT_STATE_INDEX.equals(WechatUtil.getState(request)));
         model.addAttribute("state", Constants.WECHAT_STATE_INDEX);
         model.addAttribute("msg", msg);
 
