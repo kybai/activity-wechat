@@ -134,10 +134,16 @@ public class WechatController {
         }
         this.logger.info("用户签到code：" + code);
         String openid = WechatUtil.getOpenidByCode(code);
-        WechatUser wechatUser = wechatUserService.findByOpenid(openid);
-        if (wechatUser != null) {
-            WechatUtil.setOpenid(request, openid);
-            return "redirect:/wechat/course/sign/" + courseId;//用户存在转发至签到接口
+        if (StringUtils.isEmpty(openid)) {
+            WxMpOAuth2AccessToken auth = wxMpService.oauth2getAccessToken(code);
+            openid = auth.getOpenId();
+        }
+        if (!StringUtils.isEmpty(openid)) {
+            WechatUser wechatUser = wechatUserService.findByOpenid(openid);
+            if (wechatUser != null) {
+                WechatUtil.setOpenid(request, openid);
+                return "redirect:/wechat/course/sign/" + courseId;//用户存在转发至签到接口
+            }
         }
 
         return "redirect:/wechat/activity";//用户不存在转发至活动首页
