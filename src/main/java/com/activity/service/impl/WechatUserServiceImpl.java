@@ -6,6 +6,7 @@ import com.activity.model.WechatUser;
 import com.activity.service.UsersService;
 import com.activity.service.WechatUserService;
 import com.activity.utils.DateUtils;
+import com.activity.utils.WechatUtil;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,8 @@ public class WechatUserServiceImpl implements WechatUserService {
     @Override
     @Transactional
     public int insert(WechatUser user) {
+        user.setNickname(WechatUtil.filterEmoji(user.getNickname()));
+        user.setRemark(WechatUtil.filterEmoji(user.getRemark()));
         return wechatUserMapper.insert(user);
     }
 
@@ -50,7 +53,7 @@ public class WechatUserServiceImpl implements WechatUserService {
             users.setHeadImgUrl(mp.getHeadImgUrl());
             wechatUser.setSubscribe(mp.getSubscribe());
             wechatUser.setNickname(mp.getNickname());
-            return wechatUserMapper.update(wechatUser);
+            return update(wechatUser);
         } else {
             Timestamp currentTime = DateUtils.getCurrentTimestamp();
             Users u = new Users(mp.getNickname(), mp.getSex(), mp.getCity(), mp.getProvince(), mp.getCountry(), mp.getHeadImgUrl(), Boolean.TRUE, currentTime);
@@ -63,6 +66,8 @@ public class WechatUserServiceImpl implements WechatUserService {
     @Override
     @Transactional
     public int update(WechatUser entity) {
+        entity.setNickname(WechatUtil.filterEmoji(entity.getNickname()));
+        entity.setRemark(WechatUtil.filterEmoji(entity.getRemark()));
         return wechatUserMapper.update(entity);
     }
 }

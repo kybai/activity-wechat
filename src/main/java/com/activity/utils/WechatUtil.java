@@ -3,6 +3,7 @@ package com.activity.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
@@ -33,11 +34,10 @@ public class WechatUtil {
     }
 
     public static String getOpenidByCode(String code) {
-        Timestamp currentTime = DateUtils.getCurrentTimestamp();
         logger.info("codeMap size is：" + codeMap.keySet().size());
         //Map中含有code并且未过期时不再去请求获取token
         WechatCode wechatCode = codeMap.get(code);
-        if (wechatCode != null && wechatCode.getExpireTime().getTime() + 5 * 60 * 1000 < currentTime.getTime()) {
+        if (wechatCode != null && wechatCode.getExpireTime().getTime() + 5 * 60 * 1000 < DateUtils.getCurrentTimestamp().getTime()) {
             return wechatCode.getOpenid();
         }
         return "";
@@ -45,5 +45,20 @@ public class WechatUtil {
 
     public static void setWechatCode(WechatCode wechatCode) {
         codeMap.put(wechatCode.getCode(), wechatCode);
+    }
+
+    /**
+     * 将emoji表情替换成空串
+     *
+     * @param name 原字符
+     *
+     * @return 过滤后的字符串
+     */
+    public static String filterEmoji(String name) {
+        if (!StringUtils.isEmpty(name)) {
+            return name.replaceAll("[\ud800\udc00-\udbff\udfff\ud800-\udfff]", "");
+        } else {
+            return name;
+        }
     }
 }

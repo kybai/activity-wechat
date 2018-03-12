@@ -7,7 +7,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://120.78.141.210:3306/activity?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://120.78.141.210:3306/activity?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
     username: root
     password: 123456
     test-on-borrow: false

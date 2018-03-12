@@ -6,6 +6,7 @@ import com.activity.model.Users;
 import com.activity.model.UsersScore;
 import com.activity.pojo.BasePageList;
 import com.activity.service.UsersService;
+import com.activity.utils.WechatUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,12 +51,16 @@ public class UsersServiceImpl implements UsersService {
     @Override
     @Transactional
     public int insert(Users users) {
+        users.setName(WechatUtil.filterEmoji(users.getName()));
+        users.setRemark(WechatUtil.filterEmoji(users.getRemark()));
         return usersMapper.insert(users);
     }
 
     @Override
     @Transactional
     public int update(Users users) {
+        users.setName(WechatUtil.filterEmoji(users.getName()));
+        users.setRemark(WechatUtil.filterEmoji(users.getRemark()));
         return usersMapper.update(users);
     }
 }
