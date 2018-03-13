@@ -70,13 +70,13 @@ public class WechatInterceptor implements HandlerInterceptor {
             if (wechatUser == null && u != null && !StringUtils.isEmpty(u.getNickname())) {
                 wechatUserService.insertByWxMpUser(u);
             }
-            //放入缓存中
+            //放入缓存Map中
             WechatUtil.setWechatCode(new WechatCode(openid, code, auth.getAccessToken(), currentTime));
             if (StringUtils.isEmpty(openid)) openid = openidSession;
         }
         //将openid放入缓存中
         this.logger.info("WechatInterceptor得到openid：" + openid);
-        if (!StringUtils.isEmpty(openid)) {
+        if (!StringUtils.isEmpty(openid) && StringUtils.isEmpty(WechatUtil.getOpenid(request))) {
             WechatUtil.setOpenid(request, openid);
         } else {
             response.sendRedirect(wechatConfigService.getWechatRedirectIndexUrl());

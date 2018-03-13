@@ -105,6 +105,9 @@ public class WechatController {
     public String index(HttpServletRequest request) throws WxErrorException {
         String code = request.getParameter("code");
         String openid = request.getParameter("openid");
+        if (StringUtils.isEmpty(openid)) {
+            openid = WechatUtil.getOpenidByCode(code);
+        }
         if (StringUtils.isEmpty(openid) && !StringUtils.isEmpty(code)) {
             WxMpOAuth2AccessToken auth = wxMpService.oauth2getAccessToken(code);
             openid = auth.getOpenId();
@@ -114,6 +117,8 @@ public class WechatController {
             if (wechatUser == null && u != null && !StringUtils.isEmpty(u.getNickname())) {
                 wechatUserService.insertByWxMpUser(u);
             }
+        }
+        if (!StringUtils.isEmpty(openid) && StringUtils.isEmpty(WechatUtil.getOpenid(request))) {
             WechatUtil.setOpenid(request, openid);
         }
 

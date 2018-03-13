@@ -59,7 +59,7 @@ public class WechatUserServiceImpl implements WechatUserService {
             Users u = new Users(mp.getNickname(), mp.getSex(), mp.getCity(), mp.getProvince(), mp.getCountry(), mp.getHeadImgUrl(), Boolean.TRUE, currentTime);
             usersService.insert(u);
             Boolean subscribe = mp.getSubscribe() == null ? Boolean.FALSE : mp.getSubscribe();
-            return wechatUserMapper.insert(new WechatUser(mp.getOpenId(), u.getId(), mp.getNickname(), subscribe, mp.getUnionId(), mp.getRemark(), mp.getGroupId(), currentTime));
+            return insert(new WechatUser(mp.getOpenId(), u.getId(), mp.getNickname(), subscribe, mp.getUnionId(), mp.getRemark(), mp.getGroupId(), currentTime));
         }
     }
 
