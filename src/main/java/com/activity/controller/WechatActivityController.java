@@ -7,6 +7,8 @@ import com.activity.utils.Constants;
 import com.activity.utils.DateUtils;
 import com.activity.utils.RestEntity;
 import com.activity.utils.WechatUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,6 +29,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/wechat/activity")
 public class WechatActivityController {
+    private final Logger logger = LoggerFactory.getLogger(WechatActivityController.class);
 
     @Autowired
     private ActivityDistrictService activityDistrictService;
@@ -75,6 +78,7 @@ public class WechatActivityController {
      * Created by ky.bai on 2018-03-01 11:30
      *
      * @param pojo 微信端请求参数
+     *
      * @return 微信端活动列表
      */
     @RequestMapping(value = "/list", method = RequestMethod.POST)
@@ -153,6 +157,7 @@ public class WechatActivityController {
      * Created by ky.bai on 2018-03-02 09:26
      *
      * @param pojo 活动编号, 用户微信openid
+     *
      * @return 活动点赞记录
      */
     @RequestMapping(value = "/thumbup", method = RequestMethod.POST)
@@ -179,6 +184,7 @@ public class WechatActivityController {
      * Created by ky.bai on 2018-03-02 13:08
      *
      * @param activityId 活动编号
+     *
      * @return 活动报名页
      */
     @RequestMapping(value = "/enroll/{activityId}", method = RequestMethod.GET)
@@ -201,6 +207,7 @@ public class WechatActivityController {
      * Created by ky.bai on 2018-03-02 13:56
      *
      * @param record 报名信息
+     *
      * @return 活动报名结果
      */
     @RequestMapping(value = "/enroll", method = RequestMethod.POST)
@@ -212,9 +219,8 @@ public class WechatActivityController {
         Users user = usersService.selectOne(record.getUserId());
         if (user != null && !user.getActive()) return ResponseEntity.ok(new RestEntity(100, Constants.ENROLL_RESULT_WAS_DISABLED, Boolean.FALSE));
 
-        //判断当前活动是否在开始与结束时间范围内
-        if (activity.getEndTime().getTime() < DateUtils.getCurrentTimestamp().getTime())
-            return ResponseEntity.ok(new RestEntity(100, Constants.ENROLL_RESULT_WAS_END, Boolean.FALSE));
+        //判断当前活动是否在开始时间前
+        if (activity.getBeginTime().getTime() < DateUtils.getCurrentTimestamp().getTime()) return ResponseEntity.ok(new RestEntity(100, Constants.ENROLL_RESULT_WAS_END, Boolean.FALSE));
 
         //判断是否已经报名
         List<ActivityEnroll> enrolls = activityEnrollService.selectList(new ActivityEnroll(activity.getId(), record.getUserId(), Boolean.TRUE));
@@ -225,7 +231,15 @@ public class WechatActivityController {
         if (activity.getMaxLimit() != null && activity.getMaxLimit() != 0 && activity.getMaxLimit() <= enrollList.size())
             return ResponseEntity.ok(new RestEntity(100, Constants.ENROLL_RESULT_WAS_FULL, Boolean.FALSE));
 
-        activityEnrollService.insert(record);
+        //未插入成功，或捕捉到异常则报名已满
+        try {
+            int code = activityEnrollService.insert(record);
+            if (code == -1) return ResponseEntity.ok(new RestEntity(100, Constants.ENROLL_RESULT_WAS_FULL, Boolean.FALSE));
+        } catch (RuntimeException e) {
+            this.logger.error("WechatActivityController.saveEnroll had error");
+            return ResponseEntity.ok(new RestEntity(100, Constants.ENROLL_RESULT_WAS_FULL, Boolean.FALSE));
+        }
+
         return ResponseEntity.ok(new RestEntity(200, Constants.OPERATOR_SUCCESS, Boolean.TRUE));
     }
 
@@ -233,6 +247,7 @@ public class WechatActivityController {
      * Created by ky.bai on 2018-03-02 13:55
      *
      * @param file 上传文件
+     *
      * @return 上传文件编号
      */
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
@@ -246,6 +261,7 @@ public class WechatActivityController {
      * Created by ky.bai on 2018-03-09 15:11
      *
      * @param activityId 活动编号
+     *
      * @return 活动报名成功页面
      */
     @RequestMapping(value = "/enroll/{activityId}/success", method = RequestMethod.GET)
@@ -261,6 +277,7 @@ public class WechatActivityController {
      * @param activity    活动
      * @param userId      用户编号
      * @param enrollTotal 活动已报名人数
+     *
      * @return 活动状态: --我要报名，--已报名，--名额已满，--已结束
      */
     private String getActivityStatus(Activity activity, Integer userId, int enrollTotal) {

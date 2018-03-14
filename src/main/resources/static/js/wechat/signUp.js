@@ -1,9 +1,11 @@
 //保存报名资料
+var flag = false;
 function saveEnroll() {
-    if (!checkForm()) {
+    if (!checkForm() && flag) {
         return false;
     }
     var entity = new ActivityEnroll();
+    flag = true;
     $.ajax({
         url: base + '/wechat/activity/enroll',
         type: 'post',
@@ -11,6 +13,7 @@ function saveEnroll() {
         contentType: 'application/json',
         data: JSON.stringify(entity),
         success: function (results) {
+            flag = false;
             if (results.status === 100) {
                 $('.error-tip').text(results.msg).removeClass('none');
                 setTimeout(function () {

@@ -33,7 +33,10 @@ public class WechatUtil {
     }
 
     public static String getOpenidByCode(String code) {
-        logger.info("codeMap size is：" + codeMap.keySet().size());
+        logger.info("codeMap size is：" + codeMap.keySet().size() + ", and this code is：" + code);
+        if (StringUtils.isEmpty(code)) {
+            return "";
+        }
         //Map中含有code并且未过期时不再去请求获取token
         WechatCode wechatCode = codeMap.get(code);
         if (wechatCode != null && wechatCode.getExpireTime().getTime() + 5 * 60 * 1000 < DateUtils.getCurrentTimestamp().getTime()) {
@@ -43,7 +46,9 @@ public class WechatUtil {
     }
 
     public static void setWechatCode(WechatCode wechatCode) {
-        codeMap.put(wechatCode.getCode(), wechatCode);
+        if (wechatCode != null && !StringUtils.isEmpty(wechatCode.getCode())) {
+            codeMap.put(wechatCode.getCode(), wechatCode);
+        }
     }
 
     /**
