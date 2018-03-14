@@ -55,15 +55,23 @@ public class ActivityEnrollServiceImpl implements ActivityEnrollService {
     @Transactional
     public int insert(ActivityEnroll record) {
         Activity activity = activityMapper.selectOne(record.getActivityId());
-        int ranking = activityEnrollMapper.countEnrollRanking(record.getActivityId());
-        if (activity.getMaxLimit() == null || activity.getMaxLimit() == 0 || ranking < activity.getMaxLimit()) {
+        int code = saveEnroll(record, activity.getMaxLimit());
+        if (code != -1) { //添加积分
             List<ActivityCourse> courses = activityCourseMapper.selectList(new ActivityCourse(record.getActivityId()));
-            if (!ObjectUtils.isEmpty(courses)) { //添加积分
+            if (!ObjectUtils.isEmpty(courses)) {
                 for (ActivityCourse course : courses) {
                     String reason = "报名课程：" + course.getName();
                     usersScoreMapper.insert(new UsersScore(record.getUserId(), Constants.SCORE_SIGN_COURSE, reason, record.getActivityId(), course.getId(), DateUtils.getCurrentTimestamp()));
                 }
             }
+        }
+        return code;
+    }
+
+    @Transactional
+    synchronized int saveEnroll(ActivityEnroll record, Integer limit) {
+        int ranking = activityEnrollMapper.countEnrollRanking(record.getActivityId());
+        if (limit == null || limit == 0 || ranking < limit) {
             //课程报名
             record.setRanking(ranking + 1);
             record.setActive(Boolean.TRUE);
