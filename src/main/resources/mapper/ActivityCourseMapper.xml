@@ -57,7 +57,7 @@
     </select>
     
     <select id="selectCodeList" resultMap="BaseResultMap" parameterType="com.activity.model.ActivityCourse">
-        select c.id, c.name, c.activity_id, COUNT(s.user_id) signTotal, COUNT(e.user_id) enrollTotal
+        select c.id, c.name, c.activity_id, COUNT(distinct s.id) signTotal, count(distinct e.id) enrollTotal
         from activity_course c
         inner join activity a on a.id = c.activity_id
         left join activity_enroll e on e.activity_id = a.id
