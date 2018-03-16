@@ -2,6 +2,8 @@ package com.activity.controller;
 
 import com.activity.model.WechatUser;
 import com.activity.service.WechatUserService;
+import com.activity.utils.DateUtils;
+import com.activity.utils.WechatCode;
 import com.activity.utils.WechatUtil;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Timestamp;
 
 /**
  * @author Created by ky.bai on 2018-02-04
@@ -109,6 +112,7 @@ public class WechatController {
             openid = WechatUtil.getOpenidByCode(code);
         }
         if (StringUtils.isEmpty(openid) && !StringUtils.isEmpty(code)) {
+            Timestamp currentTime = DateUtils.getCurrentTimestamp();
             WxMpOAuth2AccessToken auth = wxMpService.oauth2getAccessToken(code);
             openid = auth.getOpenId();
             //获取微信用户的基本信息, 若微信用户还未存在，则保存
@@ -117,6 +121,8 @@ public class WechatController {
             if (wechatUser == null && u != null && !StringUtils.isEmpty(u.getNickname())) {
                 wechatUserService.insertByWxMpUser(u);
             }
+            //放入缓存Map中
+            WechatUtil.setWechatCode(new WechatCode(openid, code, auth.getAccessToken(), currentTime));
         }
         if (!StringUtils.isEmpty(openid) && StringUtils.isEmpty(WechatUtil.getOpenid(request))) {
             WechatUtil.setOpenid(request, openid);
@@ -140,8 +146,11 @@ public class WechatController {
         this.logger.info("用户签到code：" + code);
         String openid = WechatUtil.getOpenidByCode(code);
         if (StringUtils.isEmpty(openid)) {
+            Timestamp currentTime = DateUtils.getCurrentTimestamp();
             WxMpOAuth2AccessToken auth = wxMpService.oauth2getAccessToken(code);
             openid = auth.getOpenId();
+            //放入缓存Map中
+            WechatUtil.setWechatCode(new WechatCode(openid, code, auth.getAccessToken(), currentTime));
         }
         if (!StringUtils.isEmpty(openid)) {
             WechatUser wechatUser = wechatUserService.findByOpenid(openid);
