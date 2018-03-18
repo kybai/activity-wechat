@@ -98,7 +98,7 @@ public class WechatCourseController {
             } else if (!ObjectUtils.isEmpty(signs)) {    //已签到
                 msg = Constants.COURSE_SIGN_WAS_SIGNED;
             }
-        } else if (course.getEndTime().getTime() < currentTime || course.getBeginTime().getTime() > currentTime) {
+        } else if (course.getEndTime().getTime() < currentTime || course.getBeginTime().getTime() > currentTime - 30 * 60 * 1000) {
             msg = Constants.COURSE_SIGN_NOT_TIME;
         }
         model.addAttribute("activityId", course.getActivityId());
