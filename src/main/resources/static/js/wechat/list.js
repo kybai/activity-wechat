@@ -127,4 +127,5 @@ function loadMyInfo(user) {
 
 function WechatPojo() {
     this.districtId = $("#district").val();
+    this.active = true;
 }

@@ -16,6 +16,7 @@
         <result column="thumbupTotal" property="thumbupTotal" jdbcType="INTEGER"/>
         <result column="enrollTotal" property="enrollTotal" jdbcType="INTEGER"/>
     </resultMap>
+
     <sql id="Base_Column_List">
         a.id, title, a.district_id, a.begin_time, a.end_time, a.max_limit, a.address, a.upload_file_id, a.active, a.create_date
     </sql>
@@ -50,12 +51,9 @@
         select a.id, a.title, a.address, a.begin_time beginTime, a.end_time endTime, f.file_path coverPath
         from activity a
         left join upload_file f on f.id = a.upload_file_id
-        where 1 = 1 and a.begin_time &gt; now()
+        where 1 = 1 and a.active is true and a.begin_time &gt; now()
         <if test="districtId!=null">
             and a.district_id = #{districtId,jdbcType=INTEGER}
-        </if>
-        <if test="active!=null">
-            and a.active = #{active,jdbcType=BIT}
         </if>
         order by a.id desc
     </select>
@@ -65,12 +63,9 @@
         select a.id, a.title, a.address, a.begin_time beginTime, a.end_time endTime, f.file_path coverPath
         from activity a
         inner join upload_file f on f.id = a.upload_file_id
-        where 1 = 1 and a.begin_time &lt; now()
+        where 1 = 1 and a.active is true and a.begin_time &lt; now()
         <if test="districtId!=null">
             and a.district_id = #{districtId,jdbcType=INTEGER}
-        </if>
-        <if test="active!=null">
-            and a.active = #{active,jdbcType=BIT}
         </if>
         order by a.id desc
     </select>
@@ -81,15 +76,12 @@
         from activity a
         inner join activity_enroll e on e.activity_id = a.id
         inner join upload_file f on f.id = a.upload_file_id
-        where 1 = 1
+        where 1 = 1 and e.active is true
         <if test="id!=null">
             and e.user_id = #{id,jdbcType=INTEGER}
         </if>
         <if test="districtId!=null">
             and a.district_id = #{districtId,jdbcType=INTEGER}
-        </if>
-        <if test="active!=null">
-            and e.active = #{active,jdbcType=BIT}
         </if>
         order by a.id desc
     </select>
