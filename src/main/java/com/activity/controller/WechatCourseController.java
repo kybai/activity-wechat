@@ -78,13 +78,15 @@ public class WechatCourseController {
         String msg = Constants.COURSE_SIGN_SUCCESS;
         String openid = WechatUtil.getOpenid(request);
         ActivityCourse course = activityCourseMapper.selectByPrimaryKey(courseId);
-        if (course == null) {
+        if (course == null || StringUtils.isEmpty(openid)) {
             return "redirect:/wechat/activity";
         }
 
         //是否在签到时间
         long currentTime = DateUtils.getCurrentTimestamp().getTime();
-        if (!StringUtils.isEmpty(openid)) {
+        if (currentTime > course.getEndTime().getTime() || currentTime < course.getBeginTime().getTime() - 30 * 60 * 1000) {
+            msg = Constants.COURSE_SIGN_NOT_TIME;
+        } else if (!StringUtils.isEmpty(openid)) {
             WechatUser wechatUser = wechatUserService.findByOpenid(openid);
             Integer userId = wechatUser.getUserId();
             Integer activityId = course.getActivityId();
@@ -98,8 +100,6 @@ public class WechatCourseController {
             } else if (!ObjectUtils.isEmpty(signs)) {    //已签到
                 msg = Constants.COURSE_SIGN_WAS_SIGNED;
             }
-        } else if (course.getEndTime().getTime() < currentTime || course.getBeginTime().getTime() > currentTime - 30 * 60 * 1000) {
-            msg = Constants.COURSE_SIGN_NOT_TIME;
         }
         model.addAttribute("activityId", course.getActivityId());
         model.addAttribute("toIndex", !Constants.WECHAT_STATE_INDEX.equals(WechatUtil.getState(request)));

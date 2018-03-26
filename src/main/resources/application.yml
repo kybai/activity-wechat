@@ -2,6 +2,8 @@
 server:
   context-path: /activity
   port: 8091
+  tomcat:
+    basedir: ${user.home}/deployer/tomcat
 
 # DataSource and JPA Configuration
 spring:

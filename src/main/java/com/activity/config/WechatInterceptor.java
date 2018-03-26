@@ -49,6 +49,8 @@ public class WechatInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws WxErrorException, IOException {
+        logger.info("request url is '{}'", request.getRequestURL());
+
         String openidSession = WechatUtil.getOpenid(request);
         if (!StringUtils.isEmpty(openidSession)) return true;
 
