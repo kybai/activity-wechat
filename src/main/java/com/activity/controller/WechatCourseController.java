@@ -86,7 +86,7 @@ public class WechatCourseController {
         long currentTime = DateUtils.getCurrentTimestamp().getTime();
         if (currentTime > course.getEndTime().getTime() || currentTime < course.getBeginTime().getTime() - 30 * 60 * 1000) {
             msg = Constants.COURSE_SIGN_NOT_TIME;
-        } else if (!StringUtils.isEmpty(openid)) {
+        } else {
             WechatUser wechatUser = wechatUserService.findByOpenid(openid);
             Integer userId = wechatUser.getUserId();
             Integer activityId = course.getActivityId();
