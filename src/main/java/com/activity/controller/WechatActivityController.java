@@ -69,8 +69,12 @@ public class WechatActivityController {
         model.addAttribute("districts", activityDistrictService.selectList(new ActivityDistrict(Boolean.TRUE)));
         model.addAttribute("imgList", adsenseService.selectList(new Adsense(Constants.IMAGE_TYPE_ROLLING, Boolean.TRUE)));//轮播图
         model.addAttribute("isWeiXin", !StringUtils.isEmpty(WechatUtil.getOpenid(request)));
-        model.addAttribute("redirectUrl", wechatConfigService.getWechatRedirectIndexUrl());
+        model.addAttribute("redirectUrl", wechatConfigService.getWechatRedirectIndexMyUrl());
         model.addAttribute("needAuth", StringUtils.isEmpty(WechatUtil.getOpenid(request)));
+        String my = request.getParameter("my");
+        if (Constants.WECHAT_STATE_INDEX_MY.equals(my)) {
+            model.addAttribute("my", Boolean.TRUE);
+        }
         return "wechat/list";
     }
 

@@ -56,5 +56,6 @@ public class Constants {
 
     //微信路径state
     public static final String WECHAT_STATE_INDEX = "INDEX";
+    public static final String WECHAT_STATE_INDEX_MY = "my";
 
 }

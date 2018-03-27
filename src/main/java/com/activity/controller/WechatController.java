@@ -2,6 +2,7 @@ package com.activity.controller;
 
 import com.activity.model.WechatUser;
 import com.activity.service.WechatUserService;
+import com.activity.utils.Constants;
 import com.activity.utils.DateUtils;
 import com.activity.utils.WechatCode;
 import com.activity.utils.WechatUtil;
@@ -127,8 +128,12 @@ public class WechatController {
         if (!StringUtils.isEmpty(openid) && StringUtils.isEmpty(WechatUtil.getOpenid(request))) {
             WechatUtil.setOpenid(request, openid);
         }
-
-        return "redirect:/wechat/activity";
+        //是否为我的
+        if (Constants.WECHAT_STATE_INDEX_MY.equals(request.getParameter("state"))) {
+            return "redirect:/wechat/activity?my="+Constants.WECHAT_STATE_INDEX_MY;
+        } else {
+            return "redirect:/wechat/activity";
+        }
     }
 
     /**

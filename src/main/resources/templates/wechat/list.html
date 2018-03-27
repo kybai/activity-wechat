@@ -45,15 +45,15 @@
     <div class="tab">
         <div class="tab-li box">
             <ul id="title-ul">
-                <li class="title-li active"><span>活动列表</span></li>
+                <li class="title-li" th:classappend="${my} ? '':'active'"><span>活动列表</span></li>
                 <li class="title-li"><span>活动回顾</span></li>
-                <li class="title-li"><span>我的</span></li>
+                <li class="title-li" th:classappend="${my} ? 'active':''"><span>我的</span></li>
             </ul>
         </div>
         <div id="tab-ul" class="tab-con">
-            <div class="act-list box" id="actListInfo"></div>
+            <div class="act-list box" th:classappend="${my} ? 'none':''" id="actListInfo"></div>
             <div class="act-review box none" id="actReviewListInfo"></div>
-            <div class="my none">
+            <div class="my" th:classappend="${my} ? '':'none'">
                 <div class="my-class" th:unless="${isWeiXin}">
                     <div class="no-class">
                         <img th:src="@{/img/wechat/nojoin.png}"/>

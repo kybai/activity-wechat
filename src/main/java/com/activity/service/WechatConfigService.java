@@ -11,4 +11,7 @@ public interface WechatConfigService {
     String getWechatRedirectUrl(String redirectUrl);
 
     String getWechatRedirectIndexUrl();
+
+    String getWechatRedirectIndexMyUrl();
+
 }
