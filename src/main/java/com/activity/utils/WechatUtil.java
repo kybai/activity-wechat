@@ -39,7 +39,7 @@ public class WechatUtil {
         }
         //Map中含有code并且未过期时不再去请求获取token
         WechatCode wechatCode = codeMap.get(code);
-        if (wechatCode != null && wechatCode.getExpireTime().getTime() + 5 * 60 * 1000 < DateUtils.getCurrentTimestamp().getTime()) {
+        if (wechatCode != null && wechatCode.getExpireTime().getTime() + 5 * 60 * 1000 > DateUtils.getCurrentTimestamp().getTime()) {
             return wechatCode.getOpenid();
         }
         return "";
