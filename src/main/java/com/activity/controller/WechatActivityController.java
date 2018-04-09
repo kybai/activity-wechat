@@ -72,7 +72,7 @@ public class WechatActivityController {
         model.addAttribute("redirectUrl", wechatConfigService.getWechatRedirectIndexMyUrl());
         model.addAttribute("needAuth", StringUtils.isEmpty(WechatUtil.getOpenid(request)));
         String my = request.getParameter("my");
-        if (Constants.WECHAT_STATE_INDEX_MY.equals(my)) {
+        if (Constants.WECHAT_STATE_INDEX_MY.equals(my) || !StringUtils.isEmpty(WechatUtil.getOpenid(request))) {
             model.addAttribute("my", Boolean.TRUE);
         }
         return "wechat/list";
