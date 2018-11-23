@@ -22,10 +22,10 @@ public class OSSClientUtil {
     private static BucketInfo bucketInfo1;  //存储空间
 
     static {
-        endpoint = "oss-cn-hangzhou.aliyuncs.com";
-        accessKeyId = "LTAIUsNypUGkyTC3";
-        accessKeySecret = "z8ler2QCQPW2ZPOM4dO4Zw88j8VQYU";
-        bucketName1 = "shiyu-test";
+        endpoint = "oss-c";
+        accessKeyId = "LTyTC3";
+        accessKeySecret = "z8ler2Q4Zw88j8VQYU";
+        bucketName1 = "sst";
         filedir = "data/";
         ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
         bucketInfo1 = ossClient.getBucketInfo(bucketName1);
